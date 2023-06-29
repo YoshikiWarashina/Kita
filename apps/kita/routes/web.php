@@ -15,22 +15,19 @@ use App\Http\Controllers\Auth\LoginController;
 */
 
 Route::get('/', function () {
-    return view('example');
+    return view('user.changepass');
 });
 
+//done page 1,2,3,4,5,6,7,8
+//done page 1,5,10
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/admin_users', 'AdminController@index');
+    Route::get('/admin_users/create', 'AdminController@create')->name('admin_users.create');
+    Route::post('/admin_users', 'AdminController@store')->name('admin_users.store');
+});
 
-// 会員登録ルート
-Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('register', [RegisterController::class, 'register']);
-
-// ログインルート
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
-// ログアウトルート
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Auth::routes();
 
