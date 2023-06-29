@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Http\Middleware;
-
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 class RedirectIfAuthenticated
 {
     /**
@@ -20,13 +17,16 @@ class RedirectIfAuthenticated
     public function handle(Request $request, Closure $next, ...$guards)
     {
         $guards = empty($guards) ? [null] : $guards;
-
         foreach ($guards as $guard) {
+            //redirect destination for admin
+            if($guard == "admin" && Auth::guard($guard)->check()) {   //追記
+                return redirect('admin/admin_users');                        //追記
+            }
+            //redirect destination for members
             if (Auth::guard($guard)->check()) {
                 return redirect(RouteServiceProvider::HOME);
             }
         }
-
         return $next($request);
     }
 }

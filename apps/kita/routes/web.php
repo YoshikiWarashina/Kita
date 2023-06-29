@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 /*
@@ -21,12 +22,12 @@ Route::get('/', function () {
 //done page 1,2,3,4,5,6,7,8
 //done page 1,5,10
 
-
-Route::group(['prefix' => 'admin'], function () {
-    Route::get('/admin_users', 'AdminController@index');
-    Route::get('/admin_users/create', 'AdminController@create')->name('admin_users.create');
-    Route::post('/admin_users', 'AdminController@store')->name('admin_users.store');
-});
+Route::view('/admin/login', 'admin/login');
+Route::post('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'login']);
+Route::post('admin/logout', [App\Http\Controllers\admin\LoginController::class,'logout'])->name('admin/logout');
+Route::view('/admin/register', 'admin/register');
+Route::post('/admin/register', [App\Http\Controllers\admin\RegisterController::class, 'register']);
+Route::view('/admin/admin_users', 'admin/admin_users')->middleware('auth:admin');
 
 
 Auth::routes();

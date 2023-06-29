@@ -41,32 +41,32 @@
 
         <div class="row">
             <nav aria-label="Page navigation example">
-                <ul class="pagination pt-3">
-                    <li class="page-item{{ $admins->currentPage() == 1 ? ' disabled' : '' }}">
-                        <a class="page-link" href="{{ $admins->previousPageUrl() }}" aria-label="Previous">
-                            Previous
-                        </a>
-                    </li>
-                    @for ($i = 1; $i <= min(3, $admins->lastPage()); $i++)
-                        <li class="page-item{{ $i == $admins->currentPage() ? ' active' : '' }}">
-                            <a class="page-link" href="{{ $admins->url($i) }}">{{ $i }}</a>
-                        </li>
-                    @endfor
-                    <li class="page-item{{ $admins->currentPage() == $admins->lastPage() ? ' disabled' : '' }}">
-                        <a class="page-link" href="{{ $admins->nextPageUrl() }}" aria-label="Next">
-                            Next
-                        </a>
-                    </li>
-                </ul>
+{{--                <ul class="pagination pt-3">--}}
+{{--                    <li class="page-item{{ $admins->currentPage() == 1 ? ' disabled' : '' }}">--}}
+{{--                        <a class="page-link" href="{{ $admins->previousPageUrl() }}" aria-label="Previous">--}}
+{{--                            Previous--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    @for ($i = 1; $i <= min(3, $admins->lastPage()); $i++)--}}
+{{--                        <li class="page-item{{ $i == $admins->currentPage() ? ' active' : '' }}">--}}
+{{--                            <a class="page-link" href="{{ $admins->url($i) }}">{{ $i }}</a>--}}
+{{--                        </li>--}}
+{{--                    @endfor--}}
+{{--                    <li class="page-item{{ $admins->currentPage() == $admins->lastPage() ? ' disabled' : '' }}">--}}
+{{--                        <a class="page-link" href="{{ $admins->nextPageUrl() }}" aria-label="Next">--}}
+{{--                            Next--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
             </nav>
         </div>
         <div class="row">
             <div class="col-md-12 col-12 justify-content-center">
                 <div class="border rounded bg-white">
                     <div class="p-3">
-                        {!! Form::open(['route' => 'admin_users.create', 'method' => 'GET']) !!}
+{{--                        {!! Form::open(['route' => 'admin_users.create', 'method' => 'GET']) !!}--}}
                         {!! Form::submit('新規登録', ['class' => 'btn btn-primary']) !!}
-                        {!! Form::close() !!}
+{{--                        {!! Form::close() !!}--}}
                     </div>
                     <div class="col-md-12 col-12 px-3">
                         <table class="table table-bordered table-hover">
@@ -79,18 +79,18 @@
                                 <th>登録日時</th>
                                 <th>レコード操作</th>
                             </tr>
-                            @foreach ($admins as $admin)
-                                <tr>
-                                    <td>{{ $admin->id }}</td>
-                                    <td>{{ $admin->last_name }} {{ $admin->first_name }}</td>
-                                    <td>{{ $admin->email }}</td>
-                                    <td>{{ $admin->updated_at }}</td>
-                                    <td>{{ $admin->created_at }}</td>
-                                    <td class="text-center">
-                                        {{ Form::button('編集', ['class' => 'btn btn-primary']) }}
-                                    </td>
-                                </tr>
-                            @endforeach
+{{--                            @foreach ($admins as $admin)--}}
+{{--                                <tr>--}}
+{{--                                    <td>{{ $admin->id }}</td>--}}
+{{--                                    <td>{{ $admin->last_name }} {{ $admin->first_name }}</td>--}}
+{{--                                    <td>{{ $admin->email }}</td>--}}
+{{--                                    <td>{{ $admin->updated_at }}</td>--}}
+{{--                                    <td>{{ $admin->created_at }}</td>--}}
+{{--                                    <td class="text-center">--}}
+{{--                                        {{ Form::button('編集', ['class' => 'btn btn-primary']) }}--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+{{--                            @endforeach--}}
                         </table>
                     </div>
                 </div>

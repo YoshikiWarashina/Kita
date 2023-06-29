@@ -18,11 +18,14 @@
 
 <body>
 <div class="container">
-    <div class = "row d-flex justify-content-center align-items-center" style="height: 100vh;">
-        <div class = "col-md-6 col-12">
+    <div class="row d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="col-md-6 col-12">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-10 col-12">
-                    <div class="border rounded bg-white pt-3 px-3">
+                    <div class="border rounded bg-white">
+                        <div class = "border rounded bg-light pt-2 mb-2">
+                            <p class="text-start px-4 mb-2">パスワード変更</p>
+                        </div>
                         <form method="POST" action="" aria-label="">
                             @csrf
                             <div class="col px-4 mb-4">
