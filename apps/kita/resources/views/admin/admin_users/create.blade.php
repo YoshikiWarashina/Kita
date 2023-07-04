@@ -7,6 +7,15 @@
                 <h1>管理者管理 - 新規登録</h1>
             </div>
         </div>
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         {!! Form::open(['route' => 'admin_users.store', 'method' => 'POST']) !!}
         <div class="row">
             <div class="col-md-9 col-12">

@@ -24,7 +24,7 @@ class AdminController extends Controller
     }
 
     /**
-     * dmin users新規登録ページへの遷移
+     * admin users新規登録ページへの遷移
      *
      * @return \Illuminate\Contracts\View\View
      */
@@ -32,4 +32,33 @@ class AdminController extends Controller
     {
         return view('admin.admin_users.create');
     }
+
+    /**
+     * 新規のadmin userをテーブルに格納し、編集画面にリダイレクト
+     *
+     * @param \App\Http\Requests\Admin\CreateRequest $request
+     * @param \App\Services\AdminService $adminService
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(CreateRequest $request, AdminService $adminService)
+    {
+        $validatedData = $request->validated();
+        $admin = $adminService->getNewAdmin($validatedData);
+        $admin->save();
+
+        // 保存した後のIDを取得する
+        $adminId = $admin->id;
+
+        // 編集画面にリダイレクトする
+        return redirect('admin/admin_users/'.$adminId.'/edit')->with('message', '登録処理が完了しました')->with('admin', $admin);
+    }
+
+    public function edit($admin_user)
+    {
+        $admin = Admin::find($admin_user);
+
+        // 編集画面の表示処理
+        return view('admin.admin_users.edit', ['admin' => $admin]);
+    }
+
 }
