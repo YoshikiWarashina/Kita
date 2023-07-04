@@ -11,7 +11,7 @@
 </head>
 <body>
 <header>
-    <div class="container-fluid sticky-top border">
+    <div class="container-fluid sticky-top border bg-white">
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 my-3">
                 <nav class="navbar navbar-expand-lg navbar-dark">
@@ -53,7 +53,7 @@
 </header>
 
 
-<div class="main bg-light vh-100">
+<div class="main">
     @yield('content')
 </div>
 </body>
