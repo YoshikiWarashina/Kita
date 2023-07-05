@@ -24,10 +24,10 @@ Route::get('/', function () {
 //done page 1,5,10
 Route::group(['prefix' => 'admin'], function () {
     Route::view('/login', 'admin/login');
-    Route::post('/login', [App\Http\Controllers\admin\LoginController::class, 'login']);
-    Route::post('/logout', [App\Http\Controllers\admin\LoginController::class,'logout'])->name('admin/logout');
+    Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
+    Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class,'logout'])->name('admin/logout');
     Route::view('/register', 'admin/register');
-    Route::post('/register', [App\Http\Controllers\admin\RegisterController::class, 'register']);
+    Route::post('/register', [App\Http\Controllers\Admin\RegisterController::class, 'register']);
     Route::view('/admin_users', 'admin/admin_users')->middleware('auth:admin');
 
     Route::get('/admin_users', 'App\Http\Controllers\Admin\AdminController@index')->middleware('auth:admin');

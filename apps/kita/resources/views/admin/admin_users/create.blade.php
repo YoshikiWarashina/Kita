@@ -7,6 +7,7 @@
                 <h1>管理者管理 - 新規登録</h1>
             </div>
         </div>
+{{--        ここのルーティングのせいでエラーが出て表示できなかったので一旦コメントアウト--}}
 {{--        {!! Form::open(['route' => 'admin_users.store', 'method' => 'POST']) !!}--}}
         <div class="row">
             <div class="col-md-9 col-12">

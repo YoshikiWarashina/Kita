@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,6 +8,11 @@ use App\Models\Admin;
 
 class AdminController extends Controller
 {
+    /**
+     * admin users一覧表示
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $pageNum = 6;
