@@ -6,57 +6,39 @@
             <div class="col-md-8 col-12 bg-white rounded">
                 <div class="container">
                     <div class = "py-3 text-secondary">
-                        <p>hogehogeが2021年5月21日に投稿</p>
-                        <h3>Debian 11 Bullseye インストール</h3>
-                        <div class="row pb-2 border-bottom border-dark">
-                            <div class="col-auto">
-                                <p class="text-white bg-primary px-2 rounded">javascript</p>
+                        @foreach ($articles as $article)
+                            <p>{{ $article->member->name }}が{{ $article->created_at->format('Y年m月d日') }}に投稿</p>
+                            <h3>{{ $article->title }}</h3>
+                            <div class="row mb-2 border-bottom border-dark">
+                                <div class="col-auto">
+                                    <p class="text-white bg-primary px-2 rounded">javascript</p>
+                                </div>
+                                <div class="col-auto">
+                                    <p class="text-white bg-primary px-2 rounded">Vue</p>
+                                </div>
+                                <div class="col-auto">
+                                    <p class="text-white bg-primary px-2 rounded">Vite</p>
+                                </div>
                             </div>
-                            <div class="col-auto">
-                                <p class="text-white bg-primary px-2 rounded">Vue</p>
-                            </div>
-                            <div class="col-auto">
-                                <p class="text-white bg-primary px-2 rounded">Vite</p>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
-                    <div class = "py-3 text-secondary">
-                        <p>hogehogeが2021年5月21日に投稿</p>
-                        <h3>Debian 11 Bullseye インストール</h3>
-                        <div class="row pb-2 border-bottom border-secondary">
-                            <div class="col-auto">
-                                <p class="text-white bg-primary px-2 rounded">javascript</p>
-                            </div>
-                            <div class="col-auto">
-                                <p class="text-white bg-primary px-2 rounded">Vue</p>
-                            </div>
-                            <div class="col-auto">
-                                <p class="text-white bg-primary px-2 rounded">Vite</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class = "py-3 text-secondary">
-                        <p>hogehogeが2021年5月21日に投稿</p>
-                        <h3>Debian 11 Bullseye インストール</h3>
-                        <div class="row pb-2 border-bottom border-dark">
-                            <div class="col-auto">
-                                <p class="text-white bg-primary px-2 rounded">javascript</p>
-                            </div>
-                            <div class="col-auto">
-                                <p class="text-white bg-primary px-2 rounded">Vue</p>
-                            </div>
-                            <div class="col-auto">
-                                <p class="text-white bg-primary px-2 rounded">Vite</p>
-                            </div>
-                        </div>
-                    </div>
-                    <nav aria-label="Page navigation example border-success">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item"><a class="page-link text-success border-success" href="#">Previous</a></li>
-                            <li class="page-item"><a class="page-link text-success border-success" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link text-success border-success" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link text-success border-success" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link text-success border-success" href="#">Next</a></li>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center pt-3">
+                            <li class="page-item{{ $articles->currentPage() == 1 ? ' disabled' : '' }}">
+                                <a class="page-link text-success border-success" href="{{ $articles->previousPageUrl() }}" aria-label="Previous">
+                                    Previous
+                                </a>
+                            </li>
+                            @for ($i = 1; $i <= min(3, $articles->lastPage()); $i++)
+                                <li class="page-item{{ $i == $articles->currentPage() ? ' active' : '' }}">
+                                    <a class="page-link text-success border-success{{ $i == $articles->currentPage() ? ' bg-success' : '' }}" href="{{ $articles->url($i) }}">{{ $i }}</a>
+                                </li>
+                            @endfor
+                            <li class="page-item{{ $articles->currentPage() == $articles->lastPage() ? ' disabled' : '' }}">
+                                <a class="page-link text-success border-success" href="{{ $articles->nextPageUrl() }}" aria-label="Next">
+                                    Next
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                 </div>

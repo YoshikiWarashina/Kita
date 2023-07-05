@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Article\ArticleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/admin_users_create', [AdminController::class, 'create'])->name('admin_users.create')->middleware('auth:admin');
     Route::post('/admin_users', [AdminController::class, 'store'])->name('admin_users.store')->middleware('auth:admin');
     Route::get('/admin_users/{admin_user}/edit', [AdminController::class, 'edit'])->name('admin_users.edit')->middleware('auth:admin');
+});
+
+Route::group(['prefix' => 'articles'], function () {
+    Route::get('/', [ArticleController::class, 'index']);
 });
 
 
