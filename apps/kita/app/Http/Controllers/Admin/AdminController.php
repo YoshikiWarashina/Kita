@@ -9,7 +9,7 @@ use App\Models\Admin;
 class AdminController extends Controller
 {
     /**
-     * admin users一覧表示
+     * admin users一覧表示(ページネーション6)
      *
      * @return \Illuminate\Contracts\View\View
      */
