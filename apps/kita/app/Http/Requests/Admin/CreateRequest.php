@@ -30,20 +30,4 @@ class CreateRequest extends FormRequest
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'first_name.required' => '名は必須です',
-            'last_name.required' => '姓は必須です',
-            'email.required' => 'メールアドレスは必須です',
-            'email.email' => '正しいメールアドレスの形式で入力してください',
-            'email.unique' => '既に登録されているメールアドレスです',
-            'password.required' => 'パスワードは必須です',
-            'password.min' => 'パスワードは8文字以上で入力してください',
-            'password.confirmed' => 'パスワードが一致しません',
-        ];
-    }
-
-
 }

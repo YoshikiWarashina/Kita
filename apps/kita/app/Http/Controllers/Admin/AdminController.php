@@ -11,7 +11,7 @@ use App\Http\Requests\Admin\CreateRequest;
 class AdminController extends Controller
 {
     /**
-     * admin users一覧表示
+     * admin users一覧表示(ページネーション6)
      *
      * @return \Illuminate\Contracts\View\View
      */
@@ -23,11 +23,13 @@ class AdminController extends Controller
         return view('admin.admin_users', compact('admins'));
     }
 
+
     /**
      * admin users新規登録ページへの遷移
      *
      * @return \Illuminate\Contracts\View\View
      */
+  
     public function create() : object
     {
         return view('admin.admin_users.create');
@@ -43,8 +45,7 @@ class AdminController extends Controller
     public function store(CreateRequest $request, AdminService $adminService)
     {
         $validatedData = $request->validated();
-        $admin = $adminService->getNewAdmin($validatedData);
-        $admin->save();
+        $admin = $adminService->saveNewAdmin($validatedData);
 
         // 保存した後のIDを取得する
         $adminId = $admin->id;
