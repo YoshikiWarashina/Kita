@@ -33,6 +33,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class,'logout'])->name('admin/logout');
     Route::view('/register', 'admin/register');
     Route::post('/register', [App\Http\Controllers\Admin\RegisterController::class, 'register'])->name('admin/register');
+//    Route::view('/admin_users', 'admin/admin_users')->middleware('auth:admin');
+
+
+    Route::get('/admin_users', 'App\Http\Controllers\Admin\AdminController@index')->middleware('auth:admin');
+    Route::get('/admin_users_create', 'App\Http\Controllers\Admin\AdminController@create')->name('admin_users.create')->middleware('auth:admin');
+    Route::post('/admin_users', 'App\Http\Controllers\Admin\AdminController@store')->name('admin_users.store')->middleware('auth:admin');
 
     Route::get('/admin_users', [AdminController::class, 'index'])->middleware('auth:admin');
     Route::get('/admin_users_create', [AdminController::class, 'create'])->name('admin_users.create')->middleware('auth:admin');
