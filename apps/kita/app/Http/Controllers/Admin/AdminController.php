@@ -43,8 +43,7 @@ class AdminController extends Controller
     public function store(CreateRequest $request, AdminService $adminService)
     {
         $validatedData = $request->validated();
-        $admin = $adminService->getNewAdmin($validatedData);
-        $admin->save();
+        $admin = $adminService->saveNewAdmin($validatedData);
 
         // 保存した後のIDを取得する
         $adminId = $admin->id;

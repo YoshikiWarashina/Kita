@@ -14,14 +14,25 @@ class AdminService{
         return Admin::orderBy('updated_at', 'desc')->paginate($pageNum);
     }
 
-    public function getNewAdmin(array $data)
+    /**
+     * 新しい管理者を保存。
+     *
+     * @param array $data
+     * @return Admin
+     */
+
+    public function saveNewAdmin(array $data)
     {
         $admin = new Admin();
 
-        $admin->first_name = $data['first_name'];
-        $admin->last_name = $data['last_name'];
-        $admin->email = $data['email'];
-        $admin->password = Hash::make($data['password']);
+        $admin->fill([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+
+        $admin->save();
 
         return $admin;
     }
