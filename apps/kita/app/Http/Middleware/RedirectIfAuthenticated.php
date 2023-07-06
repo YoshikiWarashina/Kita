@@ -24,7 +24,7 @@ class RedirectIfAuthenticated
             }
             //redirect destination for members
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                return redirect('articles');
             }
         }
         return $next($request);

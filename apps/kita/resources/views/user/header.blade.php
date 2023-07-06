@@ -42,7 +42,12 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         <li><a class="dropdown-item text-primary" href="#">プロフィール編集</a></li>
-                                        <li><a class="dropdown-item text-primary" href="#">ログアウト</a></li>
+                                        <li>
+                                            <form method="POST" action="{{ route('logout') }}">
+                                                @csrf
+                                                <button type="submit" class="dropdown-item text-primary">ログアウト</button>
+                                            </form>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
