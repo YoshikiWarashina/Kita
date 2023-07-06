@@ -159,6 +159,7 @@ return [
         'last_name' => '姓',
         'email' => 'メールアドレス',
         'password' => 'パスワード',
+        'keyword' => '検索ワード',
     ],
 
 ];

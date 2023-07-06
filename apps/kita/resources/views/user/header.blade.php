@@ -22,9 +22,11 @@
                         </button>
                         <div class="justify-content-end collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav pl-md-4 my-md-0 mt-3 mb-lg-0">
-                                <div class="input-group mx-md-3 mx-2">
-                                    <input type="text" class="form-control" placeholder="Search for something">
-                                    <button class="btn btn-success px-4" type="button">検索</button>
+                                <div class="input-group mx-md-4 mx-2">
+                                    {!! Form::open(['route' => 'article.search', 'method' => 'GET', 'class' => 'd-flex align-items-center']) !!}
+                                    {!! Form::text('keyword', null, ['class' => 'form-control', 'placeholder' => 'Search for something']) !!}
+                                    {!! Form::submit('検索', ['class' => 'btn btn-success col-auto']) !!}
+                                    {!! Form::close() !!}
                                 </div>
                             </ul>
                             <div class="mx-2">

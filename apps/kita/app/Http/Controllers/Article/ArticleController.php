@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Article;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Article\SearchRequest;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
 
@@ -85,5 +86,20 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * keywordを受け取り、返ってきた検索結果をview渡す。
+     *
+     * @param  ArticleService  $articleService
+     * @param  SearchRequest  $searchRequest
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function search(ArticleService $articleService, SearchRequest $searchRequest)
+    {
+        $keyword = $searchRequest->input('keyword');
+        $articles = $articleService->getSearchedArticles($keyword);
+
+        return view('articles.articles', compact('articles'));
     }
 }
