@@ -97,8 +97,8 @@ class ArticleController extends Controller
      */
     public function search(ArticleService $articleService, SearchRequest $searchRequest)
     {
-        $keyword = $searchRequest->input('keyword');
-        $articles = $articleService->getSearchedArticles($keyword);
+        $search = $searchRequest->input('search');
+        $articles = $articleService->getSearchedArticles($search);
 
         return view('articles.articles', compact('articles'));
     }

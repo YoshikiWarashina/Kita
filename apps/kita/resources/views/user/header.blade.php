@@ -24,7 +24,7 @@
                             <ul class="navbar-nav pl-md-4 my-md-0 mt-3 mb-lg-0">
                                 <div class="input-group mx-md-4 mx-2">
                                     {!! Form::open(['route' => 'article.search', 'method' => 'GET', 'class' => 'd-flex align-items-center']) !!}
-                                    {!! Form::text('keyword', null, ['class' => 'form-control', 'placeholder' => 'Search for something']) !!}
+                                    {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Search for something']) !!}
                                     {!! Form::submit('検索', ['class' => 'btn btn-success col-auto']) !!}
                                     {!! Form::close() !!}
                                 </div>

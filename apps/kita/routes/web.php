@@ -49,7 +49,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::group(['prefix' => 'articles'], function () {
     Route::get('/', [ArticleController::class, 'index']);
-    Route::get('/search', [ArticleController::class, 'search'])->name('article.search');
+    Route::get('/', [ArticleController::class, 'search'])->name('article.search');
 });
 
 

@@ -24,7 +24,7 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'keyword' => ['string','nullable','regex:/^[^%#]+$/'],
+            'search' => ['string','nullable','regex:/^[^%#]+$/'],
         ];
     }
 }
