@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Article;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Article\SearchRequest;
+use App\Models\Article;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
+use App\Http\Requests\Article\CreateRequest;
 
 class ArticleController extends Controller
 {
@@ -25,33 +27,41 @@ class ArticleController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function create()
     {
-        //
+        return view('articles.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Services\ArticleService  $articleService
+     * @param  App\Http\Requests\Article\CreateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(ArticleService $articleService, CreateRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+        $article = $articleService->saveNewArticle($validatedData);
+
+        $articleId = $article->id;
+        return redirect('articles/'.$articleId.'/edit')->with('message', '記事投稿が完了しました')->with('article', $article);
     }
 
     /**
      * Display the specified resource.
      *
+     * @param  \App\Services\ArticleService  $articleService
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function show(ArticleService $articleService, int $id)
     {
-        //
+        $article = $articleService->getArticleById($id);
+
+        return view('articles.edit', ['article' => $article]);
     }
 
     /**

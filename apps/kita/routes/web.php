@@ -53,6 +53,10 @@ Route::group(['prefix' => ''], function () {
 Route::group(['prefix' => 'articles'], function () {
     Route::get('/', [ArticleController::class, 'index']);
     Route::get('/', [ArticleController::class, 'search'])->name('article.search');
+    //middlewareの処理、後ほど対応
+    Route::get('/create', [ArticleController::class, 'create'])->name('article.create');
+    Route::post('/', [ArticleController::class, 'store'])->name('article.store');
+    Route::get('/{article_id}/edit', [ArticleController::class, 'show'])->name('article.show');
 });
 
 

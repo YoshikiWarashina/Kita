@@ -160,6 +160,8 @@ return [
         'email' => 'メールアドレス',
         'password' => 'パスワード',
         'search' => '検索ワード',
+        'title' => 'タイトル',
+        'contents' => '内容',
     ],
 
 ];
