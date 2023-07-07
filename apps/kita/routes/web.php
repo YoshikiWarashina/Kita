@@ -26,7 +26,6 @@ Route::get('/', function () {
 //done page 1,2,3,4,5,6,7,8
 //done page 1,2,3,4,5,6,7,9,10
 
-Route::post('/logout', [App\Http\Controllers\auth\LoginController::class,'logout'])->name('logout');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::view('/login', 'admin/login');
@@ -41,6 +40,16 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/admin_users/{admin_user}/edit', [AdminController::class, 'edit'])->name('admin_users.edit')->middleware('auth:admin');
 });
 
+Route::group(['prefix' => ''], function () {
+    Route::get('/member_registration', [RegisterController::class, 'showRegistrationForm'])->name('member.register');
+    Route::post('/member_registration', [RegisterController::class, 'register'])->name('member.register');
+    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [LoginController::class, 'login']);
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+});
+
+
+
 Route::group(['prefix' => 'articles'], function () {
     Route::get('/', [ArticleController::class, 'index']);
     Route::get('/', [ArticleController::class, 'search'])->name('article.search');
@@ -48,8 +57,5 @@ Route::group(['prefix' => 'articles'], function () {
 
 
 
-Auth::routes();
 
-Route::get('/member_registration', [RegisterController::class, 'showRegistrationForm'])->name('member.register');
-Route::post('/member_registration', [RegisterController::class, 'register'])->name('member.register');
 
