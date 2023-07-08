@@ -53,26 +53,27 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show()
+    {
+
+    }
+
+    /**
+     *
      * @param  \App\Services\ArticleService  $articleService
      * @param  int  $id
      * @return \Illuminate\Contracts\View\View
+     * Show the form for editing the specified resource.
+     *
      */
-    public function show(ArticleService $articleService, int $id)
+    public function edit(ArticleService $articleService, int $id)
     {
         $article = $articleService->getArticleById($id);
 
         return view('articles.edit', ['article' => $article]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
