@@ -53,12 +53,15 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param  \App\Services\ArticleService  $articleService
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function show()
+    public function show(ArticleService $articleService, int $id)
     {
+        $article = $articleService->getArticleById($id);
 
+        return view('articles.detail', compact('article'));
     }
 
     /**

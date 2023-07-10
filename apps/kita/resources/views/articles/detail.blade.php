@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="container my-5 py-2">
+        @if(session('message'))
+            <div class="alert alert-success">
+                <h5 class="fw-bolder">Success!</h5>
+                {{ session('message') }}
+            </div>
+        @endif
         <div class="row justify-content-center align-items-center">
             <div class="col-md-8 col-12 bg-white rounded">
                 <div class="container">
@@ -18,8 +24,8 @@
                         </div>
                     </div>
                     <div class = "py-3 text-secondary">
-                        <h3>[Vue 2.x] Vue CLI環境にViteを導入</h3>
-                        <p>hogehogeが2021年5月21日に投稿</p>
+                        <h3>{{ $article->title }}</h3>
+                        <p>{{ $article->member->name }}が{{ $article->created_at->format('Y年m月d日') }}に投稿</p>
                         <div class="row pt-4">
                             <div class="col-auto">
                                 <p class="text-white bg-primary px-2 rounded">javascript</p>
@@ -34,10 +40,7 @@
                     </div>
                     <div class="py-3 text-secondary">
                         <div class="pb-2">
-                            <p>タイトルここにバーーーーーーーーーーーーっ</p>
-                        </div>
-                        <div class="pb-2">
-                            <p>内容もここにバーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー表示</p>
+                            <p>{!! nl2br($article->contents) !!}</p>
                         </div>
                     </div>
                 </div>
