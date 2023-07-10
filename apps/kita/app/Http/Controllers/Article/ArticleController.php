@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Article;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
 
@@ -11,11 +12,11 @@ class ArticleController extends Controller
     /**
      * 記事一覧表示
      *
+     * @param \App\Services\ArticleService
      * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(ArticleService $articleService)
     {
-        $articleService = new ArticleService();
         $articles = $articleService->getArticles();
 
         return view('articles.articles', compact('articles'));
