@@ -30,7 +30,7 @@ class Article extends Model
 
 
     /**
-     * メンバーとの関係性.
+     * 記事を保有しているメンバーの取得
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
