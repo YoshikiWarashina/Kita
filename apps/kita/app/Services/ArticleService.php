@@ -30,6 +30,7 @@ class ArticleService{
 
         return Article::where('title', 'like', "%$keyword%")
             ->orWhere('contents', 'like', "%$keyword%")
+            ->orderBy('updated_at', 'desc')
             ->paginate($articlesPerPage);
     }
 
