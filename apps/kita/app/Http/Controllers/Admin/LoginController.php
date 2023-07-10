@@ -34,7 +34,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:admin')->except('logout');
+        $this->middleware('guest:admins')->except('logout');
     }
 
 
@@ -46,7 +46,7 @@ class LoginController extends Controller
 
     protected function guard()                              //追記
     {                                                       //追記
-        return Auth::guard('admin');                        //追記
+        return Auth::guard('admins');                        //追記
     }                                                       //追記
 
 
