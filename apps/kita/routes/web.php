@@ -63,4 +63,8 @@ Route::group(['prefix' => 'articles'], function () {
     //詳細表示
     Route::get('/{article_id}', [ArticleController::class, 'show'])->name('article.show');
     Route::get('/{article_id}/edit', [ArticleController::class, 'edit'])->name('article.edit')->middleware('auth:members');
+
+    //編集ページ投稿後に遷移するルートを再利用
+    //編集実行
+    Route::put('{article_id}/edit', [ArticleController::class, 'update'])->name('article.update')->middleware('auth:members');
 });
