@@ -64,10 +64,3 @@ Route::group(['prefix' => 'articles'], function () {
     Route::post('/', [ArticleController::class, 'store'])->name('article.store')->middleware('auth:members');
     Route::get('/{article_id}/edit', [ArticleController::class, 'edit'])->name('article.edit')->middleware('auth:members');
 });
-
-
-
-
-
-
-
