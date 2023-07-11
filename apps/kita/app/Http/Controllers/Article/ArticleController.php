@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Article;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Article\SearchRequest;
+use App\Http\Requests\Article\UpdateRequest;
 use App\Models\Article;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
@@ -82,13 +83,19 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Services\ArticleService  $articleService
+     * @param  \App\Http\Requests\Article\UpdateRequest $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(ArticleService $articleService, UpdateRequest $request, int $id)
     {
-        //
+        $validatedData = $request->validated();
+
+        $article = $articleService->saveUpdatedArticle($id, $validatedData);
+
+        $articleId = $article->id;
+        return redirect('articles/'.$articleId.'/edit')->with('message', '記事編集が完了しました')->with('article', $article);
     }
 
     /**

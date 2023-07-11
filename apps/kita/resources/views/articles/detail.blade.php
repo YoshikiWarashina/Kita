@@ -18,9 +18,9 @@
                             </button>
                         </div>
                         <div class="col-auto mt-4 text-end">
-                            <button type="submit" class="btn btn-success btn-sm rounded-pill">
-                                {{ __('更新する') }}
-                            </button>
+                            {!! Form::open(['route' => ['article.edit', $article->id], 'method' => 'GET']) !!}
+                            {!! Form::submit('更新する', ['class' => 'btn btn-success btn-sm rounded-pill']) !!}
+                            {!! Form::close() !!}
                         </div>
                     </div>
                     <div class = "py-3 text-secondary">

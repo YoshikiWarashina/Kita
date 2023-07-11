@@ -55,6 +55,9 @@ Route::group(['prefix' => 'articles'], function () {
     Route::get('/', [ArticleController::class, 'search'])->name('article.search');
     //詳細表示
     Route::get('/{article_id}', [ArticleController::class, 'show'])->name('article.show');
+    //編集ページ投稿後に遷移するルートを再利用
+    //編集実行
+    Route::put('/articles/{article_id}/edit', [ArticleController::class, 'update'])->name('article.update')->middleware('auth:members');
 
     Route::get('/create', [ArticleController::class, 'create'])->name('article.create')->middleware('auth:members');
     Route::post('/', [ArticleController::class, 'store'])->name('article.store')->middleware('auth:members');
