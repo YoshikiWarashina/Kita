@@ -26,30 +26,34 @@ Route::get('/', function () {
 //done page 1,2,3,4,5,6,7,8
 //done page 1,2,3,4,5,6,7,9,10
 
-
-Route::group(['prefix' => 'admin'], function () {
-    Route::view('/login', 'admin/login');
-    Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin/login');
+//admins middleware
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:admins']], function () {
     Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class,'logout'])->name('admin/logout')->middleware('auth:admins');
-    Route::view('/register', 'admin/register');
-    Route::post('/register', [App\Http\Controllers\Admin\RegisterController::class, 'register'])->name('admin/register');
-
     Route::get('/admin_users', [AdminController::class, 'index'])->middleware('auth:admins');
     Route::get('/admin_users_create', [AdminController::class, 'create'])->name('admin_users.create')->middleware('auth:admins');
     Route::post('/admin_users', [AdminController::class, 'store'])->name('admin_users.store')->middleware('auth:admins');
     Route::get('/admin_users/{admin_user}/edit', [AdminController::class, 'edit'])->name('admin_users.edit')->middleware('auth:admins');
 });
 
-Route::group(['prefix' => ''], function () {
-    Route::get('/member_registration', [RegisterController::class, 'showRegistrationForm'])->name('member.register');
-    Route::post('/member_registration', [RegisterController::class, 'register'])->name('member.register');
-    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [LoginController::class, 'login']);
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+//admins middlewareなし
+Route::group(['prefix' => 'admin'], function () {
+    Route::view('/login', 'admin/login');
+    Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin/login');
+    Route::view('/register', 'admin/register');
+    Route::post('/register', [App\Http\Controllers\Admin\RegisterController::class, 'register'])->name('admin/register');
 });
 
+// prefix 外し
+Route::get('/member_registration', [RegisterController::class, 'showRegistrationForm'])->name('member.register');
+Route::post('/member_registration', [RegisterController::class, 'register'])->name('member.register');
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
+
+//articles関連
 Route::group(['prefix' => 'articles'], function () {
     Route::get('/', [ArticleController::class, 'index']);
     Route::get('/', [ArticleController::class, 'search'])->name('article.search');
