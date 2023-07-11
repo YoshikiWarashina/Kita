@@ -7,6 +7,7 @@
                 <h1>管理者管理 - 新規登録</h1>
             </div>
         </div>
+<<<<<<< HEAD
         @if($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -17,6 +18,10 @@
             </div>
         @endif
         {!! Form::open(['route' => 'admin_users.store', 'method' => 'POST']) !!}
+=======
+{{--        ここのルーティングのせいでエラーが出て表示できなかったので一旦コメントアウト--}}
+{{--        {!! Form::open(['route' => 'admin_users.store', 'method' => 'POST']) !!}--}}
+>>>>>>> feature/QKZA-35_admin_list
         <div class="row">
             <div class="col-md-9 col-12">
                 <div class="border rounded bg-white py-3">
