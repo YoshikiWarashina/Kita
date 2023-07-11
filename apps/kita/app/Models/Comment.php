@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-class Article extends Model
+class Comment extends Model
 {
     use HasFactory;
 
@@ -16,22 +15,19 @@ class Article extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'title',
         'contents',
-        'member_id',
     ];
-
 
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'articles';
+    protected $table = 'article_comments';
 
 
     /**
-     * 記事を保有しているメンバーの取得
+     * コメントが紐付けられるユーザーの取得
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -42,12 +38,13 @@ class Article extends Model
 
 
     /**
-     * 複数コメントが紐付けられる記事の取得
+     * コメントが紐付けられる記事の取得
      *
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function comments()
+    public function article()
     {
-        return $this->hasMany(Comment::class);
+        return $this->belongsTo(Article::class, 'article_id');
     }
+
 }

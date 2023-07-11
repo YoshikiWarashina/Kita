@@ -53,17 +53,13 @@
                     <h4 class="text-secondary">コメント</h4>
                 </div>
                 <div class="border-dark border-top"></div>
-                <div class="py-3 px-2">
-                    <div class="border-bottom border-dark">
-                        <p class="text-secondary mx-2">hogehogeが2021年5月21日に投稿</p>
-                        <p class="text-secondary mx-2">コメントをここにバーーーーーーーーーー<br>
-                            ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー</p>
-                    </div>
-                    <div class="py-3 px-2 border-bottom border-dark">
-                        <p class="text-secondary mx-2">hogehogeが2021年5月21日に投稿</p>
-                        <p class="text-secondary mx-2">コメントをここにバーーーーーーーーーー<br>
-                            ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー</p>
-                    </div>
+                <div class="px-2">
+{{--                    @foreach ($article->comments as $comment)--}}
+{{--                    <div class="border-bottom border-dark">--}}
+{{--                        <p class="text-secondary mx-2 mt-3">{{ $comment->member->name }}が{{ $comment->created_at->format('Y年m月d日') }}に投稿</p>--}}
+{{--                        <p class="text-secondary mx-2">{!! nl2br(e($comment->contents)) !!}</p>--}}
+{{--                    </div>--}}
+{{--                    @endforeach--}}
                 </div>
 
                 <div class="row align-items-end pb-2">
