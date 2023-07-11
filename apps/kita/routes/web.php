@@ -58,8 +58,3 @@ Route::group(['prefix' => 'articles'], function () {
     Route::get('/', [ArticleController::class, 'index']);
     Route::get('/', [ArticleController::class, 'search'])->name('article.search');
 });
-
-
-
-
-

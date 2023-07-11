@@ -7,7 +7,7 @@
                 <h1>管理者管理 - 新規登録</h1>
             </div>
         </div>
-        
+
         @if($errors->any())
             <div class="alert alert-danger">
                 <ul>
