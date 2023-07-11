@@ -60,7 +60,7 @@ class ArticleController extends Controller
      */
     public function show(ArticleService $articleService, int $id)
     {
-        $article = $articleService->getArticleById($id);
+        $article = $articleService->getArticleWithCommentsById($id);
 
         return view('articles.detail', compact('article'));
     }
