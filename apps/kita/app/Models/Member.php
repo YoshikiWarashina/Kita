@@ -51,7 +51,7 @@ class Member extends Authenticatable
 
 
     /**
-     * 記事との関係性.
+     * 記事の取得
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */

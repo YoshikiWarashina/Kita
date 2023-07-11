@@ -19,7 +19,7 @@ class ArticleFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->realText(10),
+            'title' => $this->faker->sentence(),
             'contents' => $this->faker->realText(100),
             'member_id' => $this->faker->numberBetween(1,10),
         ];
