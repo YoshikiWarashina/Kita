@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('contents');
+            $table->mediumText('contents');
             $table->unsignedBigInteger('member_id');
             $table->foreign('member_id')->references('id')->on('members');
             $table->timestamp('created_at')->nullable();
