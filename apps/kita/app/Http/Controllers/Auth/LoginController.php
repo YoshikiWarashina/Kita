@@ -20,14 +20,14 @@ class LoginController extends Controller
     |
     */
 
+    use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    use AuthenticatesUsers;
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/articles';
 
     /**
      * Create a new controller instance.

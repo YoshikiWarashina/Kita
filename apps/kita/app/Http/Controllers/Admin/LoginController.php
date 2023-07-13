@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -36,10 +36,26 @@ class LoginController extends Controller
     {
         $this->middleware('guest:admin')->except('logout');
     }
+
+
+    /**
+     * Get the guard instance for the admin authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\Guard
+     */
+
     protected function guard()                              //追記
     {                                                       //追記
         return Auth::guard('admin');                        //追記
     }                                                       //追記
+
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
 
     public function logout(Request $request)                //追記
     {                                                       //追記
