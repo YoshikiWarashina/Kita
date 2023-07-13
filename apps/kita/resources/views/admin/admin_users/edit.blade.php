@@ -1,51 +1,66 @@
 @extends('admin.header')
 
 @section('content')
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="container">
         <div class="row pt-5">
             <div class="col">
                 <h1>管理者管理 - 編集</h1>
             </div>
         </div>
+        @if(session('message'))
+            <div class="alert alert-success">
+                <h5 class="fw-bolder">Success!</h5>
+                {{ session('message') }}
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-9 col-12">
                 <div class="border rounded bg-white py-3">
                     <div class="col px-4 my-4">
                         <p class="mb-2">ID</p>
-                        {{ Form::text('sirName', null, ['class' => 'form-control', 'disabled', 'id' => 'sirName']) }}
+                        {{ Form::text('id', $admin->id, ['class' => 'form-control', 'disabled', 'id' => 'id']) }}
                     </div>
                     <div class="col px-4 my-4">
                         <div class="row">
                             <p class="mb-2 col-auto">姓</p>
                             <p class="mb-2 col-auto rounded bg-danger text-white">必須</p>
                         </div>
-                        {{ Form::text('sirName', null, ['class' => 'form-control', 'id' => 'sirName']) }}
+                        {{ Form::text('last_name', $admin->last_name, ['class' => 'form-control', 'id' => 'last_name']) }}
                     </div>
                     <div class="col px-4 my-4">
                         <div class="row">
                             <p class="mb-2 col-auto">名</p>
                             <p class="mb-2 col-auto rounded bg-danger text-white">必須</p>
                         </div>
-                        {{ Form::text('sirName', null, ['class' => 'form-control', 'id' => 'sirName']) }}
+                        {{ Form::text('first_name', $admin->first_name, ['class' => 'form-control', 'id' => 'first_name']) }}
                     </div>
                     <div class="col px-4 my-4">
                         <div class="row">
                             <p class="mb-2 col-auto ">メールアドレス</p>
                             <p class="mb-2 col-auto rounded bg-danger text-white">必須</p>
                         </div>
-                        {{ Form::text('sirName', null, ['class' => 'form-control', 'id' => 'sirName']) }}
+                        {{ Form::email('email', $admin->email, ['class' => 'form-control', 'id' => 'email']) }}
                     </div>
                     <div class="col px-4 my-4">
                         <p class="mb-2">パスワード</p>
-                        <p>・・・・</p>
+                        <p>{{ $admin->password }}</p>
                     </div>
                     <div class="col px-4 my-4">
                         <p class="mb-2">更新日時</p>
-                        {{ Form::text('sirName', null, ['class' => 'form-control', 'disabled', 'id' => 'sirName']) }}
+                        {{ Form::text('updated_at', $admin->updated_at, ['class' => 'form-control', 'disabled', 'id' => 'update_at']) }}
                     </div>
                     <div class="col px-4 my-4">
                         <p class="mb-2">登録日時</p>
-                        {{ Form::text('sirName', null, ['class' => 'form-control', 'disabled', 'id' => 'sirName']) }}
+                        {{ Form::text('created_at', $admin->created_at, ['class' => 'form-control', 'disabled', 'id' => 'created_at']) }}
                     </div>
                 </div>
             </div>

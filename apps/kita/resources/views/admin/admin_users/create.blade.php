@@ -7,8 +7,18 @@
                 <h1>管理者管理 - 新規登録</h1>
             </div>
         </div>
-{{--        ここのルーティングのせいでエラーが出て表示できなかったので一旦コメントアウト--}}
-{{--        {!! Form::open(['route' => 'admin_users.store', 'method' => 'POST']) !!}--}}
+        
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        {!! Form::open(['route' => 'admin_users.store', 'method' => 'POST']) !!}
         <div class="row">
             <div class="col-md-9 col-12">
                 <div class="border rounded bg-white py-3">
@@ -45,7 +55,7 @@
                             <p class="mb-2 col-auto">パスワード（確認）</p>
                             <p class="mb-2 col-auto rounded bg-danger text-white">必須</p>
                         </div>
-                        {{ Form::password('password_check', ['class' => 'form-control', 'id' => 'password_check']) }}
+                        {{ Form::password('password_confirmation', ['class' => 'form-control', 'id' => 'password_confirmation']) }}
                     </div>
                 </div>
             </div>

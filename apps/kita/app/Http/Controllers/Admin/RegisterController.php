@@ -27,7 +27,6 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/admin/admin_users';
 
-
     /**
      * Create a new controller instance.
      *
@@ -39,16 +38,17 @@ class RegisterController extends Controller
     }
 
 
+
     /**
      * Get the guard instance for the admin authentication.
      *
      * @return \Illuminate\Contracts\Auth\Guard
      */
+
     protected function guard()
     {
         return Auth::guard('admin');
     }
-
 
     /**
      * Get a validator for an incoming registration request.
@@ -65,7 +65,6 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
-
 
     /**
      * Create a new user instance after a valid registration.
