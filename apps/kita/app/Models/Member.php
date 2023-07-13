@@ -46,5 +46,18 @@ class Member extends Authenticatable
     *
     * @var string
          */
-        protected $table = 'members';
+    protected $table = 'members';
+
+
+
+    /**
+     * 記事の取得
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
 }
