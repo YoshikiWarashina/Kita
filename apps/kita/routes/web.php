@@ -53,12 +53,15 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
 
-//articles関連
+//articles関連 middlewareなし
 Route::group(['prefix' => 'articles'], function () {
     Route::get('/', [ArticleController::class, 'index']);
     Route::get('/', [ArticleController::class, 'search'])->name('article.search');
 
-    Route::get('/create', [ArticleController::class, 'create'])->name('article.create')->middleware('auth:members');
-    Route::post('/', [ArticleController::class, 'store'])->name('article.store')->middleware('auth:members');
-    Route::get('/{article_id}/edit', [ArticleController::class, 'edit'])->name('article.edit')->middleware('auth:members');
+});
+
+Route::group(['prefix' => 'articles', 'middleware' => ['auth:members']], function () {
+    Route::get('/create', [ArticleController::class, 'create'])->name('article.create');
+    Route::post('/', [ArticleController::class, 'store'])->name('article.store');
+    Route::get('/{article_id}/edit', [ArticleController::class, 'edit'])->name('article.edit');
 });
