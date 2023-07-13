@@ -2,6 +2,15 @@
 
 @section('content')
     <div class="container my-5 py-2">
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         @if(session('message'))
             <div class="alert alert-success">
                 <h5 class="fw-bolder">Success!</h5>
@@ -62,20 +71,23 @@
                     @endforeach
                 </div>
 
+                {!! Form::open(['route' => ['comment.store', $article->id]]) !!}
                 <div class="row align-items-end pb-2">
                     <div class="col-md-9 col-12">
                         <div class="py-2 mx-2">
-                            {{ Form::textarea('last_name', null, ['class' => 'form-control border-success', 'id' => 'last_name', 'placeholder' => 'コメントを入力']) }}
+                            {{ Form::hidden('article_id', $article->id) }}
+                            {{ Form::textarea('comment', null, ['class' => 'form-control border-success', 'id' => 'comment', 'placeholder' => 'コメントを入力']) }}
                         </div>
                     </div>
                     <div class="col-md-3 col-12">
                         <div class="py-2 px-2">
                             <div class="text-center">
-                                {{ Form::submit('コメント', ['class' => 'btn border-success text-success rounded-pill col-12']) }}
+                                {{ Form::submit('コメント', ['class' => 'btn btn-outline-success rounded-pill col-12']) }}
                             </div>
                         </div>
                     </div>
                 </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>

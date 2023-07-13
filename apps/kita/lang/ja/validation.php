@@ -162,6 +162,7 @@ return [
         'search' => '検索ワード',
         'title' => 'タイトル',
         'contents' => '内容',
+        'comment' => 'コメント',
     ],
 
 ];
