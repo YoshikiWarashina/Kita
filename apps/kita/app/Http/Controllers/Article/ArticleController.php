@@ -89,7 +89,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * keywordを受け取り、返ってきた検索結果をview渡す。
+     * search(keyword)を受け取り、返ってきた検索結果をview渡す。
      *
      * @param  ArticleService  $articleService
      * @param  SearchRequest  $searchRequest
@@ -97,7 +97,7 @@ class ArticleController extends Controller
      */
     public function search(ArticleService $articleService, SearchRequest $searchRequest)
     {
-        $search = $searchRequest->input('search');
+        $search = htmlspecialchars($searchRequest->input('search'));
         $articles = $articleService->getSearchedArticles($search);
 
         return view('articles.articles', compact('articles'));
