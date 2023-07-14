@@ -9,6 +9,7 @@ use App\Models\Article;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
 use App\Http\Requests\Article\CreateRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -90,6 +91,10 @@ class ArticleController extends Controller
      */
     public function update(ArticleService $articleService, UpdateRequest $request, int $id)
     {
+        if (!$articleService->isUserArticle($id, Auth::id())) {
+            return redirect('articles/'.$id)->withErrors(['error' => '他のユーザーの記事は編集できません']);
+        }
+
         $validatedData = $request->validated();
 
         $article = $articleService->saveUpdatedArticle($id, $validatedData);

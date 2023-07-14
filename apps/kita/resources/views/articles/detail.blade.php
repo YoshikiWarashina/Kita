@@ -2,16 +2,27 @@
 
 @section('content')
     <div class="container my-5 py-2">
-        @if(session('message'))
-            <div class="alert alert-success">
-                <h5 class="fw-bolder">Success!</h5>
-                {{ session('message') }}
-            </div>
-        @endif
         <div class="row justify-content-center align-items-center">
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if(session('message'))
+                <div class="alert alert-success">
+                    <h5 class="fw-bolder">Success!</h5>
+                    {{ session('message') }}
+                </div>
+            @endif
             <div class="col-md-8 col-12 bg-white rounded">
                 <div class="container">
                     <div class="row justify-content-end">
+
+                        @if($article->member_id === auth()->id())
                         <div class="col-auto mt-4 text-end">
                             <button type="submit" class="btn btn-danger btn-sm rounded-pill">
                                 {{ __('削除する') }}
@@ -22,6 +33,8 @@
                             {!! Form::submit('更新する', ['class' => 'btn btn-success btn-sm rounded-pill']) !!}
                             {!! Form::close() !!}
                         </div>
+                        @endif
+
                     </div>
                     <div class = "py-3 text-secondary">
                         <h3>{{ $article->title }}</h3>

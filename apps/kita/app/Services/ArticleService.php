@@ -70,6 +70,20 @@ class ArticleService{
     }
 
     /**
+     * 認証ユーザーと記事が一致している場合取得
+     *
+     * @param int $article_id
+     * @param int $userId
+     * @return Article
+     */
+
+    public function isUserArticle(int $articleId, int $userId)
+    {
+        $article = Article::where('id', $articleId)->where('member_id', $userId)->exists();
+        return $article;
+    }
+
+    /**
      * 更新する記事を保存。
      *
      * @param int $articleId;
