@@ -99,7 +99,10 @@ class ArticleService{
      **/
     public function getArticleWithCommentsById(int $article_id)
     {
-        $article = Article::with('comments')->find($article_id);
+        $article = Article::with(['comments' => function ($query) {
+            $query->orderBy('updated_at', 'desc');
+        }])
+            ->find($article_id);
 
         return $article;
     }
