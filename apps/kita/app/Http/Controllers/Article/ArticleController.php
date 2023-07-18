@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Article;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Article\SearchRequest;
 use App\Http\Requests\Article\UpdateRequest;
+use App\Http\Requests\Article\DeleteRequest;
 use App\Models\Article;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
 use App\Http\Requests\Article\CreateRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -90,6 +92,10 @@ class ArticleController extends Controller
      */
     public function update(ArticleService $articleService, UpdateRequest $request, int $id)
     {
+        if (!$articleService->isUserArticle($id, Auth::id())) {
+            return redirect('articles/'.$id)->withErrors(['error' => '他のユーザーの記事は編集できません']);
+        }
+
         $validatedData = $request->validated();
 
         $article = $articleService->saveUpdatedArticle($id, $validatedData);
@@ -101,12 +107,18 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param ArticleService $articleService
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(ArticleService $articleService, int $id)
     {
-        //
+        if (!$articleService->isUserArticle($id, Auth::id())) {
+            return redirect('articles/'.$id)->withErrors(['error' => '他のユーザーの記事は削除できません']);
+        }
+        $articleService->deleteArticle($id);
+
+        return redirect('articles')->with('message', '記事を削除しました');
     }
 
     /**

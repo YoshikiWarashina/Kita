@@ -21,7 +21,7 @@ use App\Http\Controllers\Comment\CommentController;
 
 //デザインチェック用
 Route::get('/', function () {
-    return view('articles.detail');
+    return view('articles.delete');
 });
 
 //done page 1,2,3,4,5,6,7,8
@@ -68,6 +68,7 @@ Route::group(['prefix' => 'articles'], function () {
     //編集ページ投稿後に遷移するルートを再利用
     //編集実行
     Route::put('{article_id}/edit', [ArticleController::class, 'update'])->name('article.update')->middleware('auth:members');
+    Route::delete('/{article_id}', [ArticleController::class, 'destroy'])->name('article.destroy')->middleware('auth:members');
 });
 
 //コメント投稿
