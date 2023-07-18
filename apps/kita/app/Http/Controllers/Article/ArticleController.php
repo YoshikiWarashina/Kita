@@ -97,8 +97,11 @@ class ArticleController extends Controller
      */
     public function search(ArticleService $articleService, SearchRequest $searchRequest)
     {
-        $search = htmlspecialchars($searchRequest->input('search'));
-        $articles = $articleService->getSearchedArticles($search);
+        $search = $searchRequest->input('search');
+
+        $escapedKeyword = '%' . addcslashes($search, '%_\\') . '%';
+
+        $articles = $articleService->getSearchedArticles($escapedKeyword);
 
         return view('articles.articles', compact('articles'));
     }
