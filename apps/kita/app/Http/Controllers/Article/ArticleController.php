@@ -89,7 +89,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * search(keyword)を受け取り、返ってきた検索結果をview渡す。
+     * search(keyword)を受け取り、返ってきた検索結果をview渡す
      *
      * @param  ArticleService  $articleService
      * @param  SearchRequest  $searchRequest
