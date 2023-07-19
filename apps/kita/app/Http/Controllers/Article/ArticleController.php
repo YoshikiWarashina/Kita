@@ -51,7 +51,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 記事詳細ページ表示
      *
      * @param  \App\Services\ArticleService  $articleService
      * @param  int  $id
