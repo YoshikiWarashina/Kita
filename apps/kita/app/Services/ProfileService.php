@@ -2,18 +2,27 @@
 
 namespace App\Services;
 
-use App\Models\Member;
+use App\Http\Requests\Profile\UpdateRequest;
+use Illuminate\Support\Facades\Auth;
+
 class ProfileService
 {
     /**
-     * 現在のユーザー情報を取得
+     * プロフィール編集機能（ユーザー名、メールアドレス）
      *
-     * @param int $memberId
-     * @return Member
+     * @param array $data
+     * @return \Illuminate\Contracts\Auth\Authenticatable
      */
-    public function getMemberById(int $memberId)
+    public function updateMemberProfile(array $data)
     {
-        $member = Member::find($memberId);
+        $member = Auth::user();
+
+        $member->update([
+            'name' => $data['name'],
+            'email' => $data['email'],
+        ]);
+
+        $member->save();
 
         return $member;
     }

@@ -77,3 +77,5 @@ Route::post('/{article_id}/edit',[CommentController::class, 'store'])->name('com
 
 //profile編集
 Route::get('/profile',[ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth:members');
+
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth:members');

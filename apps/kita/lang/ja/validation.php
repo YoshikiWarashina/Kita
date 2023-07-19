@@ -163,6 +163,7 @@ return [
         'title' => 'タイトル',
         'contents' => '内容',
         'comment' => 'コメント',
+        'name' => 'ユーザー名',
     ],
 
 ];
