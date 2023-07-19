@@ -84,13 +84,13 @@ class ArticleService{
     }
 
     /**
-     * 更新する記事を保存。
+     * 更新する記事を保存
      *
      * @param int $articleId;
      * @param array $data
      * @return Article
      */
-    public function saveUpdatedArticle(int $articleId, array $data)
+    public function updateArticle(int $articleId, array $data)
     {
         $article = $this->getArticleById($articleId);
 

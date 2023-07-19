@@ -97,7 +97,7 @@ class ArticleController extends Controller
 
         $validatedData = $request->validated();
 
-        $article = $articleService->saveUpdatedArticle($id, $validatedData);
+        $article = $articleService->updateArticle($id, $validatedData);
 
         $articleId = $article->id;
         return redirect('articles/'.$articleId.'/edit')->with('message', '記事編集が完了しました')->with('article', $article);
