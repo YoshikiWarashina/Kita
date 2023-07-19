@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\Comment\CommentController;
+use App\Http\Controllers\Auth\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,3 +74,6 @@ Route::group(['prefix' => 'articles'], function () {
 
 //コメント投稿
 Route::post('/{article_id}/edit',[CommentController::class, 'store'])->name('comment.store')->middleware('auth:members');
+
+//profile編集
+Route::get('/profile',[ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth:members');
