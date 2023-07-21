@@ -22,13 +22,17 @@
                         </button>
                         <div class="justify-content-end collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav pl-md-4 my-md-0 mt-3 mb-lg-0">
-                                <div class="input-group mx-md-3 mx-2">
-                                    <input type="text" class="form-control" placeholder="Search for something">
-                                    <button class="btn btn-success px-4" type="button">検索</button>
+                                <div class="input-group mx-md-4 mx-2">
+                                    {!! Form::open(['route' => 'article.search', 'method' => 'GET', 'class' => 'd-flex align-items-center']) !!}
+                                    {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Search for something']) !!}
+                                    {!! Form::submit('検索', ['class' => 'btn btn-success col-auto']) !!}
+                                    {!! Form::close() !!}
                                 </div>
                             </ul>
                             <div class="mx-2">
-                                <button class="btn btn-outline-success my-md-0 my-3" type="button">記事を作成する</button>
+                                {!! Form::open(['route' => 'article.create', 'method' => 'GET']) !!}
+                                {!! Form::submit('記事を作成する', ['class' => 'btn btn-outline-success my-md-0 my-3']) !!}
+                                {!! Form::close() !!}
                             </div>
                             <div class="mx-2">
                                 <div class="dropdown">
@@ -40,7 +44,12 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         <li><a class="dropdown-item text-primary" href="#">プロフィール編集</a></li>
-                                        <li><a class="dropdown-item text-primary" href="#">ログアウト</a></li>
+                                        <li>
+                                            <form method="POST" action="{{ route('logout') }}">
+                                                @csrf
+                                                <button type="submit" class="dropdown-item text-primary">ログアウト</button>
+                                            </form>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

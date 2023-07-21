@@ -34,7 +34,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:admin');
+        $this->middleware('guest:admins');
     }
 
 
@@ -47,7 +47,7 @@ class RegisterController extends Controller
 
     protected function guard()
     {
-        return Auth::guard('admin');
+        return Auth::guard('admins');
     }
 
     /**

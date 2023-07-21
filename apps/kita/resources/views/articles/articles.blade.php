@@ -3,12 +3,23 @@
 @section('content')
     <div class="container my-5">
         <div class="row justify-content-center align-items-center">
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-8 col-12 bg-white rounded">
                 <div class="container">
                     <div class = "py-3 text-secondary">
                         @foreach ($articles as $article)
                             <p>{{ $article->member->name }}が{{ $article->created_at->format('Y年m月d日') }}に投稿</p>
-                            <h3>{{ $article->title }}</h3>
+                            <a href="{{ route('article.show', $article->id) }}" class="text-decoration-none">
+                                <h3 class="text-secondary">{{ $article->title }}</h3>
+                            </a>
                             <div class="row mb-2 border-bottom border-dark">
                                 <div class="col-auto">
                                     <p class="text-white bg-primary px-2 rounded">javascript</p>
