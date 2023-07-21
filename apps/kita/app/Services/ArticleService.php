@@ -36,7 +36,7 @@ class ArticleService{
     }
 
     /**
-     * 新しい記事を保存。
+     * 新しい記事を保存
      *
      * @param array $data
      * @return Article
