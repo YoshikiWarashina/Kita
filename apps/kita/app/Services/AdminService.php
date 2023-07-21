@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 class AdminService{
 
     /**
-     * 管理者ユーザーをページネーション込みで取得。
+     * 管理者ユーザーをページネーション込みで取得
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
@@ -20,7 +20,7 @@ class AdminService{
     }
 
     /**
-     * 新しい管理者を保存。
+     * 新しい管理者を保存
      *
      * @param array $data
      * @return Admin

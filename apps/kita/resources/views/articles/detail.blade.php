@@ -2,22 +2,22 @@
 
 @section('content')
     <div class="container my-5 py-2">
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if(session('message'))
+            <div class="alert alert-success">
+                <h5 class="fw-bolder">Success!</h5>
+                {{ session('message') }}
+            </div>
+        @endif
         <div class="row justify-content-center align-items-center">
-            @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            @if(session('message'))
-                <div class="alert alert-success">
-                    <h5 class="fw-bolder">Success!</h5>
-                    {{ session('message') }}
-                </div>
-            @endif
             <div class="col-md-8 col-12 bg-white rounded">
                 <div class="container">
                     <div class="row justify-content-end">
