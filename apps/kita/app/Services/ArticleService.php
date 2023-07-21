@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class ArticleService{
 
     /**
-     * 記事一覧をページネーション込みで取得.
+     * 記事一覧をページネーション込みで取得
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
@@ -22,16 +22,18 @@ class ArticleService{
     }
 
     /**
-     * 記事の部分一致検索結果一覧をページネーション込みで取得.
+     * 記事の部分一致検索結果一覧をページネーション込みで取得
      *
+     * @param string $keyword
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getSearchedArticles($keyword)
+    public function getSearchedArticles(string $keyword)
     {
         $articlesPerPage = 10;
 
         return Article::where('title', 'like', "%$keyword%")
             ->orWhere('contents', 'like', "%$keyword%")
+            ->orderBy('updated_at', 'desc')
             ->paginate($articlesPerPage);
     }
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Article;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Article\SearchRequest;
 use App\Http\Requests\Article\UpdateRequest;
-use App\Models\Article;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
 use App\Http\Requests\Article\CreateRequest;
@@ -115,7 +114,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * keywordを受け取り、返ってきた検索結果をview渡す。
+     * search(keyword)を受け取り、返ってきた検索結果をview渡す
      *
      * @param  ArticleService  $articleService
      * @param  SearchRequest  $searchRequest
@@ -124,7 +123,10 @@ class ArticleController extends Controller
     public function search(ArticleService $articleService, SearchRequest $searchRequest)
     {
         $search = $searchRequest->input('search');
-        $articles = $articleService->getSearchedArticles($search);
+
+        $escapedKeyword = '%' . addcslashes($search, '%_\\') . '%';
+
+        $articles = $articleService->getSearchedArticles($escapedKeyword);
 
         return view('articles.articles', compact('articles'));
     }
