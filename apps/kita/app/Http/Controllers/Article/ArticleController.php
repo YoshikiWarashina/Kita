@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Article;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Article\SearchRequest;
+use App\Http\Requests\Article\UpdateRequest;
 use App\Models\Article;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
 use App\Http\Requests\Article\CreateRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -59,7 +61,7 @@ class ArticleController extends Controller
      */
     public function show(ArticleService $articleService, int $id)
     {
-        $article = $articleService->getArticleById($id);
+        $article = $articleService->getArticleWithCommentsById($id);
 
         return view('articles.detail', compact('article'));
     }
@@ -82,13 +84,23 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Services\ArticleService  $articleService
+     * @param  \App\Http\Requests\Article\UpdateRequest $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(ArticleService $articleService, UpdateRequest $request, int $id)
     {
-        //
+        if (!$articleService->isUserArticle($id, Auth::id())) {
+            return redirect('articles/'.$id)->withErrors(['error' => '他のユーザーの記事は編集できません']);
+        }
+
+        $validatedData = $request->validated();
+
+        $article = $articleService->updateArticle($id, $validatedData);
+
+        $articleId = $article->id;
+        return redirect('articles/'.$articleId.'/edit')->with('message', '記事編集が完了しました')->with('article', $article);
     }
 
     /**

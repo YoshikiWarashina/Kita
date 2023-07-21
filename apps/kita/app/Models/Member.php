@@ -60,4 +60,15 @@ class Member extends Authenticatable
         return $this->hasMany(Article::class);
     }
 
+
+    /**
+     * メンバーが保持するコメントの取得
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 }
