@@ -17,7 +17,9 @@
                     <div class = "py-3 text-secondary">
                         @foreach ($articles as $article)
                             <p>{{ $article->member->name }}が{{ $article->created_at->format('Y年m月d日') }}に投稿</p>
-                            <h3>{{ $article->title }}</h3>
+                            <a href="{{ route('article.show', $article->id) }}" class="text-decoration-none">
+                                <h3 class="text-secondary">{{ $article->title }}</h3>
+                            </a>
                             <div class="row mb-2 border-bottom border-dark">
                                 <div class="col-auto">
                                     <p class="text-white bg-primary px-2 rounded">javascript</p>

@@ -1,15 +1,6 @@
 @extends('user.header')
 
 @section('content')
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="container my-5">
         @if(session('message'))
             <div class="alert alert-success">
@@ -17,8 +8,18 @@
                 {{ session('message') }}
             </div>
         @endif
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="row justify-content-center align-items-center">
             <div class="col-md-8 col-12 bg-white rounded">
+                {!! Form::open(['route' => ['article.update', $article->id], 'method' => 'PUT']) !!}
                 <div class = "container">
                     <div class="px-3 py-4">
                         <div class="pb-0">
@@ -53,6 +54,7 @@
                         </div>
                     </div>
                 </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
