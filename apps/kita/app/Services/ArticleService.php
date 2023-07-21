@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Article;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 class ArticleService{
 
     /**
@@ -99,6 +100,23 @@ class ArticleService{
             'title' => $data['title'],
             'contents' => $data['contents'],
         ]);
+
+        return $article;
+    }
+
+    /**
+     * 記事とコメントを同時取得
+     *
+     * @param int $article_id
+     * @return \Illuminate\Database\Eloquent\Model
+     *
+     **/
+    public function getArticleWithCommentsById(int $article_id)
+    {
+        $article = Article::with(['comments' => function ($query) {
+            $query->orderBy('updated_at', 'desc');
+        }])
+            ->find($article_id);
 
         return $article;
     }
