@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class CommentService
 {
     /**
-     * 新しいコメントを保存。
+     * 新しいコメントを保存
      *
      * @param array $data
      * @return Comment

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class ArticleService{
 
     /**
-     * 記事一覧をページネーション込みで取得.
+     * 記事一覧をページネーション込みで取得
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
@@ -22,21 +22,23 @@ class ArticleService{
     }
 
     /**
-     * 記事の部分一致検索結果一覧をページネーション込みで取得.
+     * 記事の部分一致検索結果一覧をページネーション込みで取得
      *
+     * @param string $keyword
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getSearchedArticles($keyword)
+    public function getSearchedArticles(string $keyword)
     {
         $articlesPerPage = 10;
 
         return Article::where('title', 'like', "%$keyword%")
             ->orWhere('contents', 'like', "%$keyword%")
+            ->orderBy('updated_at', 'desc')
             ->paginate($articlesPerPage);
     }
 
     /**
-     * 新しい記事を保存。
+     * 新しい記事を保存
      *
      * @param array $data
      * @return Article
@@ -85,13 +87,13 @@ class ArticleService{
     }
 
     /**
-     * 更新する記事を保存。
+     * 更新する記事を保存
      *
      * @param int $articleId;
      * @param array $data
      * @return Article
      */
-    public function saveUpdatedArticle(int $articleId, array $data)
+    public function updateArticle(int $articleId, array $data)
     {
         $article = $this->getArticleById($articleId);
 
@@ -125,7 +127,10 @@ class ArticleService{
      **/
     public function getArticleWithCommentsById(int $article_id)
     {
-        $article = Article::with('comments')->find($article_id);
+        $article = Article::with(['comments' => function ($query) {
+            $query->orderBy('updated_at', 'desc');
+        }])
+            ->find($article_id);
 
         return $article;
     }

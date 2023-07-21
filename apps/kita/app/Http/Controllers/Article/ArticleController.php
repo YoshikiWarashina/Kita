@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Article\SearchRequest;
 use App\Http\Requests\Article\UpdateRequest;
 use App\Http\Requests\Article\DeleteRequest;
-use App\Models\Article;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
 use App\Http\Requests\Article\CreateRequest;
@@ -54,7 +53,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 記事詳細ページ表示
      *
      * @param  \App\Services\ArticleService  $articleService
      * @param  int  $id
@@ -98,7 +97,7 @@ class ArticleController extends Controller
 
         $validatedData = $request->validated();
 
-        $article = $articleService->saveUpdatedArticle($id, $validatedData);
+        $article = $articleService->updateArticle($id, $validatedData);
 
         $articleId = $article->id;
         return redirect('articles/'.$articleId.'/edit')->with('message', '記事編集が完了しました')->with('article', $article);
@@ -122,7 +121,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * keywordを受け取り、返ってきた検索結果をview渡す。
+     * search(keyword)を受け取り、返ってきた検索結果をview渡す
      *
      * @param  ArticleService  $articleService
      * @param  SearchRequest  $searchRequest
@@ -131,7 +130,10 @@ class ArticleController extends Controller
     public function search(ArticleService $articleService, SearchRequest $searchRequest)
     {
         $search = $searchRequest->input('search');
-        $articles = $articleService->getSearchedArticles($search);
+
+        $escapedKeyword = '%' . addcslashes($search, '%_\\') . '%';
+
+        $articles = $articleService->getSearchedArticles($escapedKeyword);
 
         return view('articles.articles', compact('articles'));
     }
