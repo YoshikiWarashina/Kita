@@ -71,13 +71,27 @@ class ArticleService{
     }
 
     /**
-     * 更新する記事を保存。
+     * 認証ユーザーと記事が一致している場合取得
+     *
+     * @param int $article_id
+     * @param int $userId
+     * @return Article
+     */
+
+    public function isUserArticle(int $articleId, int $userId)
+    {
+        $article = Article::where('id', $articleId)->where('member_id', $userId)->exists();
+        return $article;
+    }
+
+    /**
+     * 更新する記事を保存
      *
      * @param int $articleId;
      * @param array $data
      * @return Article
      */
-    public function saveUpdatedArticle(int $articleId, array $data)
+    public function updateArticle(int $articleId, array $data)
     {
         $article = $this->getArticleById($articleId);
 

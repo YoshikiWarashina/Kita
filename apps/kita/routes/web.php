@@ -54,20 +54,27 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
 
+
+//members middleware
+Route::group(['prefix' => 'articles', 'middleware' => ['auth:members']], function () {
+    Route::get('/create', [ArticleController::class, 'create'])->name('article.create');
+    Route::post('/', [ArticleController::class, 'store'])->name('article.store');
+    Route::get('/{article_id}/edit', [ArticleController::class, 'edit'])->name('article.edit');
+
+    //編集ページ投稿後に遷移するルートを再利用
+    //編集実行
+    Route::put('{article_id}/edit', [ArticleController::class, 'update'])->name('article.update');
+});
+
+
 //articles関連
 Route::group(['prefix' => 'articles'], function () {
     Route::get('/', [ArticleController::class, 'index']);
     Route::get('/', [ArticleController::class, 'search'])->name('article.search');
 
-    Route::get('/create', [ArticleController::class, 'create'])->name('article.create')->middleware('auth:members');
-    Route::post('/', [ArticleController::class, 'store'])->name('article.store')->middleware('auth:members');
     //詳細表示
     Route::get('/{article_id}', [ArticleController::class, 'show'])->name('article.show');
-    Route::get('/{article_id}/edit', [ArticleController::class, 'edit'])->name('article.edit')->middleware('auth:members');
 
-    //編集ページ投稿後に遷移するルートを再利用
-    //編集実行
-    Route::put('{article_id}/edit', [ArticleController::class, 'update'])->name('article.update')->middleware('auth:members');
 });
 
 //コメント投稿

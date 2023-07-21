@@ -21,6 +21,8 @@
             <div class="col-md-8 col-12 bg-white rounded">
                 <div class="container">
                     <div class="row justify-content-end">
+
+                        @if($article->member_id === auth()->id())
                         <div class="col-auto mt-4 text-end">
                             <button type="submit" class="btn btn-danger btn-sm rounded-pill">
                                 {{ __('削除する') }}
@@ -31,6 +33,8 @@
                             {!! Form::submit('更新する', ['class' => 'btn btn-success btn-sm rounded-pill']) !!}
                             {!! Form::close() !!}
                         </div>
+                        @endif
+
                     </div>
                     <div class = "py-3 text-secondary">
                         <h3>{{ $article->title }}</h3>
