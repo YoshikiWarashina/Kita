@@ -30,7 +30,9 @@
                                 </div>
                             </ul>
                             <div class="mx-2">
-                                <button class="btn btn-outline-success my-md-0 my-3" type="button">記事を作成する</button>
+                                {!! Form::open(['route' => 'article.create', 'method' => 'GET']) !!}
+                                {!! Form::submit('記事を作成する', ['class' => 'btn btn-outline-success my-md-0 my-3']) !!}
+                                {!! Form::close() !!}
                             </div>
                             <div class="mx-2">
                                 <div class="dropdown">
@@ -42,7 +44,12 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         <li><a class="dropdown-item text-primary" href="#">プロフィール編集</a></li>
-                                        <li><a class="dropdown-item text-primary" href="#">ログアウト</a></li>
+                                        <li>
+                                            <form method="POST" action="{{ route('logout') }}">
+                                                @csrf
+                                                <button type="submit" class="dropdown-item text-primary">ログアウト</button>
+                                            </form>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

@@ -30,9 +30,12 @@
                             <a class="nav-link text-light mx-3" href="#">タグ管理</a>
                         </li>
                     </ul>
-                    <div class="d-flex ml-auto">
-                        <button class="btn btn-outline-light px-4" type="submit">ログアウト</button>
-                    </div>
+                    <li class="d-flex ml-auto mx-3">
+                        <form method="POST" action="{{ route('admin/logout') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-light px-4">ログアウト</button>
+                        </form>
+                    </li>
                 </div>
             </div>
         </nav>
