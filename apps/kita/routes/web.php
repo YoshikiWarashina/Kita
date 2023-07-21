@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Article\ArticleController;
+use App\Http\Controllers\Comment\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,3 +69,6 @@ Route::group(['prefix' => 'articles'], function () {
     //編集実行
     Route::put('{article_id}/edit', [ArticleController::class, 'update'])->name('article.update')->middleware('auth:members');
 });
+
+//コメント投稿
+Route::post('/{article_id}/edit',[CommentController::class, 'store'])->name('comment.store')->middleware('auth:members');
