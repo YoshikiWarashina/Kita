@@ -52,7 +52,7 @@
                     </div>
                     <div class="col px-4 my-4">
                         <p class="mb-2">パスワード</p>
-                        <p>{{ $admin->password }}</p>
+                        <p>・・・・</p>
                     </div>
                     <div class="col px-4 my-4">
                         <p class="mb-2">更新日時</p>
@@ -70,7 +70,9 @@
                         {{ Form::submit('更新する', ['class' => 'btn btn-primary col-12']) }}
                     </div>
                     <div class="col-md-12 col-12 text-center py-2">
-                        {{ Form::submit('削除する', ['class' => 'btn btn-danger col-12']) }}
+                        {!! Form::open(['route' => ['admin_users.destroy', $admin->id],'method' => 'DELETE', 'onsubmit' => "return confirm('一度削除すると元に戻せません。よろしいですか？');"]) !!}
+                        {!! Form::submit('削除する', ['class' => 'btn btn-danger col-12']) !!}
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>

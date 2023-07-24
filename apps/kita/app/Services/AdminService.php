@@ -42,5 +42,28 @@ class AdminService{
         return $admin;
     }
 
+    /**
+     * idをベースにadminを取得
+     *
+     * @param int $id
+     * @return Admin
+     */
+    public function getAdminById(int $id)
+    {
+        $admin = Admin::find($id);
 
+        return $admin;
+    }
+
+    /**
+     * adminを削除
+     *
+     * @param int $id;
+     * @return void
+     */
+    public function deleteAdmin(int $id)
+    {
+        $admin = $this->getAdminById($id);
+        $admin->delete();
+    }
 }

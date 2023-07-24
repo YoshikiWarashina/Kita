@@ -15,11 +15,11 @@
                     <div class="row">
                         <div class="col-md-4 col-12">
                             <p class="mb-2">姓</p>
-                            {{ Form::text('sirName', null, ['class' => 'form-control', 'id' => 'sirName']) }}
+                            {{ Form::text('last_name', null, ['class' => 'form-control', 'id' => 'last_name']) }}
                         </div>
                         <div class="col-md-4 col-12">
                             <p class="mb-2">名</p>
-                            {{ Form::text('givenName', null, ['class' => 'form-control', 'id' =>'givenName']) }}
+                            {{ Form::text('first_name', null, ['class' => 'form-control', 'id' =>'first_name']) }}
                         </div>
                         <div class="col-md-4 col-12">
                             <p class="mb-2">メールアドレス</p>
@@ -87,7 +87,9 @@
                                     <td>{{ $admin->updated_at }}</td>
                                     <td>{{ $admin->created_at }}</td>
                                     <td class="text-center">
-                                        {{ Form::button('編集', ['class' => 'btn btn-primary'])}}
+                                        {!! Form::open(['route' => ['admin_users.edit', $admin->id],'method' => 'GET']) !!}
+                                        {!! Form::submit('編集', ['class' => 'btn btn-primary']) !!}
+                                        {!! Form::close() !!}
                                     </td>
                                 </tr>
                             @endforeach
