@@ -121,7 +121,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * search(keyword)を受け取り、返ってきた検索結果をview渡す
+     * 検索用に入力された値を受け取り、エスケープさせ、返ってきた検索結果をviewに渡す
      *
      * @param  ArticleService  $articleService
      * @param  SearchRequest  $searchRequest
