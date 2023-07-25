@@ -69,6 +69,14 @@ class AdminController extends Controller
         return view('admin.admin_users.edit', compact('admin'));
     }
 
+    /**
+     * admin userの情報を更新し、編集ページへ遷移
+     *
+     * @param \App\Services\AdminService $adminService
+     * @param App\Http\Requests\Admin\UpdateRequest $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(AdminService $adminService, UpdateRequest $request, int $id)
     {
         $validatedData = $request->validated();

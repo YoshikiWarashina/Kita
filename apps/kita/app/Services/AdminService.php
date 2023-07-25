@@ -55,6 +55,13 @@ class AdminService{
         return $admin;
     }
 
+    /**
+     * adminの情報を更新
+     *
+     * @param int $id
+     * @param array $data
+     * @return Admin
+     */
     public function updateAdmin(int $id, array $data)
     {
         $admin = $this->getAdminById($id);
