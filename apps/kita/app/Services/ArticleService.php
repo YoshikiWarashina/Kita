@@ -107,7 +107,7 @@ class ArticleService{
     }
 
     /**
-     * 記事を削除。
+     * 記事を削除
      *
      * @param int $articleId;
      * @return void
