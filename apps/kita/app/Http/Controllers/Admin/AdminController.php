@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\AdminService;
-use Illuminate\Http\Request;
-use App\Models\Admin;
 use App\Http\Requests\Admin\CreateRequest;
+use App\Http\Requests\Admin\UpdateRequest;
 
 class AdminController extends Controller
 {
@@ -68,6 +67,17 @@ class AdminController extends Controller
 
         // 編集画面の表示処理
         return view('admin.admin_users.edit', compact('admin'));
+    }
+
+    public function update(AdminService $adminService, UpdateRequest $request, int $id)
+    {
+        $validatedData = $request->validated();
+
+        $admin = $adminService->updateAdmin($id, $validatedData);
+
+        $adminId = $admin->id;
+
+        return redirect('admin/admin_users/'. $adminId . '/edit')->with('message', '更新処理が完了しました')->with('admin', $admin);
     }
 
 
