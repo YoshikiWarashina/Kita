@@ -62,7 +62,7 @@ Route::group(['prefix' => 'articles', 'middleware' => ['auth:members']], functio
 
     //編集ページ投稿後に遷移するルートを再利用
     //編集実行
-    Route::put('{article_id}/edit', [ArticleController::class, 'update'])->name('article.update');
+    Route::put('/{article_id}/edit', [ArticleController::class, 'update'])->name('article.update');
 });
 
 
