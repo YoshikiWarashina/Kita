@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\SearchRequest;
 use App\Services\AdminService;
 use App\Http\Requests\Admin\CreateRequest;
 use App\Http\Requests\Admin\UpdateRequest;
@@ -101,6 +102,25 @@ class AdminController extends Controller
         $adminService->deleteAdmin($adminId);
 
         return redirect('admin/admin_users')->with('message', '削除処理が完了しました');
+    }
+
+
+    /**
+     * 検索ワードを受け取って検索に合致するものをViewに返す
+     *
+     * @param \App\Services\AdminService $adminService
+     * @param App\Http\Requests\Admin\SearchRequest $searchRequest
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function search(AdminService $adminService, SearchRequest $searchRequest)
+    {
+        $keywords = $searchRequest->only(['last_name', 'first_name', 'email']);
+
+        $escapedKeyword = $adminService->escapeKeyword($keywords);
+
+        $admins = $adminService->getSearchedAdmins($escapedKeyword);
+
+        return view('admin.admin_users', compact('admins'));
     }
 
 }
