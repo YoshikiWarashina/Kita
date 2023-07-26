@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Article;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Article\SearchRequest;
 use App\Http\Requests\Article\UpdateRequest;
+use App\Http\Requests\Article\DeleteRequest;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
 use App\Http\Requests\Article\CreateRequest;
@@ -105,16 +106,22 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param ArticleService $articleService
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(ArticleService $articleService, int $id)
     {
-        //
+        if (!$articleService->isUserArticle($id, Auth::id())) {
+            return redirect('articles/'.$id)->withErrors(['error' => '他のユーザーの記事は削除できません']);
+        }
+        $articleService->deleteArticle($id);
+
+        return redirect('articles')->with('message', '記事を削除しました');
     }
 
     /**
-     * search(keyword)を受け取り、返ってきた検索結果をview渡す
+     * 検索用に入力された値を受け取り、エスケープさせ、返ってきた検索結果をviewに渡す
      *
      * @param  ArticleService  $articleService
      * @param  SearchRequest  $searchRequest

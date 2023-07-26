@@ -24,9 +24,9 @@
 
                         @if($article->member_id === auth()->id())
                         <div class="col-auto mt-4 text-end">
-                            <button type="submit" class="btn btn-danger btn-sm rounded-pill">
-                                {{ __('削除する') }}
-                            </button>
+                            {!! Form::open(['route' => ['article.destroy', $article->id], 'method' => 'DELETE', 'onsubmit' => "return confirm('一度削除すると元に戻せません。よろしいですか？');"]) !!}
+                            {!! Form::submit('削除する', ['class' => 'btn btn-danger btn-sm rounded-pill']) !!}
+                            {!! Form::close() !!}
                         </div>
                         <div class="col-auto mt-4 text-end">
                             {!! Form::open(['route' => ['article.edit', $article->id], 'method' => 'GET']) !!}
