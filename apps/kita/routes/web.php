@@ -68,6 +68,7 @@ Route::middleware(['auth:members'])->group(function () {
     // プロフィール編集
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
 });
 
 
