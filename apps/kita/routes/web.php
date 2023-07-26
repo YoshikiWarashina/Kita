@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\Auth\PasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,3 +87,5 @@ Route::post('/{article_id}/edit',[CommentController::class, 'store'])->name('com
 Route::get('/profile',[ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth:members');
 
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth:members');
+
+Route::put('/password_change',[PasswordController::class, 'update'])->name('password.update')->middleware('auth:members');

@@ -60,12 +60,54 @@
                                     </div>
                                     <div class="row">
                                         <p class="mb-2 col-auto">・・・・</p>
-                                        <div class="mb-2 col-auto btn btn-success rounded-pill btn-sm text-white">パスワードを変更する</div>
+                                        <button type="button" class="mb-2 col-auto btn btn-success rounded-pill btn-sm text-white" data-bs-toggle="modal" data-bs-target="#passwordChangeModal">パスワードを変更する</button>
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-12 px-4 my-4 text-end">
                                     {!! Form::submit(__('更新する'), ['class' => 'btn btn-success rounded-pill']) !!}
                                 </div>
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-1">
+        <!-- パスワード変更モーダル -->
+        <div class="modal fade" id="passwordChangeModal" tabindex="-1" aria-labelledby="passwordChangeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <!-- モーダルのヘッダー -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="passwordChangeModalLabel">パスワード変更</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- モーダルのボディ -->
+                    <div class="modal-body">
+                        <div class="form px-3">
+                            <!--新しいパスワード-->
+                            {!! Form::open(['route' => 'password.update', 'method' => 'PUT']) !!}
+                            <div class="row pt-3">
+                                <p class="mb-2 px-0">新しいパスワード</p>
+                            </div>
+                            <div class="row pt-1">
+                                {!! Form::password('password', ['class' => 'form-control', 'required']) !!}
+                            </div>
+                            <!--確認用のパスワード-->
+                            <div class="row pt-3">
+                                <p class="mb-2 px-0">新しいパスワード（確認）</p>
+                            </div>
+                            <div class="row pt-1">
+                                {!! Form::password('password_confirmation', ['class' => 'form-control', 'required']) !!}
+                            </div>
+                            </div>
+                            <!--更新ボタン-->
+                            <div class="row">
+                                <div class="col-md-4 col-12 px-3 my-4">
+                                    {!! Form::submit('更新する', ['class'=>'btn btn-success col-12 rounded-pill']) !!}
+                                </div>
+                            </div>
                             {!! Form::close() !!}
                         </div>
                     </div>
