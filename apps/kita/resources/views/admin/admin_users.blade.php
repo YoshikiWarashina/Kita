@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        {!! Form::open(['route' => 'admin_users.search', 'method' => 'GET']) !!}
+        {!! Form::open(['route' => 'admin_users.index', 'method' => 'GET']) !!}
         <div class="row">
             <div class="col-md-12 col-12 justify-content-center">
                 <div class="border rounded p-3 bg-white">

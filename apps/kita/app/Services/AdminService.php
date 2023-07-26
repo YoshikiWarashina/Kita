@@ -87,6 +87,11 @@ class AdminService{
         $admin->delete();
     }
 
+    /**
+     * 検索ワードそれぞれをescapeして、associative arrayで返す
+     * @param array $keywords
+     * @return array
+     */
     public function escapeKeyword(array $keywords)
     {
         $escapedKeywords = [];
@@ -96,6 +101,12 @@ class AdminService{
         return $escapedKeywords;
     }
 
+
+    /**
+     * escape後の検索ワードで検索をかけ、合致したものを返す
+     * @param array $keywords
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     public function getSearchedAdmins(array $keywords)
     {
         $query = Admin::query();
