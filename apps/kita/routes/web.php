@@ -55,16 +55,22 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
 //members middleware
-Route::group(['prefix' => 'articles', 'middleware' => ['auth:members']], function () {
-    Route::get('/create', [ArticleController::class, 'create'])->name('article.create');
-    Route::post('/', [ArticleController::class, 'store'])->name('article.store');
-    Route::get('/{article_id}/edit', [ArticleController::class, 'edit'])->name('article.edit');
+Route::middleware(['auth:members'])->group(function () {
+    Route::group(['prefix' => 'articles'], function () {
+        Route::get('/create', [ArticleController::class, 'create'])->name('article.create');
+        Route::post('/', [ArticleController::class, 'store'])->name('article.store');
+        Route::get('/{article_id}/edit', [ArticleController::class, 'edit'])->name('article.edit');
+        Route::put('/{article_id}/edit', [ArticleController::class, 'update'])->name('article.update');
+        Route::delete('/{article_id}', [ArticleController::class, 'destroy'])->name('article.destroy');
+    });
 
-    //編集ページ投稿後に遷移するルートを再利用
-    //編集実行
-    Route::put('{article_id}/edit', [ArticleController::class, 'update'])->name('article.update');
-
-    Route::delete('/{article_id}', [ArticleController::class, 'destroy'])->name('article.destroy');
+    // コメント投稿
+    Route::post('/{article_id}/edit', [CommentController::class, 'store'])->name('comment.store');
+    // プロフィール編集
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // パスワード変更
+    Route::put('/password_change',[PasswordController::class, 'update'])->name('password.update')
 
 });
 
@@ -80,12 +86,3 @@ Route::group(['prefix' => 'articles'], function () {
 });
 
 
-//コメント投稿
-Route::post('/{article_id}/edit',[CommentController::class, 'store'])->name('comment.store')->middleware('auth:members');
-
-//profile編集
-Route::get('/profile',[ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth:members');
-
-Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth:members');
-
-Route::put('/password_change',[PasswordController::class, 'update'])->name('password.update')->middleware('auth:members');
