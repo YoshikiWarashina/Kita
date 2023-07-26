@@ -24,7 +24,7 @@
                             <a class="nav-link active text-light mx-3" aria-current="page" href="#">管理者管理</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light mx-3" href="#">会員管理</a>
+                            <a class="nav-link text-light mx-3" href="{{ route('member.index') }}">会員管理</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link text-light mx-3" href="#">タグ管理</a>
