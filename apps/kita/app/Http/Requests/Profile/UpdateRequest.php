@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Article;
+namespace App\Http\Requests\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class SearchRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +25,8 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'search' => ['string','nullable'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['email:filter','email:dns', 'unique:members,email,'.Auth::user()->email.',email'],
         ];
     }
 }

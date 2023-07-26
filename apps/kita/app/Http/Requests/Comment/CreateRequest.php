@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Article;
+namespace App\Http\Requests\Comment;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchRequest extends FormRequest
+class CreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'search' => ['string','nullable'],
+            'comment' => ['required', 'string', 'max:150'],
+            'article_id' => ['required'],
         ];
     }
 }

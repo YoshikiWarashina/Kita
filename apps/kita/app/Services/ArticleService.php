@@ -6,10 +6,11 @@ use App\Models\Admin;
 use App\Models\Article;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 class ArticleService{
 
     /**
-     * 記事一覧をページネーション込みで取得.
+     * 記事一覧をページネーション込みで取得
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
@@ -21,21 +22,23 @@ class ArticleService{
     }
 
     /**
-     * 記事の部分一致検索結果一覧をページネーション込みで取得.
+     * 記事の部分一致検索結果一覧をページネーション込みで取得
      *
+     * @param string $keyword
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getSearchedArticles($keyword)
+    public function getSearchedArticles(string $keyword)
     {
         $articlesPerPage = 10;
 
         return Article::where('title', 'like', "%$keyword%")
             ->orWhere('contents', 'like', "%$keyword%")
+            ->orderBy('updated_at', 'desc')
             ->paginate($articlesPerPage);
     }
 
     /**
-     * 新しい記事を保存。
+     * 新しい記事を保存
      *
      * @param array $data
      * @return Article
@@ -99,6 +102,35 @@ class ArticleService{
             'title' => $data['title'],
             'contents' => $data['contents'],
         ]);
+
+        return $article;
+    }
+
+    /**
+     * 記事を削除
+     *
+     * @param int $articleId;
+     * @return void
+     */
+    public function deleteArticle(int $articleId)
+    {
+        $article = $this->getArticleById($articleId);
+        $article->delete();
+    }
+
+    /**
+     * 記事とコメントを同時取得
+     *
+     * @param int $article_id
+     * @return \Illuminate\Database\Eloquent\Model
+     *
+     **/
+    public function getArticleWithCommentsById(int $article_id)
+    {
+        $article = Article::with(['comments' => function ($query) {
+            $query->orderBy('updated_at', 'desc');
+        }])
+            ->find($article_id);
 
         return $article;
     }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Article;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Article\SearchRequest;
 use App\Http\Requests\Article\UpdateRequest;
-use App\Models\Article;
+use App\Http\Requests\Article\DeleteRequest;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
 use App\Http\Requests\Article\CreateRequest;
@@ -53,7 +53,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 記事詳細ページ表示
      *
      * @param  \App\Services\ArticleService  $articleService
      * @param  int  $id
@@ -61,7 +61,7 @@ class ArticleController extends Controller
      */
     public function show(ArticleService $articleService, int $id)
     {
-        $article = $articleService->getArticleById($id);
+        $article = $articleService->getArticleWithCommentsById($id);
 
         return view('articles.detail', compact('article'));
     }
@@ -106,16 +106,22 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param ArticleService $articleService
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(ArticleService $articleService, int $id)
     {
-        //
+        if (!$articleService->isUserArticle($id, Auth::id())) {
+            return redirect('articles/'.$id)->withErrors(['error' => '他のユーザーの記事は削除できません']);
+        }
+        $articleService->deleteArticle($id);
+
+        return redirect('articles')->with('message', '記事を削除しました');
     }
 
     /**
-     * keywordを受け取り、返ってきた検索結果をview渡す。
+     * 検索用に入力された値を受け取り、エスケープさせ、返ってきた検索結果をviewに渡す
      *
      * @param  ArticleService  $articleService
      * @param  SearchRequest  $searchRequest
@@ -124,7 +130,10 @@ class ArticleController extends Controller
     public function search(ArticleService $articleService, SearchRequest $searchRequest)
     {
         $search = $searchRequest->input('search');
-        $articles = $articleService->getSearchedArticles($search);
+
+        $escapedKeyword = '%' . addcslashes($search, '%_\\') . '%';
+
+        $articles = $articleService->getSearchedArticles($escapedKeyword);
 
         return view('articles.articles', compact('articles'));
     }
