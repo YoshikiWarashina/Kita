@@ -8,17 +8,18 @@
             </div>
         </div>
 
+        {!! Form::open(['route' => 'member.index', 'method' => 'GET']) !!}
         <div class="row">
             <div class="col-md-12 col-12 justify-content-center">
                 <div class="border rounded p-3 bg-white">
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <p class="mb-2">ユーザー名</p>
-                            {{ Form::text('name', null, ['class' => 'form-control', 'id' => 'name']) }}
+                            {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name']) !!}
                         </div>
                         <div class="col-md-6 col-12">
                             <p class="mb-2">メールアドレス</p>
-                            {{ Form::email('email', null, ['class' => 'form-control', 'id' => 'email']) }}
+                            {!! Form::email('email', null, ['class' => 'form-control', 'id' => 'email']) !!}
                         </div>
                     </div>
                 </div>
@@ -28,11 +29,11 @@
         <div class="row">
             <div class="col-md-12 col-12 justify-content-center">
                 <div class="border rounded p-3 text-center">
-                    {{ Form::submit('検索', ['class' => 'btn btn-primary']) }}
+                    {!! Form::submit('検索', ['class' => 'btn btn-primary']) !!}
                 </div>
             </div>
         </div>
-
+        {!! Form::close() !!}
         <div class="row">
             <nav aria-label="Page navigation example">
                 <ul class="pagination pt-3">
