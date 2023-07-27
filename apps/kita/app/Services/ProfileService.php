@@ -22,8 +22,6 @@ class ProfileService
             'email' => $data['email'],
         ]);
 
-        $member->save();
-
         return $member;
     }
 }
