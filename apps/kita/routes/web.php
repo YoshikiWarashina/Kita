@@ -7,7 +7,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\Comment\CommentController;
-use \App\Http\Controllers\Member\MemberController;
+use App\Http\Controllers\Member\MemberController;
+use App\Http\Controllers\Auth\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ use \App\Http\Controllers\Member\MemberController;
 
 //デザインチェック用
 Route::get('/', function () {
-    return view('articles.detail');
+    return view('articles.delete');
 });
 
 //done page 1,2,3,4,5,6,7,8
@@ -57,14 +58,21 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
 //members middleware
-Route::group(['prefix' => 'articles', 'middleware' => ['auth:members']], function () {
-    Route::get('/create', [ArticleController::class, 'create'])->name('article.create');
-    Route::post('/', [ArticleController::class, 'store'])->name('article.store');
-    Route::get('/{article_id}/edit', [ArticleController::class, 'edit'])->name('article.edit');
+Route::middleware(['auth:members'])->group(function () {
+    Route::group(['prefix' => 'articles'], function () {
+        Route::get('/create', [ArticleController::class, 'create'])->name('article.create');
+        Route::post('/', [ArticleController::class, 'store'])->name('article.store');
+        Route::get('/{article_id}/edit', [ArticleController::class, 'edit'])->name('article.edit');
+        Route::put('/{article_id}/edit', [ArticleController::class, 'update'])->name('article.update');
+        Route::delete('/{article_id}', [ArticleController::class, 'destroy'])->name('article.destroy');
+    });
 
-    //編集ページ投稿後に遷移するルートを再利用
-    //編集実行
-    Route::put('{article_id}/edit', [ArticleController::class, 'update'])->name('article.update');
+    // コメント投稿
+    Route::post('/{article_id}/edit', [CommentController::class, 'store'])->name('comment.store');
+    // プロフィール編集
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
 });
 
 
@@ -77,7 +85,3 @@ Route::group(['prefix' => 'articles'], function () {
     Route::get('/{article_id}', [ArticleController::class, 'show'])->name('article.show');
 
 });
-
-
-//コメント投稿
-Route::post('/{article_id}/edit',[CommentController::class, 'store'])->name('comment.store')->middleware('auth:members');

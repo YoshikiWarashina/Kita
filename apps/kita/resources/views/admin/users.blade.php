@@ -34,23 +34,46 @@
         </div>
 
         <div class="row">
-            <nav aria-label="Page navigation example">
+            <nav aria-label="...">
                 <ul class="pagination pt-3">
-                    <li class="page-item{{ $members->currentPage() == 1 ? ' disabled' : '' }}">
-                        <a class="page-link" href="{{ $members->previousPageUrl() }}" aria-label="Previous">
-                            Previous
-                        </a>
-                    </li>
-                    @for ($i = 1; $i <= min(3, $members->lastPage()); $i++)
-                        <li class="page-item{{ $i == $members->currentPage() ? ' active' : '' }}">
-                            <a class="page-link" href="{{ $members->url($i) }}">{{ $i }}</a>
+                    @if ($members->onFirstPage())
+                        <li class="page-item disabled">
+                            <span class="page-link" aria-label="前">
+                                Previous
+                            </span>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $members->previousPageUrl() }}" aria-label="前">
+                                Previous
+                            </a>
+                        </li>
+                    @endif
+
+                    @php
+                        $startPage = max(1, $members->currentPage() - 1);
+                        $endPage = min($startPage + 2, $members->lastPage());
+                    @endphp
+
+                    @for ($page = $startPage; $page <= $endPage; $page++)
+                        <li class="page-item{{ $members->currentPage() == $page ? ' active' : '' }}">
+                            <a class="page-link" href="{{ $members->url($page) }}">{{ $page }}</a>
                         </li>
                     @endfor
-                    <li class="page-item{{ $members->currentPage() == $members->lastPage() ? ' disabled' : '' }}">
-                        <a class="page-link" href="{{ $members->nextPageUrl() }}" aria-label="Next">
-                            Next
-                        </a>
-                    </li>
+
+                    @if ($members->hasMorePages())
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $members->nextPageUrl() }}" aria-label="次">
+                                Next
+                            </a>
+                        </li>
+                    @else
+                        <li class="page-item disabled">
+                            <span class="page-link" aria-label="次">
+                                Next
+                            </span>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>
