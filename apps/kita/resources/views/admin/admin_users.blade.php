@@ -45,23 +45,46 @@
         </div>
         {!! Form::close() !!}
         <div class="row">
-            <nav aria-label="Page navigation example">
+            <nav aria-label="...">
                 <ul class="pagination pt-3">
-                    <li class="page-item{{ $admins->currentPage() == 1 ? ' disabled' : '' }}">
-                        <a class="page-link" href="{{ $admins->previousPageUrl() }}" aria-label="Previous">
-                            Previous
-                        </a>
-                    </li>
-                    @for ($i = 1; $i <= min(3, $admins->lastPage()); $i++)
-                        <li class="page-item{{ $i == $admins->currentPage() ? ' active' : '' }}">
-                            <a class="page-link" href="{{ $admins->url($i) }}">{{ $i }}</a>
+                    @if ($admins->onFirstPage())
+                        <li class="page-item disabled">
+                            <span class="page-link" aria-label="前">
+                                Previous
+                            </span>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $admins->previousPageUrl() }}" aria-label="前">
+                                Previous
+                            </a>
+                        </li>
+                    @endif
+
+                    @php
+                        $startPage = max(1, $admins->currentPage() - 1);
+                        $endPage = min($startPage + 2, $admins->lastPage());
+                    @endphp
+
+                    @for ($page = $startPage; $page <= $endPage; $page++)
+                        <li class="page-item{{ $admins->currentPage() == $page ? ' active' : '' }}">
+                            <a class="page-link" href="{{ $admins->url($page) }}">{{ $page }}</a>
                         </li>
                     @endfor
-                    <li class="page-item{{ $admins->currentPage() == $admins->lastPage() ? ' disabled' : '' }}">
-                        <a class="page-link" href="{{ $admins->nextPageUrl() }}" aria-label="Next">
-                            Next
-                        </a>
-                    </li>
+
+                    @if ($admins->hasMorePages())
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $admins->nextPageUrl() }}" aria-label="次">
+                                Next
+                            </a>
+                        </li>
+                    @else
+                        <li class="page-item disabled">
+                            <span class="page-link" aria-label="次">
+                                Next
+                            </span>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>
