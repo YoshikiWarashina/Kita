@@ -22,8 +22,7 @@ class AdminController extends Controller
 
         //if 検索機能, else 一覧表示
         if (!empty($keywords)) {
-            $escapedKeyword = $adminService->escapeKeyword($keywords);
-            $admins = $adminService->getSearchedAdmins($escapedKeyword);
+            $admins = $adminService->getSearchedAdmins($keywords);
         }else{
             $admins = $adminService->getAdminUsers();
 

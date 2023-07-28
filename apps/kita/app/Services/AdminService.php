@@ -92,7 +92,7 @@ class AdminService{
      * @param array $keywords
      * @return array
      */
-    public function escapeKeyword(array $keywords)
+    private function escapeKeyword(array $keywords)
     {
         $escapedKeywords = [];
         foreach ($keywords as $field => $keyword) {
@@ -113,8 +113,10 @@ class AdminService{
 
         $adminPerPage = 6;
 
+        $escapedKeywords = $this->escapeKeyword($keywords);
+
         // 各フィールドに対して部分一致の検索条件を追加
-        foreach ($keywords as $field => $keyword) {
+        foreach ($escapedKeywords as $field => $keyword) {
             $query->where($field, 'LIKE', '%' . $keyword . '%');
         }
 
