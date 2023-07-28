@@ -27,7 +27,7 @@
                             <a class="nav-link text-light mx-3" href="{{ route('member.index') }}">会員管理</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-light mx-3" href="#">タグ管理</a>
+                            <a class="nav-link text-light mx-3" href="{{ route('tag.index') }}">タグ管理</a>
                         </li>
                     </ul>
                     <li class="d-flex ml-auto mx-3">

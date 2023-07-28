@@ -32,13 +32,46 @@
         {{ Form::close() }}
 
         <div class="row">
-            <nav aria-label="Page navigation example">
+            <nav aria-label="...">
                 <ul class="pagination pt-3">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    @if ($tags->onFirstPage())
+                        <li class="page-item disabled">
+                            <span class="page-link" aria-label="前">
+                                Previous
+                            </span>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $tags->previousPageUrl() }}" aria-label="前">
+                                Previous
+                            </a>
+                        </li>
+                    @endif
+
+                    @php
+                        $startPage = max(1, $tags->currentPage() - 1);
+                        $endPage = min($startPage + 2, $tags->lastPage());
+                    @endphp
+
+                    @for ($page = $startPage; $page <= $endPage; $page++)
+                        <li class="page-item{{ $tags->currentPage() == $page ? ' active' : '' }}">
+                            <a class="page-link" href="{{ $tags->url($page) }}">{{ $page }}</a>
+                        </li>
+                    @endfor
+
+                    @if ($tags->hasMorePages())
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $tags->nextPageUrl() }}" aria-label="次">
+                                Next
+                            </a>
+                        </li>
+                    @else
+                        <li class="page-item disabled">
+                            <span class="page-link" aria-label="次">
+                                Next
+                            </span>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>
@@ -57,14 +90,16 @@
                                 <th>登録日時</th>
                                 <th>レコード操作</th>
                             </tr>
+                            @foreach ($tags as $tag)
                             <tr>
-                                <td>デフォルトID</td>
-                                <td>デフォルトタグ名</td>
-                                <td>デフォルト登録日時</td>
+                                <td>{{ $tag->id }}</td>
+                                <td>{{ $tag->name }}</td>
+                                <td>{{ $tag->created_at }}</td>
                                 <td class="text-center">
                                     {{ Form::button('編集', ['class' => 'btn btn-primary']) }}
                                 </td>
                             </tr>
+                            @endforeach
                         </table>
                     </div>
                 </div>
