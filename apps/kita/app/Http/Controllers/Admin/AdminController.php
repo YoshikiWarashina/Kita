@@ -93,7 +93,10 @@ class AdminController extends Controller
 
         $adminId = $admin->id;
 
-        return redirect('admin/admin_users/'. $adminId . '/edit')->with('message', '更新処理が完了しました')->with('admin', $admin);
+        return redirect('admin/admin_users/'.$adminId.'/edit')->with([
+            'message' => '更新処理が完了しました',
+            'admin' => $admin,
+        ]);
     }
 
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\Auth\PasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,7 +73,7 @@ Route::middleware(['auth:members'])->group(function () {
     // プロフィール編集
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
+    Route::put('/password_change',[PasswordController::class, 'update'])->name('password.update');
 });
 
 
@@ -85,3 +86,5 @@ Route::group(['prefix' => 'articles'], function () {
     Route::get('/{article_id}', [ArticleController::class, 'show'])->name('article.show');
 
 });
+
+

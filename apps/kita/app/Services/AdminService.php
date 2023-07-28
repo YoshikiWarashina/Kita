@@ -87,6 +87,7 @@ class AdminService{
         $admin->delete();
     }
 
+
     /**
      * 検索ワードそれぞれをescapeして、associative arrayで返す
      * @param array $keywords
@@ -125,4 +126,5 @@ class AdminService{
 
         return $results;
     }
+
 }
