@@ -20,8 +20,7 @@ class MemberController extends Controller
         $keywords = $searchRequest->only(['name', 'email']);
 
         if (!empty($keywords)) {
-            $escapedKeyword = $memberService->escapeKeyword($keywords);
-            $members = $memberService->getSearchedMembers($escapedKeyword);
+            $members = $memberService->getSearchedMembers($keywords);
         }else{
             $members = $memberService->getMembers();
         }
