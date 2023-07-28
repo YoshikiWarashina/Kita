@@ -1,21 +1,21 @@
 @extends('admin.header')
 
 @section('content')
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="container">
         <div class="row pt-5">
             <div class="col">
                 <h1>管理者管理 - 編集</h1>
             </div>
         </div>
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         @if(session('message'))
             <div class="alert alert-success">
                 <h5 class="fw-bolder">Success!</h5>
@@ -25,6 +25,7 @@
         <div class="row">
             <div class="col-md-9 col-12">
                 <div class="border rounded bg-white py-3">
+                    {!! Form::open(['route' => ['admin_users.update', $admin->id],'method' => 'PUT']) !!}
                     <div class="col px-4 my-4">
                         <p class="mb-2">ID</p>
                         {{ Form::text('id', $admin->id, ['class' => 'form-control', 'disabled', 'id' => 'id']) }}
@@ -52,7 +53,7 @@
                     </div>
                     <div class="col px-4 my-4">
                         <p class="mb-2">パスワード</p>
-                        <p>{{ $admin->password }}</p>
+                        <p>・・・・</p>
                     </div>
                     <div class="col px-4 my-4">
                         <p class="mb-2">更新日時</p>
@@ -67,10 +68,13 @@
             <div class="col-md-3 col-12">
                 <div class="border rounded bg-white py-3 px-3">
                     <div class="col-md-12 col-12 text-center py-2">
-                        {{ Form::submit('更新する', ['class' => 'btn btn-primary col-12']) }}
+                        {!! Form::submit('更新する', ['class' => 'btn btn-primary col-12']) !!}
+                        {!! Form::close() !!}
                     </div>
                     <div class="col-md-12 col-12 text-center py-2">
-                        {{ Form::submit('削除する', ['class' => 'btn btn-danger col-12']) }}
+                        {!! Form::open(['route' => ['admin_users.destroy', $admin->id],'method' => 'DELETE', 'onsubmit' => "return confirm('一度削除すると元に戻せません。よろしいですか？');"]) !!}
+                        {!! Form::submit('削除する', ['class' => 'btn btn-danger col-12']) !!}
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>

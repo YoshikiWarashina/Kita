@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\AdminService;
-use Illuminate\Http\Request;
-use App\Models\Admin;
 use App\Http\Requests\Admin\CreateRequest;
+use App\Http\Requests\Admin\UpdateRequest;
 
 class AdminController extends Controller
 {
@@ -54,12 +53,57 @@ class AdminController extends Controller
         return redirect('admin/admin_users/'.$adminId.'/edit')->with('message', '登録処理が完了しました')->with('admin', $admin);
     }
 
-    public function edit($admin_user)
+
+    /**
+     * admin userの編集ページ表示
+     *
+     * @param \App\Services\AdminService $adminService
+     * @param int $adminId
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function edit(AdminService $adminService, int $adminId)
     {
-        $admin = Admin::find($admin_user);
+        $admin = $adminService->getAdminById($adminId);
 
         // 編集画面の表示処理
-        return view('admin.admin_users.edit', ['admin' => $admin]);
+        return view('admin.admin_users.edit', compact('admin'));
+    }
+
+    /**
+     * admin userの情報を更新し、編集ページへ遷移
+     *
+     * @param \App\Services\AdminService $adminService
+     * @param App\Http\Requests\Admin\UpdateRequest $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(AdminService $adminService, UpdateRequest $request, int $id)
+    {
+        $validatedData = $request->validated();
+
+        $admin = $adminService->updateAdmin($id, $validatedData);
+
+        $adminId = $admin->id;
+
+        return redirect('admin/admin_users/'.$adminId.'/edit')->with([
+            'message' => '更新処理が完了しました',
+            'admin' => $admin,
+        ]);
+    }
+
+
+    /**
+     * admin userを削除し、一覧へ遷移
+     *
+     * @param \App\Services\AdminService $adminService
+     * @param int $adminId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(AdminService $adminService, int $adminId)
+    {
+        $adminService->deleteAdmin($adminId);
+
+        return redirect('admin/admin_users')->with('message', '削除処理が完了しました');
     }
 
 }
