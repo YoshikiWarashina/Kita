@@ -86,4 +86,45 @@ class AdminService{
         $admin = $this->getAdminById($id);
         $admin->delete();
     }
+
+
+    /**
+     * 検索ワードそれぞれをescapeして、associative arrayで返す
+     * @param array $keywords
+     * @return array
+     */
+    private function escapeKeyword(array $keywords)
+    {
+        $escapedKeywords = [];
+        foreach ($keywords as $field => $keyword) {
+            $escapedKeywords[$field] = '%' . addcslashes($keyword, '%_\\') . '%';
+        }
+        return $escapedKeywords;
+    }
+
+
+    /**
+     * escape後の検索ワードで検索をかけ、合致したものを返す
+     * @param array $keywords
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getSearchedAdmins(array $keywords)
+    {
+        $query = Admin::query();
+
+        $adminPerPage = 6;
+
+        $escapedKeywords = $this->escapeKeyword($keywords);
+
+        // 各フィールドに対して部分一致の検索条件を追加
+        foreach ($escapedKeywords as $field => $keyword) {
+            $query->where($field, 'LIKE', '%' . $keyword . '%');
+        }
+
+        // 検索結果を取得
+        $results = $query->paginate($adminPerPage);
+
+        return $results;
+    }
+
 }

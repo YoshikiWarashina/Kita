@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\Comment\CommentController;
+use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\PasswordController;
 
@@ -32,12 +33,13 @@ Route::get('/', function () {
 //admins middleware
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:admins']], function () {
     Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class,'logout'])->name('admin/logout');
-    Route::get('/admin_users', [AdminController::class, 'index']);
+    Route::get('/admin_users', [AdminController::class, 'index'])->name('admin_users.index');
     Route::get('/admin_users_create', [AdminController::class, 'create'])->name('admin_users.create');
     Route::post('/admin_users', [AdminController::class, 'store'])->name('admin_users.store');
     Route::get('/admin_users/{id}/edit', [AdminController::class, 'edit'])->name('admin_users.edit');
     Route::delete('/admin_users/{id}', [AdminController::class, 'destroy'])->name('admin_users.destroy');
     Route::put('/admin_users/{id}', [AdminController::class, 'update'])->name('admin_users.update');
+    Route::get('/users',[MemberController::class, 'index'])->name('member.index');
 });
 
 

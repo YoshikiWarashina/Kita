@@ -13,22 +13,23 @@
                 {{ session('message') }}
             </div>
         @endif
-        {{ Form::open(['url' => 'admin/admin_users', 'method' => 'GET']) }}
+
+        {!! Form::open(['route' => 'admin_users.index', 'method' => 'GET']) !!}
         <div class="row">
             <div class="col-md-12 col-12 justify-content-center">
                 <div class="border rounded p-3 bg-white">
                     <div class="row">
                         <div class="col-md-4 col-12">
                             <p class="mb-2">姓</p>
-                            {{ Form::text('last_name', null, ['class' => 'form-control', 'id' => 'last_name']) }}
+                            {!! Form::text('last_name', null, ['class' => 'form-control', 'id' => 'last_name']) !!}
                         </div>
                         <div class="col-md-4 col-12">
                             <p class="mb-2">名</p>
-                            {{ Form::text('first_name', null, ['class' => 'form-control', 'id' =>'first_name']) }}
+                            {!! Form::text('first_name', null, ['class' => 'form-control', 'id' =>'first_name']) !!}
                         </div>
                         <div class="col-md-4 col-12">
                             <p class="mb-2">メールアドレス</p>
-                            {{ Form::email('email', null, ['class' => 'form-control', 'id' => 'email']) }}
+                            {!! Form::email('email', null, ['class' => 'form-control', 'id' => 'email']) !!}
                         </div>
                     </div>
                 </div>
@@ -38,30 +39,52 @@
         <div class="row">
             <div class="col-md-12 col-12 justify-content-center">
                 <div class="border rounded p-3 text-center">
-                    {{ Form::submit('検索', ['class' => 'btn btn-primary']) }}
+                    {!! Form::submit('検索', ['class' => 'btn btn-primary']) !!}
                 </div>
             </div>
         </div>
-        {{ Form::close() }}
-
+        {!! Form::close() !!}
         <div class="row">
-            <nav aria-label="Page navigation example">
+            <nav aria-label="...">
                 <ul class="pagination pt-3">
-                    <li class="page-item{{ $admins->currentPage() == 1 ? ' disabled' : '' }}">
-                        <a class="page-link" href="{{ $admins->previousPageUrl() }}" aria-label="Previous">
-                            Previous
-                        </a>
-                    </li>
-                    @for ($i = 1; $i <= min(3, $admins->lastPage()); $i++)
-                        <li class="page-item{{ $i == $admins->currentPage() ? ' active' : '' }}">
-                            <a class="page-link" href="{{ $admins->url($i) }}">{{ $i }}</a>
+                    @if ($admins->onFirstPage())
+                        <li class="page-item disabled">
+                            <span class="page-link" aria-label="前">
+                                Previous
+                            </span>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $admins->previousPageUrl() }}" aria-label="前">
+                                Previous
+                            </a>
+                        </li>
+                    @endif
+
+                    @php
+                        $startPage = max(1, $admins->currentPage() - 1);
+                        $endPage = min($startPage + 2, $admins->lastPage());
+                    @endphp
+
+                    @for ($page = $startPage; $page <= $endPage; $page++)
+                        <li class="page-item{{ $admins->currentPage() == $page ? ' active' : '' }}">
+                            <a class="page-link" href="{{ $admins->url($page) }}">{{ $page }}</a>
                         </li>
                     @endfor
-                    <li class="page-item{{ $admins->currentPage() == $admins->lastPage() ? ' disabled' : '' }}">
-                        <a class="page-link" href="{{ $admins->nextPageUrl() }}" aria-label="Next">
-                            Next
-                        </a>
-                    </li>
+
+                    @if ($admins->hasMorePages())
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $admins->nextPageUrl() }}" aria-label="次">
+                                Next
+                            </a>
+                        </li>
+                    @else
+                        <li class="page-item disabled">
+                            <span class="page-link" aria-label="次">
+                                Next
+                            </span>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>
