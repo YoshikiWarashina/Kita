@@ -107,6 +107,18 @@ class ArticleService{
     }
 
     /**
+     * 記事を削除
+     *
+     * @param int $articleId;
+     * @return void
+     */
+    public function deleteArticle(int $articleId)
+    {
+        $article = $this->getArticleById($articleId);
+        $article->delete();
+    }
+
+    /**
      * 記事とコメントを同時取得
      *
      * @param int $article_id
