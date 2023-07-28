@@ -56,6 +56,26 @@ class AdminService{
     }
 
     /**
+     * adminの情報を更新
+     *
+     * @param int $id
+     * @param array $data
+     * @return Admin
+     */
+    public function updateAdmin(int $id, array $data)
+    {
+        $admin = $this->getAdminById($id);
+
+        $admin->update([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+        ]);
+
+        return $admin;
+    }
+
+    /**
      * adminを削除
      *
      * @param int $id;
