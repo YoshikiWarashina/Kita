@@ -39,6 +39,9 @@ class TagController extends Controller
     /**
      * タグ新規登録
      *
+     * @param App\Http\Requests\Tag\CreateRequest
+     * @param App\Services\TagService
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateRequest $request, TagService $tagService)
     {
@@ -53,6 +56,12 @@ class TagController extends Controller
         ]);
     }
 
+    /**
+     * タグ編集画面表示
+     * @param App\Services\TagService
+     * @param int $id
+     * @return \Illuminate\Contracts\View\View
+     */
     public function edit(TagService $tagService, int $id)
     {
         $tag = $tagService->getTagById($id);

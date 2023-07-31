@@ -48,16 +48,31 @@ class TagService
             ->paginate($tagsPerPage);
     }
 
+    /**
+     * タグをテーブルに保存
+     *
+     * @param array $data
+     * @return \App\Models\Tag
+     */
     public function saveNewTag(array $data)
     {
         $tag = new Tag();
+
         $tag->fill([
             'name' => $data['tag_name'],
         ]);
+
         $tag->save();
+
         return $tag;
     }
 
+    /**
+     * idをベースにタグを取得
+     *
+     * @param int $id
+     * @return \App\Models\Tag
+     */
     public function getTagById(int $id)
     {
         $tag = Tag::find($id);
