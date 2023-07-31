@@ -7,6 +7,12 @@
                 <h1>タグ管理 - 更新</h1>
             </div>
         </div>
+        @if(session('message'))
+            <div class="alert alert-success">
+                <h5 class="fw-bolder">Success!</h5>
+                {{ session('message') }}
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-9 col-12">
                 <div class="border rounded bg-white py-3">
