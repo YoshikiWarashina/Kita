@@ -79,7 +79,9 @@
             <div class="col-md-12 col-12 justify-content-center">
                 <div class="border rounded bg-white">
                     <div class="p-3">
-                        <button type="submit" class="btn btn-primary">新規登録</button>
+                        {!! Form::open(['route' => 'tag.create', 'method' => 'GET']) !!}
+                        {!! Form::submit('新規登録', ['class' => 'btn btn-primary']) !!}
+                        {!! Form::close() !!}
                     </div>
                     <div class="col-md-12 col-12 px-3">
                         <table class="table table-bordered table-hover">

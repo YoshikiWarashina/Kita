@@ -47,4 +47,21 @@ class TagService
             ->orderBy('created_at', 'desc')
             ->paginate($tagsPerPage);
     }
+
+    public function saveNewTag(array $data)
+    {
+        $tag = new Tag();
+        $tag->fill([
+            'name' => $data['tag_name'],
+        ]);
+        $tag->save();
+        return $tag;
+    }
+
+    public function getTagById(int $id)
+    {
+        $tag = Tag::find($id);
+
+        return $tag;
+    }
 }

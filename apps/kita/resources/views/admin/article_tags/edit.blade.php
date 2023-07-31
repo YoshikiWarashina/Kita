@@ -12,22 +12,22 @@
                 <div class="border rounded bg-white py-3">
                     <div class="col px-4 my-4">
                         <p class="mb-2">ID</p>
-                        {{ Form::text('sirName', null, ['class' => 'form-control', 'disabled', 'id' => 'sirName']) }}
+                        {{ Form::text('id', $tag->id, ['class' => 'form-control', 'disabled', 'id' => 'id']) }}
                     </div>
                     <div class="col px-4 my-4">
                         <div class="row">
                             <p class="mb-2 col-auto">タグ名</p>
                             <p class="mb-2 col-auto text-center rounded bg-danger text-white">必須</p>
                         </div>
-                        {{ Form::text('sirName', null, ['class' => 'form-control', 'id' => 'sirName']) }}
+                        {{ Form::text('tag_name', $tag->name, ['class' => 'form-control', 'id' => 'tag_name']) }}
                     </div>
                     <div class="col px-4 my-4">
                         <p class="mb-2">更新日時</p>
-                        {{ Form::text('sirName', null, ['class' => 'form-control', 'disabled', 'id' => 'sirName']) }}
+                        {{ Form::text('updated_at', $tag->updated_at, ['class' => 'form-control', 'disabled', 'id' => 'updated_at']) }}
                     </div>
                     <div class="col px-4 my-4">
                         <p class="mb-2">登録日時</p>
-                        {{ Form::text('sirName', null, ['class' => 'form-control', 'disabled', 'id' => 'sirName']) }}
+                        {{ Form::text('created_at', $tag->created_at, ['class' => 'form-control', 'disabled', 'id' => 'created_at']) }}
                     </div>
                 </div>
             </div>
