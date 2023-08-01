@@ -45,6 +45,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admins']], function ()
     Route::get('/article_tags/create',[TagController::class, 'create'])->name('tag.create');
     Route::post('/article_tags',[TagController::class, 'store'])->name('tag.store');
     Route::get('/article_tags/{id}/edit',[TagController::class, 'edit'])->name('tag.edit');
+    Route::put('/article_tags/{id}/edit', [TagController::class, 'update'])->name('tag.update');
 });
 
 
