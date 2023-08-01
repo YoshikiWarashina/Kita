@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('article_article_tag', function (Blueprint $table) {
             $table->unsignedInteger('id')->autoIncrement();
             $table->unsignedInteger('article_id');
-            $table->foreign('article_id')->references('id')->on('articles');
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
             $table->unsignedInteger('article_tag_id');
-            $table->foreign('article_tag_id')->references('id')->on('article_tags');
+            $table->foreign('article_tag_id')->references('id')->on('article_tags')->onDelete('cascade');
             $table->timestamps();
 
             $table->unique(['article_id', 'article_tag_id']);

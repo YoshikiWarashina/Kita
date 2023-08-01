@@ -55,9 +55,18 @@ class ArticleService{
 
         $article->save();
 
-        //タグの関連付け
+        //タグの関連付け(created_at updated_at込み)
         if (isset($data['tags']) && is_array($data['tags'])) {
-            $article->tags()->attach($data['tags']);
+            $tags = $data['tags'];
+
+            foreach ($tags as $tag) {
+                $timestamp = date('Y-m-d H:i:s'); // 現在の日時を取得
+                $pivotData = [
+                    'created_at' => $timestamp,
+                    'updated_at' => $timestamp,
+                ];
+                $article->tags()->attach($tag, $pivotData); // 中間テーブルにデータを追加
+            }
         }
 
         return $article;
