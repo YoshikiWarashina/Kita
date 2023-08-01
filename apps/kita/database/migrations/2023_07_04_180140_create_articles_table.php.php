@@ -14,14 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('articles', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedInteger('id')->autoIncrement();
             $table->string('title');
             $table->mediumText('contents');
-            $table->unsignedBigInteger('member_id');
+            $table->unsignedInteger('member_id');
             $table->foreign('member_id')->references('id')->on('members');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
-            $table->softDeletes()->nullable();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 
