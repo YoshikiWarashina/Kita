@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Article;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Article\SearchRequest;
 use App\Http\Requests\Article\UpdateRequest;
-use App\Http\Requests\Article\DeleteRequest;
 use App\Services\ArticleService;
-use Illuminate\Http\Request;
+use App\Services\TagService;
 use App\Http\Requests\Article\CreateRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,17 +26,21 @@ class ArticleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * タグとともに新規投稿ページを表示
      *
+     * @param \App\Services\TagService
      * @return \Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(TagService $tagService)
     {
-        return view('articles.create');
+        $tags = $tagService->getTagsForArticle();
+
+        return view('articles.create', compact('tags'));
     }
 
+
     /**
-     * Store a newly created resource in storage.
+     * 記事をテーブルに保存
      *
      * @param  \App\Services\ArticleService  $articleService
      * @param  App\Http\Requests\Article\CreateRequest $request
@@ -49,7 +52,11 @@ class ArticleController extends Controller
         $article = $articleService->saveNewArticle($validatedData);
 
         $articleId = $article->id;
-        return redirect('articles/'.$articleId.'/edit')->with('message', '記事投稿が完了しました')->with('article', $article);
+
+        return redirect('articles/'.$articleId.'/edit')->with([
+            'message' => '記事投稿が完了しました',
+            'article' => $article
+        ]);
     }
 
     /**

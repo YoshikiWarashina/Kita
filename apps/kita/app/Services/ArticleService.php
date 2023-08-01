@@ -38,7 +38,7 @@ class ArticleService{
     }
 
     /**
-     * 新しい記事を保存
+     * 新しい記事を保存したあと、タグを関連付ける
      *
      * @param array $data
      * @return Article
@@ -54,6 +54,11 @@ class ArticleService{
         ]);
 
         $article->save();
+
+        //タグの関連付け
+        if (isset($data['tags']) && is_array($data['tags'])) {
+            $article->tags()->attach($data['tags']);
+        }
 
         return $article;
     }

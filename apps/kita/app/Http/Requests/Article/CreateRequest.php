@@ -25,6 +25,7 @@ class CreateRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:20'],
+            'tags' => ['array', 'max:5', 'nullable'],
             'contents' =>['required', 'string', 'max:400'],
         ];
     }
