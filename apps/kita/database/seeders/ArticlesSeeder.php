@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Article;
+use App\Models\Tag;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +16,13 @@ class ArticlesSeeder extends Seeder
      */
     public function run()
     {
-        Article::factory()->count(40)->create();
+        $tags = Tag::all();
+
+        $articles = Article::factory()->count(40)->create();
+
+        // 各記事に3つのタグをランダムに紐付ける
+        $articles->each(function ($article) use ($tags) {
+            $article->tags()->attach($tags->random(3));
+        });
     }
 }
