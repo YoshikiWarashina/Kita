@@ -18,7 +18,20 @@ class ArticleService{
     {
         $articlesPerPage = 10;
 
-        return Article::orderBy('updated_at', 'asc')->paginate($articlesPerPage);
+        return Article::orderBy('updated_at', 'desc')->paginate($articlesPerPage);
+    }
+
+    /**
+     * 検索ワードをエスケープ
+     *
+     * @param string $keyword
+     * @return string
+     */
+    private function escapeKeyword(string $keyword)
+    {
+        $escapedKeyword = '%' . addcslashes($keyword, '%_\\') . '%';
+
+        return $escapedKeyword;
     }
 
     /**
@@ -31,8 +44,10 @@ class ArticleService{
     {
         $articlesPerPage = 10;
 
-        return Article::where('title', 'like', "%$keyword%")
-            ->orWhere('contents', 'like', "%$keyword%")
+        $escapedKeyword = $this->escapeKeyword($keyword);
+
+        return Article::where('title', 'like', "%$escapedKeyword%")
+            ->orWhere('contents', 'like', "%$escapedKeyword%")
             ->orderBy('updated_at', 'desc')
             ->paginate($articlesPerPage);
     }

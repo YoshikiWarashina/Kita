@@ -86,8 +86,7 @@ Route::middleware(['auth:members'])->group(function () {
 //articles関連 middlewareなし
 Route::group(['prefix' => 'articles'], function () {
 
-    Route::get('/', [ArticleController::class, 'index']);
-    Route::get('/', [ArticleController::class, 'search'])->name('article.search');
+    Route::get('/', [ArticleController::class, 'index'])->name('article.index');
     //詳細表示
     Route::get('/{article_id}', [ArticleController::class, 'show'])->name('article.show');
 

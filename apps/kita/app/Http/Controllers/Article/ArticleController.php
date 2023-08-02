@@ -13,14 +13,22 @@ use Illuminate\Support\Facades\Auth;
 class ArticleController extends Controller
 {
     /**
-     * 記事一覧表示
+     * 記事一覧表示/検索
      *
+     * @param App\Services\ArticleService $articleService
+     * @param App\Http\Requests\Article\SearchRequest $request
      * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(ArticleService $articleService, SearchRequest $request)
     {
-        $articleService = new ArticleService();
-        $articles = $articleService->getArticles();
+        $search = $request->input('search');
+
+        if (!empty($search)) {
+            $articles = $articleService->getSearchedArticles($search);
+        }else{
+            $articles = $articleService->getArticles();
+
+        }
 
         return view('articles.articles', compact('articles'));
     }
@@ -127,21 +135,4 @@ class ArticleController extends Controller
         return redirect('articles')->with('message', '記事を削除しました');
     }
 
-    /**
-     * 検索用に入力された値を受け取り、エスケープさせ、返ってきた検索結果をviewに渡す
-     *
-     * @param  ArticleService  $articleService
-     * @param  SearchRequest  $searchRequest
-     * @return \Illuminate\Contracts\View\View
-     */
-    public function search(ArticleService $articleService, SearchRequest $searchRequest)
-    {
-        $search = $searchRequest->input('search');
-
-        $escapedKeyword = '%' . addcslashes($search, '%_\\') . '%';
-
-        $articles = $articleService->getSearchedArticles($escapedKeyword);
-
-        return view('articles.articles', compact('articles'));
-    }
 }
