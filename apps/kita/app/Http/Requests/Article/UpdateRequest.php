@@ -25,6 +25,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:20'],
+            'tags' => ['array', 'max:5', 'nullable', 'distinct'],
             'contents' =>['required', 'string', 'max:400'],
         ];
     }

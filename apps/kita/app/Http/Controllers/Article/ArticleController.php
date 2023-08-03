@@ -82,18 +82,19 @@ class ArticleController extends Controller
     }
 
     /**
+     * 記事編集ページ表示
      *
-     * @param  \App\Services\ArticleService  $articleService
+     * @param  \App\Services\ArticleService $articleService
+     * @param  \App\Services\TagService $tagService
      * @param  int  $id
      * @return \Illuminate\Contracts\View\View
-     * Show the form for editing the specified resource.
-     *
      */
-    public function edit(ArticleService $articleService, int $id)
+    public function edit(ArticleService $articleService, TagService $tagService, int $id)
     {
         $article = $articleService->getArticleById($id);
+        $tags = $tagService->getTagsForArticle();
 
-        return view('articles.edit', ['article' => $article]);
+        return view('articles.edit', compact('article', 'tags'));
     }
 
     /**

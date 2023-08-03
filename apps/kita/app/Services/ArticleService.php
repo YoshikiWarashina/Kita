@@ -126,12 +126,29 @@ class ArticleService{
     {
         $article = $this->getArticleById($articleId);
 
-
         $article->update([
             'title' => $data['title'],
             'contents' => $data['contents'],
         ]);
 
+        // タグの関連付け(updated_atを更新するためdetachして再度attachする)
+        if (isset($data['tags']) && is_array($data['tags'])) {
+            $tags = $data['tags'];
+
+            $timestamp = date('Y-m-d H:i:s'); // 現在の日時を取得
+
+            // 一旦タグの関連付けを削除
+            $article->tags()->detach();
+
+            // 更新したタグを関連付け
+            foreach ($tags as $tag) {
+                $pivotData = [
+                    'created_at' => $timestamp,
+                    'updated_at' => $timestamp,
+                ];
+                $article->tags()->attach($tag, $pivotData); // 中間テーブルにデータを追加
+            }
+        }
         return $article;
     }
 
