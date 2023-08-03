@@ -44,7 +44,7 @@ class TagService
         $escapedKeyword = $this->escapeKeyword($keyword);
 
         return Tag::where('name', 'like', "%$escapedKeyword%")
-            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->paginate($tagsPerPage);
     }
 }
