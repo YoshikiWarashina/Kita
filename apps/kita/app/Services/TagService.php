@@ -54,7 +54,7 @@ class TagService
      * @param array $data
      * @return \App\Models\Tag
      */
-    public function saveNewTag(array $data)
+    public function saveTag(array $data)
     {
         $tag = new Tag();
 

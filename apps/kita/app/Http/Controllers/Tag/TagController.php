@@ -46,7 +46,7 @@ class TagController extends Controller
     public function store(CreateRequest $request, TagService $tagService)
     {
         $validatedData = $request->validated();
-        $tag = $tagService->saveNewTag($validatedData);
+        $tag = $tagService->saveTag($validatedData);
 
         $tagId = $tag->id;
 
