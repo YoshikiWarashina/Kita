@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Tag;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -23,8 +24,10 @@ class UpdateRequest extends FormRequest
      */
     public function rules()
     {
+        $tagId = $this->route('id');
+
         return [
-            'tag_name' => ['required', 'string', 'max:20', 'unique:article_tags,name'],
+            'tag_name' => ['required', 'string', 'max:20', Rule::unique('article_tags', 'name')->ignore($tagId)],
         ];
     }
 }
