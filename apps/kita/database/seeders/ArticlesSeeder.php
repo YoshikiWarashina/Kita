@@ -22,7 +22,7 @@ class ArticlesSeeder extends Seeder
 
         // 各記事に3つのタグをランダムに紐付ける
         $articles->each(function ($article) use ($tags) {
-            $article->tags()->attach($tags->random(3));
+            $article->tags()->attach($tags->random(3), ['created_at' => now(), 'updated_at' => now()]);
         });
     }
 }
