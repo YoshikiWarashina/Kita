@@ -15,6 +15,6 @@ class TagService
     {
         $tagsPerPage = 10;
 
-        return Tag::orderby('created_at')->paginate($tagsPerPage);
+        return Tag::orderby('updated_at', 'desc')->paginate($tagsPerPage);
     }
 }
