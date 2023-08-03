@@ -19,8 +19,7 @@ return new class extends Migration
             $table->mediumText('contents');
             $table->unsignedInteger('member_id');
             $table->foreign('member_id')->references('id')->on('members');
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
+            $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
         });
     }
