@@ -164,6 +164,7 @@ return [
         'contents' => '内容',
         'comment' => 'コメント',
         'name' => 'ユーザー名',
+        'tag_name' => 'タグ',
     ],
 
 ];

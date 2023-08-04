@@ -8,14 +8,14 @@
             </div>
         </div>
 
-        {{ Form::open(['url' => 'admin/admin_users', 'method' => 'GET']) }}
+        {!! Form::open(['route' => 'tag.index', 'method' => 'GET']) !!}
         <div class="row">
             <div class="col-md-12 col-12 justify-content-center">
                 <div class="border rounded p-3 bg-white">
                     <div class="row">
                         <div class="col-md-12 col-12">
                             <p class="mb-2">タグ名</p>
-                            {{ Form::text('sirName', null, ['class' => 'form-control', 'id' => 'sirName']) }}
+                            {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name']) !!}
                         </div>
                     </div>
                 </div>
@@ -25,11 +25,11 @@
         <div class="row">
             <div class="col-md-12 col-12 justify-content-center">
                 <div class="border rounded p-3 text-center">
-                    {{ Form::submit('検索', ['class' => 'btn btn-primary']) }}
+                    {!! Form::submit('検索', ['class' => 'btn btn-primary']) !!}
                 </div>
             </div>
         </div>
-        {{ Form::close() }}
+        {!! Form::close() !!}
 
         <div class="row">
             <nav aria-label="...">
@@ -79,7 +79,9 @@
             <div class="col-md-12 col-12 justify-content-center">
                 <div class="border rounded bg-white">
                     <div class="p-3">
-                        <button type="submit" class="btn btn-primary">新規登録</button>
+                        {!! Form::open(['route' => 'tag.create', 'method' => 'GET']) !!}
+                        {!! Form::submit('新規登録', ['class' => 'btn btn-primary']) !!}
+                        {!! Form::close() !!}
                     </div>
                     <div class="col-md-12 col-12 px-3">
                         <table class="table table-bordered table-hover">
@@ -96,7 +98,9 @@
                                 <td>{{ $tag->name }}</td>
                                 <td>{{ $tag->created_at }}</td>
                                 <td class="text-center">
-                                    {{ Form::button('編集', ['class' => 'btn btn-primary']) }}
+                                    {!! Form::open(['route' => ['tag.edit', $tag->id],'method' => 'GET']) !!}
+                                    {!! Form::submit('編集', ['class' => 'btn btn-primary']) !!}
+                                    {!! Form::close() !!}
                                 </td>
                             </tr>
                             @endforeach

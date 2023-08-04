@@ -7,6 +7,18 @@
                 <h1>タグ管理 - 新規登録</h1>
             </div>
         </div>
+
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        {!! Form::open(['route' => 'tag.store', 'method' => 'POST']) !!}
         <div class="row">
             <div class="col-md-9 col-12">
                 <div class="border rounded bg-white py-3">
@@ -15,7 +27,7 @@
                             <p class="mb-2 col-auto">タグ名</p>
                             <p class="mb-2 col-auto rounded bg-danger text-white">必須</p>
                         </div>
-                        {{ Form::text('sirName', null, ['class' => 'form-control', 'id' => 'sirName']) }}
+                        {{ Form::text('tag_name', null, ['class' => 'form-control', 'id' => 'tag_name']) }}
                     </div>
                 </div>
             </div>
@@ -27,5 +39,6 @@
                 </div>
             </div>
         </div>
+        {!! Form::close() !!}
     </div>
 @endsection
