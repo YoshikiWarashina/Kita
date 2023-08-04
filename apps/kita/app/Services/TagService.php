@@ -15,7 +15,7 @@ class TagService
     {
         $tagsPerPage = 10;
 
-        return Tag::orderby('created_at')->paginate($tagsPerPage);
+        return Tag::orderby('updated_at', 'desc')->paginate($tagsPerPage);
     }
 
     /**
@@ -46,5 +46,54 @@ class TagService
         return Tag::where('name', 'like', "%$escapedKeyword%")
             ->orderBy('updated_at', 'desc')
             ->paginate($tagsPerPage);
+    }
+
+    /**
+     * タグをテーブルに保存
+     *
+     * @param array $data
+     * @return \App\Models\Tag
+     */
+    public function saveTag(array $data)
+    {
+        $tag = new Tag();
+
+        $tag->fill([
+            'name' => $data['tag_name'],
+        ]);
+
+        $tag->save();
+
+        return $tag;
+    }
+
+    /**
+     * idをベースにタグを取得
+     *
+     * @param int $id
+     * @return \App\Models\Tag
+     */
+    public function getTagById(int $id)
+    {
+        $tag = Tag::find($id);
+
+        return $tag;
+    }
+
+    /**
+     * タグをアップデート
+     *
+     * @param int $id
+     * @param array $data
+     * @return \App\Models\Tag
+     */
+    public function updateTag(int $id, array $data)
+    {
+        $tag = $this->getTagById($id);
+
+        $tag->name = $data['tag_name'];
+        $tag->save();
+
+        return $tag;
     }
 }
