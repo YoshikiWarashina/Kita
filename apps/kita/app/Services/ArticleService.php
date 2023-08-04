@@ -60,12 +60,11 @@ class ArticleService{
             $tags = $data['tags'];
 
             foreach ($tags as $tag) {
-                $timestamp = date('Y-m-d H:i:s'); // 現在の日時を取得
                 $pivotData = [
-                    'created_at' => $timestamp,
-                    'updated_at' => $timestamp,
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ];
-                $article->tags()->attach($tag, $pivotData); // 中間テーブルにデータを追加
+                $article->tags()->attach($tag, $pivotData);
             }
         }
 
