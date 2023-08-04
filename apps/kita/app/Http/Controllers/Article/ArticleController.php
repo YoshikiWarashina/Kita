@@ -98,7 +98,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 記事の更新
      *
      * @param  \App\Services\ArticleService  $articleService
      * @param  \App\Http\Requests\Article\UpdateRequest $request
@@ -116,7 +116,11 @@ class ArticleController extends Controller
         $article = $articleService->updateArticle($id, $validatedData);
 
         $articleId = $article->id;
-        return redirect('articles/'.$articleId.'/edit')->with('message', '記事編集が完了しました')->with('article', $article);
+
+        return redirect('articles/'.$articleId.'/edit')->with([
+            'message'=> '記事編集が完了しました',
+            'article'=> $article
+        ]);
     }
 
     /**

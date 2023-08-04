@@ -131,24 +131,19 @@ class ArticleService{
             'contents' => $data['contents'],
         ]);
 
-        // タグの関連付け(updated_atを更新するためdetachして再度attachする)
+        $syncData = [];
+
+        // タグの関連付け(if文: タグあり、それ以外: タグなし)
         if (isset($data['tags']) && is_array($data['tags'])) {
             $tags = $data['tags'];
 
-            $timestamp = date('Y-m-d H:i:s'); // 現在の日時を取得
-
-            // 一旦タグの関連付けを削除
-            $article->tags()->detach();
-
-            // 更新したタグを関連付け
+            // タグにcreated_at updated_atを追加
             foreach ($tags as $tag) {
-                $pivotData = [
-                    'created_at' => $timestamp,
-                    'updated_at' => $timestamp,
-                ];
-                $article->tags()->attach($tag, $pivotData); // 中間テーブルにデータを追加
+                $syncData[$tag] = ['created_at' => now(), 'updated_at' => now()];
             }
         }
+        $article->tags()->sync($syncData);
+
         return $article;
     }
 
