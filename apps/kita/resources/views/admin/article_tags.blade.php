@@ -98,7 +98,9 @@
                                 <td>{{ $tag->name }}</td>
                                 <td>{{ $tag->created_at }}</td>
                                 <td class="text-center">
-                                    {{ Form::button('編集', ['class' => 'btn btn-primary']) }}
+                                    {!! Form::open(['route' => ['tag.edit', $tag->id],'method' => 'GET']) !!}
+                                    {!! Form::submit('編集', ['class' => 'btn btn-primary']) !!}
+                                    {!! Form::close() !!}
                                 </td>
                             </tr>
                             @endforeach
