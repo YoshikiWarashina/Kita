@@ -8,14 +8,14 @@
             </div>
         </div>
 
-        {{ Form::open(['url' => 'admin/admin_users', 'method' => 'GET']) }}
+        {!! Form::open(['route' => 'tag.index', 'method' => 'GET']) !!}
         <div class="row">
             <div class="col-md-12 col-12 justify-content-center">
                 <div class="border rounded p-3 bg-white">
                     <div class="row">
                         <div class="col-md-12 col-12">
                             <p class="mb-2">タグ名</p>
-                            {{ Form::text('sirName', null, ['class' => 'form-control', 'id' => 'sirName']) }}
+                            {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name']) !!}
                         </div>
                     </div>
                 </div>
@@ -25,20 +25,53 @@
         <div class="row">
             <div class="col-md-12 col-12 justify-content-center">
                 <div class="border rounded p-3 text-center">
-                    {{ Form::submit('検索', ['class' => 'btn btn-primary']) }}
+                    {!! Form::submit('検索', ['class' => 'btn btn-primary']) !!}
                 </div>
             </div>
         </div>
-        {{ Form::close() }}
+        {!! Form::close() !!}
 
         <div class="row">
-            <nav aria-label="Page navigation example">
+            <nav aria-label="...">
                 <ul class="pagination pt-3">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    @if ($tags->onFirstPage())
+                        <li class="page-item disabled">
+                            <span class="page-link" aria-label="前">
+                                Previous
+                            </span>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $tags->previousPageUrl() }}" aria-label="前">
+                                Previous
+                            </a>
+                        </li>
+                    @endif
+
+                    @php
+                        $startPage = max(1, $tags->currentPage() - 1);
+                        $endPage = min($startPage + 2, $tags->lastPage());
+                    @endphp
+
+                    @for ($page = $startPage; $page <= $endPage; $page++)
+                        <li class="page-item{{ $tags->currentPage() == $page ? ' active' : '' }}">
+                            <a class="page-link" href="{{ $tags->url($page) }}">{{ $page }}</a>
+                        </li>
+                    @endfor
+
+                    @if ($tags->hasMorePages())
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $tags->nextPageUrl() }}" aria-label="次">
+                                Next
+                            </a>
+                        </li>
+                    @else
+                        <li class="page-item disabled">
+                            <span class="page-link" aria-label="次">
+                                Next
+                            </span>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>
@@ -46,7 +79,9 @@
             <div class="col-md-12 col-12 justify-content-center">
                 <div class="border rounded bg-white">
                     <div class="p-3">
-                        <button type="submit" class="btn btn-primary">新規登録</button>
+                        {!! Form::open(['route' => 'tag.create', 'method' => 'GET']) !!}
+                        {!! Form::submit('新規登録', ['class' => 'btn btn-primary']) !!}
+                        {!! Form::close() !!}
                     </div>
                     <div class="col-md-12 col-12 px-3">
                         <table class="table table-bordered table-hover">
@@ -57,14 +92,18 @@
                                 <th>登録日時</th>
                                 <th>レコード操作</th>
                             </tr>
+                            @foreach ($tags as $tag)
                             <tr>
-                                <td>デフォルトID</td>
-                                <td>デフォルトタグ名</td>
-                                <td>デフォルト登録日時</td>
+                                <td>{{ $tag->id }}</td>
+                                <td>{{ $tag->name }}</td>
+                                <td>{{ $tag->created_at }}</td>
                                 <td class="text-center">
-                                    {{ Form::button('編集', ['class' => 'btn btn-primary']) }}
+                                    {!! Form::open(['route' => ['tag.edit', $tag->id],'method' => 'GET']) !!}
+                                    {!! Form::submit('編集', ['class' => 'btn btn-primary']) !!}
+                                    {!! Form::close() !!}
                                 </td>
                             </tr>
+                            @endforeach
                         </table>
                     </div>
                 </div>

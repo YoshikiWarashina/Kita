@@ -10,6 +10,7 @@ use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Tag\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admins']], function ()
     Route::delete('/admin_users/{id}', [AdminController::class, 'destroy'])->name('admin_users.destroy');
     Route::put('/admin_users/{id}', [AdminController::class, 'update'])->name('admin_users.update');
     Route::get('/users',[MemberController::class, 'index'])->name('member.index');
+    Route::get('/article_tags',[TagController::class, 'index'])->name('tag.index');
+    Route::get('/article_tags/create',[TagController::class, 'create'])->name('tag.create');
+    Route::post('/article_tags',[TagController::class, 'store'])->name('tag.store');
+    Route::get('/article_tags/{id}/edit',[TagController::class, 'edit'])->name('tag.edit');
+    Route::put('/article_tags/{id}/edit', [TagController::class, 'update'])->name('tag.update');
 });
 
 

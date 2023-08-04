@@ -21,13 +21,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mx-4 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active text-light mx-3" aria-current="page" href="#">管理者管理</a>
+                            <a class="nav-link text-light mx-3" href="{{ route('admin_users.index') }}">管理者管理</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light mx-3" href="{{ route('member.index') }}">会員管理</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-light mx-3" href="#">タグ管理</a>
+                            <a class="nav-link text-light mx-3" href="{{ route('tag.index') }}">タグ管理</a>
                         </li>
                     </ul>
                     <li class="d-flex ml-auto mx-3">
