@@ -27,7 +27,6 @@ class ArticleController extends Controller
             $articles = $articleService->getSearchedArticles($search);
         }else{
             $articles = $articleService->getArticles();
-
         }
 
         return view('articles.articles', compact('articles'));
