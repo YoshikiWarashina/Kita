@@ -91,4 +91,17 @@ class TagController extends Controller
             'tag' => $tag,
         ]);
     }
+
+    /**
+     * タグ削除
+     * @param App\Services\TagService
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(TagService $tagService, int $id)
+    {
+        $tagService->deleteTag($id);
+
+        return redirect('admin/article_tags')->with('message', 'タグを削除しました');
+    }
 }
