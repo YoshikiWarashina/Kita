@@ -9,6 +9,7 @@ class Tag extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id';
     /**
      * The attributes that are mass assignable.
      *

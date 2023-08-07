@@ -12,6 +12,8 @@ class Article extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $primaryKey = 'id';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -60,6 +62,6 @@ class Article extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'article_article_tag', 'article_id', 'article_tag_id');
+        return $this->belongsToMany(Tag::class, 'article_article_tag', 'article_id', 'article_tag_id')->withTimestamps();
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\Admin;
 use App\Models\Article;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Exception;
+
 class ArticleService{
 
     /**
@@ -42,33 +42,40 @@ class ArticleService{
      *
      * @param array $data
      * @return Article
+     * @throws Exception
      */
     public function saveNewArticle(array $data)
     {
-        $article = new Article();
+        DB::beginTransaction();
 
-        $article->fill([
-            'title' => $data['title'],
-            'contents' => $data['contents'],
-            'member_id' => Auth::id(),
-        ]);
+        try {
+            $article = new Article();
 
-        $article->save();
+            $article->fill([
+                'title' => $data['title'],
+                'contents' => $data['contents'],
+                'member_id' => Auth::id(),
+            ]);
 
-        //タグの関連付け(created_at updated_at込み)
-        if (isset($data['tags']) && is_array($data['tags'])) {
-            $tags = $data['tags'];
+            $article->save();
 
-            foreach ($tags as $tag) {
-                $pivotData = [
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
-                $article->tags()->attach($tag, $pivotData);
+            // タグの関連付け(created_at updated_at込み)
+            if (isset($data['tags']) && is_array($data['tags'])) {
+                $tags = $data['tags'];
+
+                foreach ($tags as $tag) {
+                    $article->tags()->attach($tag);
+                }
             }
-        }
+            // トランザクションのコミット
+            DB::commit();
+            return $article;
 
-        return $article;
+        } catch (\Exception $e) {
+            // トランザクションのロールバック
+            DB::rollback();
+            throw $e;
+        }
     }
 
     /**
