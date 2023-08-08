@@ -40,15 +40,11 @@
                         <h3>{{ $article->title }}</h3>
                         <p>{{ $article->member->name }}が{{ $article->created_at->format('Y年m月d日') }}に投稿</p>
                         <div class="row pt-4">
-                            <div class="col-auto">
-                                <p class="text-white bg-primary px-2 rounded">javascript</p>
-                            </div>
-                            <div class="col-auto">
-                                <p class="text-white bg-primary px-2 rounded">Vue</p>
-                            </div>
-                            <div class="col-auto">
-                                <p class="text-white bg-primary px-2 rounded">Vite</p>
-                            </div>
+                            @foreach ($article->tags as $tag)
+                                <div class="col-auto">
+                                    <p class="text-white bg-primary px-2 rounded">{{ $tag->name }}</p>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="py-3 text-secondary">

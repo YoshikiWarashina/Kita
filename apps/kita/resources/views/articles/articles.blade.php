@@ -27,15 +27,11 @@
                                 <h3 class="text-secondary">{{ $article->title }}</h3>
                             </a>
                             <div class="row mb-2 border-bottom border-dark">
+                                @foreach ($article->tags as $tag)
                                 <div class="col-auto">
-                                    <p class="text-white bg-primary px-2 rounded">javascript</p>
+                                    <p class="text-white bg-primary px-2 rounded">{{ $tag->name }}</p>
                                 </div>
-                                <div class="col-auto">
-                                    <p class="text-white bg-primary px-2 rounded">Vue</p>
-                                </div>
-                                <div class="col-auto">
-                                    <p class="text-white bg-primary px-2 rounded">Vite</p>
-                                </div>
+                                @endforeach
                             </div>
                         @endforeach
                     </div>
@@ -62,7 +58,7 @@
 
                             @for ($page = $startPage; $page <= $endPage; $page++)
                                 <li class="page-item{{ $articles->currentPage() == $page ? ' active' : '' }}">
-                                    <a class="page-link border-success text-success{{ $articles->currentPage() == $page ? ' bg-success' : '' }}" href="{{ $articles->url($page) }}">{{ $page }}</a>
+                                    <a class="page-link border-success text-success{{ $articles->currentPage() == $page ? ' bg-success text-white' : '' }}" href="{{ $articles->url($page) }}">{{ $page }}</a>
                                 </li>
                             @endfor
 

@@ -18,7 +18,20 @@ class ArticleService{
     {
         $articlesPerPage = 10;
 
-        return Article::orderBy('updated_at', 'asc')->paginate($articlesPerPage);
+        return Article::orderBy('updated_at', 'desc')->paginate($articlesPerPage);
+    }
+
+    /**
+     * 検索ワードをエスケープ
+     *
+     * @param string $keyword
+     * @return string
+     */
+    private function escapeKeyword(string $keyword)
+    {
+        $escapedKeyword = '%' . addcslashes($keyword, '%_\\') . '%';
+
+        return $escapedKeyword;
     }
 
     /**
@@ -31,8 +44,10 @@ class ArticleService{
     {
         $articlesPerPage = 10;
 
-        return Article::where('title', 'like', "%$keyword%")
-            ->orWhere('contents', 'like', "%$keyword%")
+        $escapedKeyword = $this->escapeKeyword($keyword);
+
+        return Article::where('title', 'like', "%$escapedKeyword%")
+            ->orWhere('contents', 'like', "%$escapedKeyword%")
             ->orderBy('updated_at', 'desc')
             ->paginate($articlesPerPage);
     }
@@ -112,18 +127,37 @@ class ArticleService{
      * @param int $articleId;
      * @param array $data
      * @return Article
+     * @@throws Exception
      */
     public function updateArticle(int $articleId, array $data)
     {
-        $article = $this->getArticleById($articleId);
+        DB::beginTransaction();
 
+        try {
+            $article = $this->getArticleById($articleId);
 
-        $article->update([
-            'title' => $data['title'],
-            'contents' => $data['contents'],
-        ]);
+            $article->update([
+                'title' => $data['title'],
+                'contents' => $data['contents'],
+            ]);
 
-        return $article;
+            $tags = [];
+
+            // タグの関連付け(if文: タグあり、それ以外: タグなし)
+            if (isset($data['tags']) && is_array($data['tags'])) {
+                $tags = $data['tags'];
+            }
+
+            $article->tags()->sync($tags);
+            DB::commit();
+
+            return $article;
+
+        } catch (\Exception $e) {
+            // トランザクションのロールバック
+            DB::rollback();
+            throw $e;
+        }
     }
 
     /**

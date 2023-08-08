@@ -16,14 +16,14 @@
             <div class="col-12 col-md-6 my-3">
                 <nav class="navbar navbar-expand-lg navbar-dark">
                     <div class="container">
-                        <a class="navbar-brand text-light bg-success px-4" style="border-radius: 50%;" href="#"><h1>Kita</h1></a>
-                        <button class="navbar-toggler my-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <a class="navbar-brand text-light bg-success px-4" style="border-radius: 50%;" href="{{ route('article.index') }}"><h1>Kita</h1></a>
+                        <button class="navbar-toggler my-2 bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="justify-content-end collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav pl-md-4 my-md-0 mt-3 mb-lg-0">
                                 <div class="input-group mx-md-4 mx-2">
-                                    {!! Form::open(['route' => 'article.search', 'method' => 'GET', 'class' => 'd-flex align-items-center']) !!}
+                                    {!! Form::open(['route' => 'article.index', 'method' => 'GET', 'class' => 'd-flex']) !!}
                                     {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Search for something']) !!}
                                     {!! Form::submit('検索', ['class' => 'btn btn-success col-auto']) !!}
                                     {!! Form::close() !!}

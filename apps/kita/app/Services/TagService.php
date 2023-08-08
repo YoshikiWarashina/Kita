@@ -106,4 +106,19 @@ class TagService
 
         return $tag;
     }
+
+
+    /**
+     * idをベースにタグを取得し、
+     * 記事との中間テーブルレコードを削除、かつタグ自体も削除
+     *
+     * @param int $id
+     * @return void
+     */
+    public function deleteTag(int $id)
+    {
+        $tag = $this->getTagById($id);
+        $tag->articles()->detach();
+        $tag->delete();
+    }
 }

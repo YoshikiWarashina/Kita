@@ -44,7 +44,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admins']], function ()
     Route::get('/article_tags',[TagController::class, 'index'])->name('tag.index');
     Route::get('/article_tags/create',[TagController::class, 'create'])->name('tag.create');
     Route::post('/article_tags',[TagController::class, 'store'])->name('tag.store');
-    Route::get('/article_tags/{id}/edit',[TagController::class, 'edit'])->name('tag.edit');
+    Route::get('/article_tags/{id}/edit', [TagController::class, 'edit'])->name('tag.edit');
+    Route::delete('/article_tags/{id}', [TagController::class, 'destroy'])->name('tag.destroy');
     Route::put('/article_tags/{id}/edit', [TagController::class, 'update'])->name('tag.update');
 });
 
@@ -86,8 +87,7 @@ Route::middleware(['auth:members'])->group(function () {
 //articles関連 middlewareなし
 Route::group(['prefix' => 'articles'], function () {
 
-    Route::get('/', [ArticleController::class, 'index']);
-    Route::get('/', [ArticleController::class, 'search'])->name('article.search');
+    Route::get('/', [ArticleController::class, 'index'])->name('article.index');
     //詳細表示
     Route::get('/{article_id}', [ArticleController::class, 'show'])->name('article.show');
 
