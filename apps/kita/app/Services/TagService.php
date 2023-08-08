@@ -7,6 +7,16 @@ use App\Models\Tag;
 class TagService
 {
     /**
+     * 記事投稿する際に表示するタグ(アルファベット順)
+     *
+     *@return  App\Models\Tag
+     */
+    public function getTagsForArticle()
+    {
+        return Tag::orderBy('name', 'asc')->get();
+    }
+
+    /**
      * タグをページネーション込みで取得
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
@@ -95,5 +105,20 @@ class TagService
         $tag->save();
 
         return $tag;
+    }
+
+
+    /**
+     * idをベースにタグを取得し、
+     * 記事との中間テーブルレコードを削除、かつタグ自体も削除
+     *
+     * @param int $id
+     * @return void
+     */
+    public function deleteTag(int $id)
+    {
+        $tag = $this->getTagById($id);
+        $tag->articles()->detach();
+        $tag->delete();
     }
 }

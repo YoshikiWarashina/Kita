@@ -8,6 +8,13 @@
             </div>
         </div>
 
+        @if(session('message'))
+            <div class="alert alert-success">
+                <h5 class="fw-bolder">Success!</h5>
+                {{ session('message') }}
+            </div>
+        @endif
+
         {!! Form::open(['route' => 'tag.index', 'method' => 'GET']) !!}
         <div class="row">
             <div class="col-md-12 col-12 justify-content-center">

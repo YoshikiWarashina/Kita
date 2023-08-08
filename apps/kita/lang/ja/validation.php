@@ -83,7 +83,7 @@ return [
         'numeric' => ':attributeには、:max以下の数字を指定してください。',
         'file' => ':attributeには、:max kB以下のファイルを指定してください。',
         'string' => ':attributeは、:max文字以下で指定してください。',
-        'array' => ':attributeは:max個以下指定してください。',
+        'array' => ':attributeは:max個以下で指定してください。',
     ],
     'mimes' => ':attributeには:valuesタイプのファイルを指定してください。',
     'mimetypes' => ':attributeには:valuesタイプのファイルを指定してください。',
@@ -165,6 +165,7 @@ return [
         'comment' => 'コメント',
         'name' => 'ユーザー名',
         'tag_name' => 'タグ',
+        'tags' => 'タグ',
     ],
 
 ];

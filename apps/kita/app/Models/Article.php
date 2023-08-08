@@ -12,6 +12,8 @@ class Article extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $primaryKey = 'id';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -51,5 +53,15 @@ class Article extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * 記事が紐つけられるタグの取得
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'article_article_tag', 'article_id', 'article_tag_id')->withTimestamps();
     }
 }

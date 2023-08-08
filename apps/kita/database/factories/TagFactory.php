@@ -20,7 +20,7 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->country,
+            'name' => $this->faker->unique()->country,
         ];
     }
 }

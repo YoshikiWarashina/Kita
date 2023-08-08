@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\Admin;
 use App\Models\Article;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Exception;
+
 class ArticleService{
 
     /**
@@ -18,7 +18,20 @@ class ArticleService{
     {
         $articlesPerPage = 10;
 
-        return Article::orderBy('updated_at', 'asc')->paginate($articlesPerPage);
+        return Article::orderBy('updated_at', 'desc')->paginate($articlesPerPage);
+    }
+
+    /**
+     * 検索ワードをエスケープ
+     *
+     * @param string $keyword
+     * @return string
+     */
+    private function escapeKeyword(string $keyword)
+    {
+        $escapedKeyword = '%' . addcslashes($keyword, '%_\\') . '%';
+
+        return $escapedKeyword;
     }
 
     /**
@@ -31,31 +44,53 @@ class ArticleService{
     {
         $articlesPerPage = 10;
 
-        return Article::where('title', 'like', "%$keyword%")
-            ->orWhere('contents', 'like', "%$keyword%")
+        $escapedKeyword = $this->escapeKeyword($keyword);
+
+        return Article::where('title', 'like', "%$escapedKeyword%")
+            ->orWhere('contents', 'like', "%$escapedKeyword%")
             ->orderBy('updated_at', 'desc')
             ->paginate($articlesPerPage);
     }
 
     /**
-     * 新しい記事を保存
+     * 新しい記事を保存したあと、タグを関連付ける
      *
      * @param array $data
      * @return Article
+     * @throws Exception
      */
     public function saveNewArticle(array $data)
     {
-        $article = new Article();
+        DB::beginTransaction();
 
-        $article->fill([
-            'title' => $data['title'],
-            'contents' => $data['contents'],
-            'member_id' => Auth::id(),
-        ]);
+        try {
+            $article = new Article();
 
-        $article->save();
+            $article->fill([
+                'title' => $data['title'],
+                'contents' => $data['contents'],
+                'member_id' => Auth::id(),
+            ]);
 
-        return $article;
+            $article->save();
+
+            // タグの関連付け(created_at updated_at込み)
+            if (isset($data['tags']) && is_array($data['tags'])) {
+                $tags = $data['tags'];
+
+                foreach ($tags as $tag) {
+                    $article->tags()->attach($tag);
+                }
+            }
+            // トランザクションのコミット
+            DB::commit();
+            return $article;
+
+        } catch (\Exception $e) {
+            // トランザクションのロールバック
+            DB::rollback();
+            throw $e;
+        }
     }
 
     /**
@@ -92,18 +127,37 @@ class ArticleService{
      * @param int $articleId;
      * @param array $data
      * @return Article
+     * @@throws Exception
      */
     public function updateArticle(int $articleId, array $data)
     {
-        $article = $this->getArticleById($articleId);
+        DB::beginTransaction();
 
+        try {
+            $article = $this->getArticleById($articleId);
 
-        $article->update([
-            'title' => $data['title'],
-            'contents' => $data['contents'],
-        ]);
+            $article->update([
+                'title' => $data['title'],
+                'contents' => $data['contents'],
+            ]);
 
-        return $article;
+            $tags = [];
+
+            // タグの関連付け(if文: タグあり、それ以外: タグなし)
+            if (isset($data['tags']) && is_array($data['tags'])) {
+                $tags = $data['tags'];
+            }
+
+            $article->tags()->sync($tags);
+            DB::commit();
+
+            return $article;
+
+        } catch (\Exception $e) {
+            // トランザクションのロールバック
+            DB::rollback();
+            throw $e;
+        }
     }
 
     /**
