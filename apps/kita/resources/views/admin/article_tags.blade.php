@@ -86,9 +86,7 @@
             <div class="col-md-12 col-12 justify-content-center">
                 <div class="border rounded bg-white">
                     <div class="p-3">
-                        {!! Form::open(['route' => 'tag.create', 'method' => 'GET']) !!}
-                        {!! Form::submit('新規登録', ['class' => 'btn btn-primary']) !!}
-                        {!! Form::close() !!}
+                        <a href="{{ route('tag.create') }}" class="btn btn-primary">新規登録</a>
                     </div>
                     <div class="col-md-12 col-12 px-3">
                         <table class="table table-bordered table-hover">
@@ -105,9 +103,7 @@
                                 <td>{{ $tag->name }}</td>
                                 <td>{{ $tag->created_at }}</td>
                                 <td class="text-center">
-                                    {!! Form::open(['route' => ['tag.edit', $tag->id],'method' => 'GET']) !!}
-                                    {!! Form::submit('編集', ['class' => 'btn btn-primary']) !!}
-                                    {!! Form::close() !!}
+                                    <a href="{{ route('tag.edit', $tag->id) }}" class="btn btn-primary">編集</a>
                                 </td>
                             </tr>
                             @endforeach

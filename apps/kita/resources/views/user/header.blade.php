@@ -30,9 +30,7 @@
                                 </div>
                             </ul>
                             <div class="mx-2">
-                                {!! Form::open(['route' => 'article.create', 'method' => 'GET']) !!}
-                                {!! Form::submit('記事を作成する', ['class' => 'btn btn-outline-success my-md-0 my-3']) !!}
-                                {!! Form::close() !!}
+                                <a href="{{ route('article.create') }}" class="btn btn-outline-success my-md-0 my-3">記事を作成する</a>
                             </div>
                             <div class="mx-2">
                                 <div class="dropdown">
