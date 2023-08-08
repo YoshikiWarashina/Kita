@@ -44,7 +44,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admins']], function ()
     Route::get('/article_tags',[TagController::class, 'index'])->name('tag.index');
     Route::get('/article_tags/create',[TagController::class, 'create'])->name('tag.create');
     Route::post('/article_tags',[TagController::class, 'store'])->name('tag.store');
-    Route::get('/article_tags/{id}/edit',[TagController::class, 'edit'])->name('tag.edit');
+    Route::get('/article_tags/{id}/edit', [TagController::class, 'edit'])->name('tag.edit');
+    Route::delete('/article_tags/{id}', [TagController::class, 'destroy'])->name('tag.destroy');
     Route::put('/article_tags/{id}/edit', [TagController::class, 'update'])->name('tag.update');
 });
 

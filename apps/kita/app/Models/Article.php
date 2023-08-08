@@ -60,6 +60,6 @@ class Article extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'article_article_tag', 'article_id', 'article_tag_id');
+        return $this->belongsToMany(Tag::class, 'article_article_tag', 'article_id', 'article_tag_id')->withTimestamps();
     }
 }

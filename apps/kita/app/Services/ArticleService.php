@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\Admin;
 use App\Models\Article;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Exception;
+
 class ArticleService{
 
     /**
@@ -121,18 +121,37 @@ class ArticleService{
      * @param int $articleId;
      * @param array $data
      * @return Article
+     * @@throws Exception
      */
     public function updateArticle(int $articleId, array $data)
     {
-        $article = $this->getArticleById($articleId);
+        DB::beginTransaction();
 
+        try {
+            $article = $this->getArticleById($articleId);
 
-        $article->update([
-            'title' => $data['title'],
-            'contents' => $data['contents'],
-        ]);
+            $article->update([
+                'title' => $data['title'],
+                'contents' => $data['contents'],
+            ]);
 
-        return $article;
+            $tags = [];
+
+            // タグの関連付け(if文: タグあり、それ以外: タグなし)
+            if (isset($data['tags']) && is_array($data['tags'])) {
+                $tags = $data['tags'];
+            }
+
+            $article->tags()->sync($tags);
+            DB::commit();
+
+            return $article;
+
+        } catch (\Exception $e) {
+            // トランザクションのロールバック
+            DB::rollback();
+            throw $e;
+        }
     }
 
     /**

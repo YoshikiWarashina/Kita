@@ -31,11 +31,10 @@
                         <div class="pb-0">
                             <p>タグ</p>
                         </div>
-                        <select class="form-select border-success" size="3" aria-label="size 3 select example">
-                            <option value="1">PHP</option>
-                            <option value="2">Java</option>
-                            <option value="3">javascript</option>
-                            <option value="4">Ruby</option>
+                        <select class="form-select border-success" size="5" aria-label="タグ選択" name="tags[]" multiple>
+                            @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}" @if(in_array($tag->id, $article->tags->pluck('id')->toArray())) selected @endif>{{ $tag->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="px-3 py-4">

@@ -22,9 +22,9 @@
                 {{ session('message') }}
             </div>
         @endif
-        {!! Form::open(['route' => ['tag.update', $tag->id], 'method' => 'PUT']) !!}
         <div class="row">
             <div class="col-md-9 col-12">
+                {!! Form::open(['route' => ['tag.update', $tag->id], 'method' => 'PUT']) !!}
                 <div class="border rounded bg-white py-3">
                     <div class="col px-4 my-4">
                         <p class="mb-2">ID</p>
@@ -51,13 +51,15 @@
                 <div class="border rounded bg-white py-3 px-3">
                     <div class="col-md-12 col-12 text-center py-2">
                         {!! Form::submit('更新する', ['class' => 'btn btn-primary w-100']) !!}
+                        {!! Form::close() !!}
                     </div>
                     <div class="col-md-12 col-12 text-center py-2">
+                        {!! Form::open(['route' => ['tag.destroy', $tag->id],'method' => 'DELETE', 'onsubmit' => "return confirm('一度削除すると元に戻せません。よろしいですか？');"]) !!}
                         {!! Form::submit('削除する', ['class' => 'btn btn-danger w-100']) !!}
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
         </div>
-        {!! Form::close() !!}
     </div>
 @endsection
