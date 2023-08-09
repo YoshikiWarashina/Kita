@@ -29,9 +29,7 @@
                             {!! Form::close() !!}
                         </div>
                         <div class="col-auto mt-4 text-end">
-                            {!! Form::open(['route' => ['article.edit', $article->id], 'method' => 'GET']) !!}
-                            {!! Form::submit('更新する', ['class' => 'btn btn-success btn-sm rounded-pill']) !!}
-                            {!! Form::close() !!}
+                            <a href="{{ route('article.edit', $article->id) }}" class="btn btn-success btn-sm rounded-pill">更新する</a>
                         </div>
                         @endif
 
