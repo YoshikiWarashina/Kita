@@ -13,7 +13,7 @@
     <div class="container-fluid sticky-top border bg-white">
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 my-3">
-                <nav class="navbar navbar-expand-lg navbar-dark">
+                <nav class="navbar navbar-expand-lg">
                     <div class="container">
                         <a class="navbar-brand text-light bg-success px-4" style="border-radius: 50%;" href="{{ route('article.index') }}"><h1>Kita</h1></a>
                         <button class="navbar-toggler my-2 bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

@@ -25,7 +25,7 @@ use App\Http\Controllers\Tag\TagController;
 
 //デザインチェック用
 Route::get('/', function () {
-    return view('articles.delete');
+    return view('adminLTE');
 });
 
 //done page 1,2,3,4,5,6,7,8
