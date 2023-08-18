@@ -35,48 +35,7 @@
                             </div>
                         @endforeach
                     </div>
-                    <nav aria-label="...">
-                        <ul class="pagination justify-content-center pt-3">
-                            @if ($articles->onFirstPage())
-                                <li class="page-item disabled">
-                                    <span class="page-link text-success border-success" aria-label="前">
-                                        Previous
-                                    </span>
-                                </li>
-                            @else
-                                <li class="page-item text-success border-success">
-                                    <a class="page-link text-success border-success" href="{{ $articles->previousPageUrl() }}" aria-label="前">
-                                        Previous
-                                    </a>
-                                </li>
-                            @endif
-
-                            @php
-                                $startPage = max(1, $articles->currentPage() - 1);
-                                $endPage = min($startPage + 2, $articles->lastPage());
-                            @endphp
-
-                            @for ($page = $startPage; $page <= $endPage; $page++)
-                                <li class="page-item{{ $articles->currentPage() == $page ? ' active' : '' }}">
-                                    <a class="page-link border-success text-success{{ $articles->currentPage() == $page ? ' bg-success text-white' : '' }}" href="{{ $articles->url($page) }}">{{ $page }}</a>
-                                </li>
-                            @endfor
-
-                            @if ($articles->hasMorePages())
-                                <li class="page-item">
-                                    <a class="page-link text-success border-success" href="{{ $articles->nextPageUrl() }}" aria-label="次">
-                                        Next
-                                    </a>
-                                </li>
-                            @else
-                                <li class="page-item disabled">
-                                    <span class="page-link text-success border-success" aria-label="次">
-                                        Next
-                                    </span>
-                                </li>
-                            @endif
-                        </ul>
-                    </nav>
+                    {{ $articles->appends(request()->query())->links('articles.common.article_pagination') }}
                 </div>
             </div>
         </div>
