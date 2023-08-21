@@ -14,7 +14,7 @@
                             </div>
                         </div>
                         <div class="border rounded bg-white pt-3 px-3">
-                            <form method="POST" action="{{ route('member.register') }}">
+                            <form method="POST" action="{{ route('register.form') }}">
                                 @csrf
                                 <div class="col px-4 mb-4">
                                     <div class="row">
@@ -63,12 +63,6 @@
                                     <button type="submit" class="btn btn-success">
                                         {{ __('登録する') }}
                                     </button>
-
-                                    @if (Route::has('password.request'))
-                                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                                            {{ __('Forgot Your Password?') }}
-                                        </a>
-                                    @endif
                                 </div>
                             </form>
                         </div>

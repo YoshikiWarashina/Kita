@@ -33,7 +33,7 @@ Route::get('/', function () {
 
 //admins middleware
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:admins']], function () {
-    Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class,'logout'])->name('admin/logout');
+    Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class,'logout'])->name('admin.logout');
     Route::get('/admin_users', [AdminController::class, 'index'])->name('admin_users.index');
     Route::get('/admin_users_create', [AdminController::class, 'create'])->name('admin_users.create');
     Route::post('/admin_users', [AdminController::class, 'store'])->name('admin_users.store');
@@ -52,14 +52,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admins']], function ()
 
 //admins middlewareなし
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin/login');
+    Route::get('/login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login.form');
+    Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin.login');
 });
 
-Route::get('/member_registration', [RegisterController::class, 'showRegistrationForm'])->name('member.register');
-Route::post('/member_registration', [RegisterController::class, 'register'])->name('member.register');
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
+Route::get('/member_registration', [RegisterController::class, 'showRegistrationForm'])->name('register.form');
+Route::post('/member_registration', [RegisterController::class, 'register'])->name('register');
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login.form');
+Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 

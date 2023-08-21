@@ -16,7 +16,7 @@
                         <div class="border rounded bg-white pt-3 px-3">
                             <div class="mx-4">
                                 <div class="row">
-                                    <p class="text-end">新規会員登録は<a href="{{ route('member.register') }}" style="text-decoration: none;">こちら</a></p>
+                                    <p class="text-end">新規会員登録は<a href="{{ route('register.form') }}" style="text-decoration: none;">こちら</a></p>
                                 </div>
                             </div>
                             <form method="POST" action="{{ route('login') }}">

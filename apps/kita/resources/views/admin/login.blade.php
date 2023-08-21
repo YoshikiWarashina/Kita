@@ -37,13 +37,8 @@
                                 </div>
                                 <div class="col-md-4 col-12 px-4 my-4">
                                     <button type="submit" class="btn btn-primary col-12">
-                                        {{ __('Login') }}
+                                        {{ __('ログイン') }}
                                     </button>
-                                    @if (Route::has('password.request'))
-                                        <a class="btn btn-link" href="{{ url('admin/password.request') }}">
-                                            {{ __('Forgot Your Password?') }}
-                                        </a>
-                                    @endif
                                 </div>
                             </div>
                         </div>

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 class LoginController extends Controller
@@ -16,9 +17,9 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-    
-    use AuthenticatesUsers {                                //追記
-        logout as performLogout;                            //追記
+
+    use AuthenticatesUsers {
+        logout as performLogout;
     }
     /**
      * Where to redirect users after login.
@@ -43,23 +44,9 @@ class LoginController extends Controller
      * @return \Illuminate\Contracts\Auth\Guard
      */
 
-    protected function guard()                              //追記
-    {                                                       //追記
-        return Auth::guard('admins');                        //追記
-    }                                                       //追記
-
-
-    /**
-     * Log the user out of the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-
-    public function logout(Request $request)                //追記
-    {                                                       //追記
-        $this->performLogout($request);                     //追記
-        return redirect('admin/login');                     //追記
+    protected function guard()
+    {
+        return Auth::guard('admins');
     }
 
     /**
@@ -69,5 +56,49 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('admin.login');
+    }
+
+    /**
+     * 前にアクセスしたページに限らず、ログイン後はadmin一覧にいく
+     *
+     * @param Illuminate\Http\Request $request
+     * @return　\Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        if ($response = $this->authenticated($request, $this->guard()->user())) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect()->route('admin_users.index');
+    }
+
+
+    /**
+     * ログアウト後はログインページにいく(user, adminの連結を排除)
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+
+    public function logout(Request $request)
+    {
+        Auth::guard('admins')->logout();
+
+        $request->session()->regenerateToken();
+
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect()->route('admin.login.form');
     }
 }

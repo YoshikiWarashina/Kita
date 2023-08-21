@@ -29,7 +29,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    {!! Form::open(['route' => 'admin/logout', 'method' => 'POST']) !!}
+                    {!! Form::open(['route' => 'admin.logout', 'method' => 'POST']) !!}
                     {!! csrf_field() !!} <!-- CSRF トークンを追加 -->
                     <button type="submit" class="btn-link nav-link text-white">
                         <i class="nav-icon fa-solid fa-door-open"></i>
