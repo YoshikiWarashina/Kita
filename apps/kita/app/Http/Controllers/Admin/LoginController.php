@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -17,7 +16,7 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-    // use AuthenticatesUsers;                              //削除
+    
     use AuthenticatesUsers {                                //追記
         logout as performLogout;                            //追記
     }
@@ -61,5 +60,14 @@ class LoginController extends Controller
     {                                                       //追記
         $this->performLogout($request);                     //追記
         return redirect('admin/login');                     //追記
+    }
+
+    /**
+     * 管理者側のログイン画面へ遷移
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function showLoginForm()
+    {
+        return view('admin.login');
     }
 }

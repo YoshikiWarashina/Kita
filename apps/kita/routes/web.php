@@ -52,10 +52,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admins']], function ()
 
 //admins middlewareなし
 Route::group(['prefix' => 'admin'], function () {
-    Route::view('/login', 'admin/login');
+    Route::get('/login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin/login');
-    Route::view('/register', 'admin/register');
-    Route::post('/register', [App\Http\Controllers\Admin\RegisterController::class, 'register'])->name('admin/register');
 });
 
 Route::get('/member_registration', [RegisterController::class, 'showRegistrationForm'])->name('member.register');
