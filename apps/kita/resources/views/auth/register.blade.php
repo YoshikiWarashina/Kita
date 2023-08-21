@@ -6,7 +6,7 @@
             <div class = "col-md-6 col-12">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-10 col-12">
-                        <div class="py-3 px-3">
+                        <div class="py-3 px-2">
                             <div class="col">
                                 <div class="row">
                                     <h1 class="border-bottom border-dark py-2"><strong>Kita</strong>会員登録</h1>

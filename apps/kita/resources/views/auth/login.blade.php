@@ -6,7 +6,7 @@
             <div class = "col-md-6 col-12">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-10 col-12">
-                        <div class="py-3 px-3">
+                        <div class="py-3 px-2">
                             <div class="col">
                                 <div class="row">
                                     <h1 class="border-bottom border-dark py-2"><strong>Kita</strong> ログイン</h1>
@@ -14,7 +14,7 @@
                             </div>
                         </div>
                         <div class="border rounded bg-white pt-3 px-3">
-                            <div class="col mx-4">
+                            <div class="mx-4">
                                 <div class="row">
                                     <p class="text-end">新規会員登録は<a href="{{ route('member.register') }}" style="text-decoration: none;">こちら</a></p>
                                 </div>
@@ -49,12 +49,6 @@
                                     <button type="submit" class="btn btn-success">
                                         {{ __('ログイン') }}
                                     </button>
-
-                                    @if (Route::has('password.request'))
-                                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                                            {{ __('Forgot Your Password?') }}
-                                        </a>
-                                    @endif
                                 </div>
                             </form>
                         </div>
