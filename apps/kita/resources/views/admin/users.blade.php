@@ -1,107 +1,94 @@
-@extends('admin.header')
+ @extends('admin.admin_menu.header')
 
-@section('content')
-    <div class="container">
-        <div class="row pt-5">
-            <div class="col">
-                <h1>会員管理</h1>
-            </div>
-        </div>
+ @section('content')
+     <div class="content-wrapper" style="min-height: auto;">
+         <section class="content-header mx-2 mt-2">
+             <div class="container-fluid">
+                 <div class="row mb-2">
+                     <div class="col-sm-6">
+                         <h1>会員管理</h1>
+                     </div>
+                 </div>
+             </div>
+         </section>
 
-        {!! Form::open(['route' => 'member.index', 'method' => 'GET']) !!}
-        <div class="row">
-            <div class="col-md-12 col-12 justify-content-center">
-                <div class="border rounded p-3 bg-white">
-                    <div class="row">
-                        <div class="col-md-6 col-12">
-                            <p class="mb-2">ユーザー名</p>
-                            {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name']) !!}
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <p class="mb-2">メールアドレス</p>
-                            {!! Form::email('email', null, ['class' => 'form-control', 'id' => 'email']) !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+         <section class="content mx-2">
+             {!! Form::open(['route' => 'member.index', 'method' => 'GET']) !!}
+             <div class="container-fluid">
+                 <div class="row">
+                     <div class="col-12">
+                         <div class="card">
+                             <div class="card-body">
+                                 <div class="row">
+                                     <div class="col-md-6 col-12">
+                                         <div class="form-group">
+                                             <label>ユーザー名</label>
+                                             {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name']) !!}
+                                         </div>
+                                     </div>
+                                     <div class="col-md-6 col-12">
+                                         <div class="form-group">
+                                             <label>メールアドレス</label>
+                                             {!! Form::email('email', null, ['class' => 'form-control', 'id' => 'email']) !!}
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="card-footer text-center">
+                                 {!! Form::submit('検索', ['class' => 'btn btn-primary']) !!}
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             {!! Form::close() !!}
+         </section>
 
-        <div class="row">
-            <div class="col-md-12 col-12 justify-content-center">
-                <div class="border rounded p-3 text-center">
-                    {!! Form::submit('検索', ['class' => 'btn btn-primary']) !!}
-                </div>
-            </div>
-        </div>
-        {!! Form::close() !!}
-        <div class="row">
-            <nav aria-label="...">
-                <ul class="pagination pt-3">
-                    @if ($members->onFirstPage())
-                        <li class="page-item disabled">
-                            <span class="page-link" aria-label="前">
-                                Previous
-                            </span>
-                        </li>
-                    @else
-                        <li class="page-item">
-                            <a class="page-link" href="{{ $members->previousPageUrl() }}" aria-label="前">
-                                Previous
-                            </a>
-                        </li>
-                    @endif
+         <section class="content mx-2">
+             <div class="container-fluid">
+                 <div class="row">
+                     <div class="col-sm-12 col-md-7">
+                         <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+                             <ul class="pagination">
+                                 {{ $members->appends(request()->query())->links('admin.common.admin_pagination') }}
+                             </ul>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </section>
 
-                    @php
-                        $startPage = max(1, $members->currentPage() - 1);
-                        $endPage = min($startPage + 2, $members->lastPage());
-                    @endphp
-
-                    @for ($page = $startPage; $page <= $endPage; $page++)
-                        <li class="page-item{{ $members->currentPage() == $page ? ' active' : '' }}">
-                            <a class="page-link" href="{{ $members->url($page) }}">{{ $page }}</a>
-                        </li>
-                    @endfor
-
-                    @if ($members->hasMorePages())
-                        <li class="page-item">
-                            <a class="page-link" href="{{ $members->nextPageUrl() }}" aria-label="次">
-                                Next
-                            </a>
-                        </li>
-                    @else
-                        <li class="page-item disabled">
-                            <span class="page-link" aria-label="次">
-                                Next
-                            </span>
-                        </li>
-                    @endif
-                </ul>
-            </nav>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-12 justify-content-center">
-                <div class="border rounded bg-white">
-                    <div class="p-3">
-                        <table class="table table-bordered table-hover">
-                            <colgroup span="4"></colgroup>
-                            <tr>
-                                <th>ID</th>
-                                <th>ユーザー名</th>
-                                <th>メールアドレス</th>
-                                <th>登録日時</th>
-                            </tr>
-                            @foreach ($members as $member)
-                                <tr>
-                                    <td>{{ $member->id }}</td>
-                                    <td>{{ $member->name }}</td>
-                                    <td>{{ $member->email }}</td>
-                                    <td>{{ $member->created_at }}</td>
-                                </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
+         <section class="content mx-2">
+             <div class="container-fluid">
+                 <div class="row">
+                     <div class="col-12">
+                         <div class="card">
+                             <div class="card-body">
+                                 <table class="table table-bordered table-hover">
+                                     <thead>
+                                     <tr>
+                                         <th>ID</th>
+                                         <th>ユーザー名</th>
+                                         <th>メールアドレス</th>
+                                         <th>登録日時</th>
+                                     </tr>
+                                     </thead>
+                                     <tbody>
+                                     @foreach ($members as $member)
+                                         <tr>
+                                             <td>{{ $member->id }}</td>
+                                             <td>{{ $member->name }}</td>
+                                             <td>{{ $member->email }}</td>
+                                             <td>{{ $member->created_at }}</td>
+                                         </tr>
+                                     @endforeach
+                                     </tbody>
+                                 </table>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </section>
+     </div>
+ @endsection
