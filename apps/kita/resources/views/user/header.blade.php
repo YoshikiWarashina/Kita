@@ -22,10 +22,10 @@
                         <div class="justify-content-end collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav pl-md-4 my-md-0 mt-3 mb-lg-0">
                                 <div class="input-group mx-md-4 mx-2">
-                                    {!! Form::open(['route' => 'article.index', 'method' => 'GET', 'class' => 'd-flex']) !!}
-                                    {!! Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Search for something']) !!}
-                                    {!! Form::submit('検索', ['class' => 'btn btn-success col-auto']) !!}
-                                    {!! Form::close() !!}
+                                    {{ Form::open(['route' => 'article.index', 'method' => 'GET', 'class' => 'd-flex']) }}
+                                    {{ Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Search for something']) }}
+                                    {{ Form::submit('検索', ['class' => 'btn btn-success col-auto']) }}
+                                    {{ Form::close() }}
                                 </div>
                             </ul>
                             <div class="mx-2">
@@ -41,10 +41,10 @@
                                             <a class="dropdown-item text-primary" href="{{ route('profile.edit') }}">プロフィール編集</a>
                                         </li>
                                         <li>
-                                            <form method="POST" action="{{ route('logout') }}">
-                                                @csrf
-                                                <button type="submit" class="dropdown-item text-primary">ログアウト</button>
-                                            </form>
+                                            {{ Form::open(['method' => 'POST', 'route' => 'logout']) }}
+                                            @csrf
+                                            {{ Form::button('ログアウト', ['type' => 'submit', 'class' => 'dropdown-item text-primary']) }}
+                                            {{ Form::close() }}
                                         </li>
                                     </ul>
                                 </div>
