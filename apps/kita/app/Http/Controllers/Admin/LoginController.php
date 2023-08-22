@@ -5,6 +5,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+
 class LoginController extends Controller
 {
     /*
@@ -21,17 +22,14 @@ class LoginController extends Controller
     use AuthenticatesUsers {
         logout as performLogout;
     }
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/admin/admin_users';
+
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
+
     public function __construct()
     {
         $this->middleware('guest:admins')->except('logout');
@@ -53,6 +51,7 @@ class LoginController extends Controller
      * 管理者側のログイン画面へ遷移
      * @return \Illuminate\Contracts\View\View
      */
+
     public function showLoginForm()
     {
         return view('admin.login');
@@ -64,6 +63,7 @@ class LoginController extends Controller
      * @param Illuminate\Http\Request $request
      * @return　\Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
+
     protected function sendLoginResponse(Request $request)
     {
         $request->session()->regenerate();
@@ -84,21 +84,13 @@ class LoginController extends Controller
      * ログアウト後はログインページにいく(user, adminの連結を排除)
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
 
     public function logout(Request $request)
     {
-        Auth::guard('admins')->logout();
+        $this->guard()->logout();
 
-        $request->session()->regenerateToken();
-
-        if ($response = $this->loggedOut($request)) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect()->route('admin.login.form');
+        return redirect()->route('admin.login.form');
     }
 }

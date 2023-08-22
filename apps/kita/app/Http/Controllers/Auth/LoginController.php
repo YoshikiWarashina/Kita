@@ -24,17 +24,11 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/articles';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
      */
+
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
@@ -46,6 +40,7 @@ class LoginController extends Controller
      * @param Illuminate\Http\Request $request
      * @return　\Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
+
     protected function sendLoginResponse(Request $request)
     {
         $request->session()->regenerate();
@@ -67,18 +62,11 @@ class LoginController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return　\Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
+
     public function logout(Request $request)
     {
-        Auth::guard('members')->logout();
+        $this->guard()->logout();
 
-        $request->session()->regenerateToken();
-
-        if ($response = $this->loggedOut($request)) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect()->route('login.form');
+        return redirect()->route('login.form');
     }
 }
