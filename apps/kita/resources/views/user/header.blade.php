@@ -28,15 +28,18 @@
                                     {{ Form::close() }}
                                 </div>
                             </ul>
+                            @if(auth()->guard('members')->check())
                             <div class="mx-2">
                                 <a href="{{ route('article.create') }}" class="btn btn-outline-success my-md-0 my-3">記事を作成する</a>
                             </div>
+                            @endif
                             <div class="mx-2">
                                 <div class="dropdown">
                                     <button class="btn btn-success dropdown-toggle　dropdown-toggle-no-caret" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa-regular fa-user-circle"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        @if(auth()->guard('members')->check())
                                         <li>
                                             <a class="dropdown-item text-primary" href="{{ route('profile.edit') }}">プロフィール編集</a>
                                         </li>
@@ -46,6 +49,11 @@
                                             {{ Form::button('ログアウト', ['type' => 'submit', 'class' => 'dropdown-item text-primary']) }}
                                             {{ Form::close() }}
                                         </li>
+                                        @else
+                                        <li>
+                                            <a class="dropdown-item text-primary" href="{{ route('login.form') }}">ログイン</a>
+                                        </li>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
