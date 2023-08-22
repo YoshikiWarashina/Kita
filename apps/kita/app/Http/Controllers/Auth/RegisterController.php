@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Member;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -39,6 +39,17 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    /**
+     * Get the guard instance for the user authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\Guard
+     */
+
+    protected function guard()
+    {
+        return Auth::guard('members');
     }
 
     /**

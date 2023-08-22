@@ -31,7 +31,18 @@ class LoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest:members')->except('logout');
+    }
+
+    /**
+     * Get the guard instance for the user authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\Guard
+     */
+
+    protected function guard()
+    {
+        return Auth::guard('members');
     }
 
     /**
