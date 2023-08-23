@@ -6,6 +6,10 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\Auth\Guard;
 
 class LoginController extends Controller
 {
@@ -40,7 +44,7 @@ class LoginController extends Controller
     /**
      * Get the guard instance for the admin authentication.
      *
-     * @return \Illuminate\Contracts\Auth\Guard
+     * @return Guard
      */
 
     protected function guard()
@@ -50,7 +54,7 @@ class LoginController extends Controller
 
     /**
      * 管理者側のログイン画面へ遷移
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
 
     public function showLoginForm()
@@ -61,8 +65,8 @@ class LoginController extends Controller
     /**
      * 前にアクセスしたページに限らず、ログイン後はadmin一覧にいく
      *
-     * @param Illuminate\Http\Request $request
-     * @return　\Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @return Response|JsonResponse|RedirectResponse
      */
 
     protected function sendLoginResponse(Request $request)
@@ -84,8 +88,8 @@ class LoginController extends Controller
     /**
      * ログアウト後はログインページにいく(user, adminの連結を排除)
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  Request  $request
+     * @return RedirectResponse
      */
 
     public function logout(Request $request)

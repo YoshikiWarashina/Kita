@@ -7,6 +7,9 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 
 class LoginController extends Controller
 {
@@ -37,7 +40,7 @@ class LoginController extends Controller
     /**
      * Get the guard instance for the user authentication.
      *
-     * @return \Illuminate\Contracts\Auth\Guard
+     * @return Guard
      */
 
     protected function guard()
@@ -48,8 +51,8 @@ class LoginController extends Controller
     /**
      * 前にアクセスしたページに限らず、ログイン後は記事一覧にいく
      *
-     * @param \Illuminate\Http\Request $request
-     * @return　\Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @return Response|JsonResponse|RedirectResponse
      */
 
     protected function sendLoginResponse(Request $request)
@@ -70,8 +73,8 @@ class LoginController extends Controller
     /**
      * ログアウト後はログインページにいく(user, adminの連結を排除)
      *
-     * @param \Illuminate\Http\Request $request
-     * @return　\Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @return Response|JsonResponse|RedirectResponse
      */
 
     public function logout(Request $request)
