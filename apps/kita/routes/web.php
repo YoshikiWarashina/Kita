@@ -1,16 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\Comment\CommentController;
+use App\Http\Controllers\Member\Auth\LoginController;
+use App\Http\Controllers\Member\Auth\PasswordController;
+use App\Http\Controllers\Member\Auth\ProfileController;
+use App\Http\Controllers\Member\Auth\RegisterController;
 use App\Http\Controllers\Member\MemberController;
-use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Tag\TagController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
