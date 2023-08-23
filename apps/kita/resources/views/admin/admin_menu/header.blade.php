@@ -24,7 +24,7 @@
 @include('admin.admin_menu.sidebar')
 
 
-<div class="main bg-light vh-100">
+<div class="main bg-light">
     @yield('content')
 </div>
 </body>
