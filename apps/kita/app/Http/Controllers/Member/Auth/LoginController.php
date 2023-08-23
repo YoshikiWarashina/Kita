@@ -67,7 +67,7 @@ class LoginController extends Controller
 
         return $request->wantsJson()
             ? new JsonResponse([], 204)
-            : redirect()->route('article.index');
+            : redirect(route('article.index'));
     }
 
     /**
@@ -81,6 +81,8 @@ class LoginController extends Controller
     {
         $this->guard()->logout();
 
-        return redirect()->route('login.form');
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect(route('login.form'));
     }
 }

@@ -66,7 +66,7 @@ class LoginController extends Controller
      * 前にアクセスしたページに限らず、ログイン後はadmin一覧にいく
      *
      * @param Request $request
-     * @return Response|JsonResponse|RedirectResponse
+     * @return JsonResponse|RedirectResponse
      */
 
     protected function sendLoginResponse(Request $request)
@@ -81,7 +81,7 @@ class LoginController extends Controller
 
         return $request->wantsJson()
             ? new JsonResponse([], 204)
-            : redirect()->route('admin_users.index');
+            : redirect(route('admin_users.index'));
     }
 
 
@@ -89,13 +89,15 @@ class LoginController extends Controller
      * ログアウト後はログインページにいく(user, adminの連結を排除)
      *
      * @param  Request  $request
-     * @return RedirectResponse
+     * @return JsonResponse|RedirectResponse
      */
 
     public function logout(Request $request)
     {
         $this->guard()->logout();
 
-        return redirect()->route('admin.login.form');
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect(route('admin.login.form'));
     }
 }
