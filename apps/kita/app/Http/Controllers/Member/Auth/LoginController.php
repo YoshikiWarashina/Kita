@@ -47,27 +47,27 @@ class LoginController extends Controller
     {
         return Auth::guard('members');
     }
-
+    
     /**
-     * 前にアクセスしたページに限らず、ログイン後は記事一覧にいく
+     * ログイン後のリダイレクト先
      *
-     * @param Request $request
-     * @return Response|JsonResponse|RedirectResponse
+     * @return string
      */
 
-    protected function sendLoginResponse(Request $request)
+    protected function redirectTo()
     {
-        $request->session()->regenerate();
+        return route('article.index');
+    }
 
-        $this->clearLoginAttempts($request);
+    /**
+     * ログイン後のリダイレクト処理
+     *
+     * @return RedirectResponse
+     */
 
-        if ($response = $this->authenticated($request, $this->guard()->user())) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect(route('article.index'));
+    protected function authenticated(Request $request, $user)
+    {
+        return redirect($this->redirectTo());
     }
 
     /**

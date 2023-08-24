@@ -6,7 +6,6 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\Auth\Guard;
@@ -63,25 +62,25 @@ class LoginController extends Controller
     }
 
     /**
-     * 前にアクセスしたページに限らず、ログイン後はadmin一覧にいく
+     * ログイン後のリダイレクト先
      *
-     * @param Request $request
-     * @return JsonResponse|RedirectResponse
+     * @return string
      */
 
-    protected function sendLoginResponse(Request $request)
+    protected function redirectTo()
     {
-        $request->session()->regenerate();
+        return route('admin_users.index');
+    }
 
-        $this->clearLoginAttempts($request);
+    /**
+     * ログイン後のリダイレクト処理
+     *
+     * @return RedirectResponse
+     */
 
-        if ($response = $this->authenticated($request, $this->guard()->user())) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect(route('admin_users.index'));
+    protected function authenticated(Request $request, $user)
+    {
+        return redirect($this->redirectTo());
     }
 
 
