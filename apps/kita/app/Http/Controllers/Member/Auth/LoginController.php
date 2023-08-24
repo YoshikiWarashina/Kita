@@ -47,7 +47,7 @@ class LoginController extends Controller
     {
         return Auth::guard('members');
     }
-    
+
     /**
      * ログイン後のリダイレクト先
      *
