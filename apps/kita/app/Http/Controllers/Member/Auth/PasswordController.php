@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Member\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Password\UpdatepassRequest;
@@ -12,7 +12,7 @@ class PasswordController extends Controller
      * プロフィール編集機能（ユーザー名、メールアドレス）
      *
      * @param PasswordService $passwordService;
-     * @param UpdatepassRequestRequest $request
+     * @param UpdatepassRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(PasswordService $passwordService, UpdatepassRequest $request)

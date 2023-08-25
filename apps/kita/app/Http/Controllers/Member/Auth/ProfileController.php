@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Member\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Services\ProfileService;
 use App\Http\Requests\Profile\UpdateRequest;
+use App\Services\ProfileService;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller

@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Member\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 
 class LoginController extends Controller
 {
@@ -37,7 +40,7 @@ class LoginController extends Controller
     /**
      * Get the guard instance for the user authentication.
      *
-     * @return \Illuminate\Contracts\Auth\Guard
+     * @return Guard
      */
 
     protected function guard()
@@ -46,38 +49,40 @@ class LoginController extends Controller
     }
 
     /**
-     * 前にアクセスしたページに限らず、ログイン後は記事一覧にいく
+     * ログイン後のリダイレクト先
      *
-     * @param Illuminate\Http\Request $request
-     * @return　\Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @return string
      */
 
-    protected function sendLoginResponse(Request $request)
+    protected function redirectTo()
     {
-        $request->session()->regenerate();
+        return route('article.index');
+    }
 
-        $this->clearLoginAttempts($request);
+    /**
+     * ログイン後のリダイレクト処理
+     *
+     * @return RedirectResponse
+     */
 
-        if ($response = $this->authenticated($request, $this->guard()->user())) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect()->route('article.index');
+    protected function authenticated(Request $request, $user)
+    {
+        return redirect($this->redirectTo());
     }
 
     /**
      * ログアウト後はログインページにいく(user, adminの連結を排除)
      *
-     * @param \Illuminate\Http\Request $request
-     * @return　\Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @return Response|JsonResponse|RedirectResponse
      */
 
     public function logout(Request $request)
     {
         $this->guard()->logout();
 
-        return redirect()->route('login.form');
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect(route('login.form'));
     }
 }

@@ -1,10 +1,14 @@
 <?php
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Auth;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\Auth\Guard;
 
 class LoginController extends Controller
 {
@@ -19,9 +23,7 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers {
-        logout as performLogout;
-    }
+    use AuthenticatesUsers;
 
 
     /**
@@ -39,7 +41,7 @@ class LoginController extends Controller
     /**
      * Get the guard instance for the admin authentication.
      *
-     * @return \Illuminate\Contracts\Auth\Guard
+     * @return Guard
      */
 
     protected function guard()
@@ -49,7 +51,7 @@ class LoginController extends Controller
 
     /**
      * 管理者側のログイン画面へ遷移
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
 
     public function showLoginForm()
@@ -58,39 +60,41 @@ class LoginController extends Controller
     }
 
     /**
-     * 前にアクセスしたページに限らず、ログイン後はadmin一覧にいく
+     * ログイン後のリダイレクト先
      *
-     * @param Illuminate\Http\Request $request
-     * @return　\Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @return string
      */
 
-    protected function sendLoginResponse(Request $request)
+    protected function redirectTo()
     {
-        $request->session()->regenerate();
+        return route('admin_users.index');
+    }
 
-        $this->clearLoginAttempts($request);
+    /**
+     * ログイン後のリダイレクト処理
+     *
+     * @return RedirectResponse
+     */
 
-        if ($response = $this->authenticated($request, $this->guard()->user())) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect()->route('admin_users.index');
+    protected function authenticated(Request $request, $user)
+    {
+        return redirect($this->redirectTo());
     }
 
 
     /**
      * ログアウト後はログインページにいく(user, adminの連結を排除)
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  Request  $request
+     * @return JsonResponse|RedirectResponse
      */
 
     public function logout(Request $request)
     {
         $this->guard()->logout();
 
-        return redirect()->route('admin.login.form');
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect(route('admin.login.form'));
     }
 }
