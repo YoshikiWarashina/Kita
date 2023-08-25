@@ -9,6 +9,12 @@
                         <h1>管理者管理</h1>
                     </div>
                 </div>
+                @if(session('message'))
+                    <div class="alert alert-success">
+                        <h5 class="fw-bolder">Success!</h5>
+                        {{ session('message') }}
+                    </div>
+                @endif
             </div>
         </section>
 
