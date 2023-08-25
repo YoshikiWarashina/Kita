@@ -21,6 +21,16 @@ class ArticleService{
         return Article::orderBy('updated_at', 'desc')->paginate($articlesPerPage);
     }
 
+    public function getMyArticles()
+    {
+        $articlesPerPage = 10;
+        $user = auth()->user();
+
+        // Assuming your Article model has a relationship to the User model
+        return $user->articles()->orderBy('updated_at', 'desc')->paginate($articlesPerPage);
+
+    }
+
     /**
      * 検索ワードをエスケープ
      *

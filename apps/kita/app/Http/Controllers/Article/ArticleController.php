@@ -139,4 +139,11 @@ class ArticleController extends Controller
         return redirect('articles')->with('message', '記事を削除しました');
     }
 
+    public function myArticles(ArticleService $articleService)
+    {
+        $articles = $articleService->getMyArticles();
+
+        return view('articles.mypage', compact('articles'));
+    }
+
 }

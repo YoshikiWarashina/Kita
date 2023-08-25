@@ -25,7 +25,7 @@ use App\Http\Controllers\Tag\TagController;
 
 //デザインチェック用
 Route::get('/', function () {
-    return view('adminLTE');
+    return view('personal.articles');
 });
 
 //done page 1,2,3,4,5,6,7,8
@@ -71,6 +71,7 @@ Route::middleware(['auth:members'])->group(function () {
         Route::get('/{article_id}/edit', [ArticleController::class, 'edit'])->name('article.edit');
         Route::put('/{article_id}/edit', [ArticleController::class, 'update'])->name('article.update');
         Route::delete('/{article_id}', [ArticleController::class, 'destroy'])->name('article.destroy');
+        Route::get('/my_articles', [ArticleController::class, 'myArticles'])->name('my.article');
     });
 
     // コメント投稿

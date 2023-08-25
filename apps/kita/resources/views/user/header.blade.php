@@ -44,6 +44,9 @@
                                             <a class="dropdown-item text-primary" href="{{ route('profile.edit') }}">プロフィール編集</a>
                                         </li>
                                         <li>
+                                            <a class="dropdown-item text-primary" href="{{ route('my.article') }}">マイページ</a>
+                                        </li>
+                                        <li>
                                             {{ Form::open(['method' => 'POST', 'route' => 'logout']) }}
                                             @csrf
                                             {{ Form::button('ログアウト', ['type' => 'submit', 'class' => 'dropdown-item text-primary']) }}
