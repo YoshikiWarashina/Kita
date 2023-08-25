@@ -71,7 +71,6 @@ Route::middleware(['auth:members'])->group(function () {
         Route::get('/{article_id}/edit', [ArticleController::class, 'edit'])->name('article.edit');
         Route::put('/{article_id}/edit', [ArticleController::class, 'update'])->name('article.update');
         Route::delete('/{article_id}', [ArticleController::class, 'destroy'])->name('article.destroy');
-        Route::get('/my_articles', [ArticleController::class, 'myArticles'])->name('my.article');
     });
 
     // コメント投稿
@@ -80,6 +79,7 @@ Route::middleware(['auth:members'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/password_change',[PasswordController::class, 'update'])->name('password.update');
+    Route::get('/my_articles', [ArticleController::class, 'myArticles'])->name('my.article');
 });
 
 

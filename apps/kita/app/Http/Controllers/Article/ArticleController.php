@@ -9,6 +9,7 @@ use App\Services\ArticleService;
 use App\Services\TagService;
 use App\Http\Requests\Article\CreateRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class ArticleController extends Controller
 {
@@ -123,7 +124,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 記事削除
      *
      * @param ArticleService $articleService
      * @param  int  $id
@@ -139,6 +140,12 @@ class ArticleController extends Controller
         return redirect('articles')->with('message', '記事を削除しました');
     }
 
+    /**
+     * 自分自身の記事一覧
+     *
+     * @param ArticleService $articleService
+     * @return View
+     */
     public function myArticles(ArticleService $articleService)
     {
         $articles = $articleService->getMyArticles();
