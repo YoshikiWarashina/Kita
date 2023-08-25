@@ -3273,6 +3273,9 @@ function withinMaxClamp(min, value, max) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+/* harmony import */ var _remember_checkbox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./remember.checkbox */ "./resources/js/remember.checkbox.js");
+/* harmony import */ var _remember_checkbox__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_remember_checkbox__WEBPACK_IMPORTED_MODULE_1__);
+
 
 window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 __webpack_require__(/*! admin-lte */ "./node_modules/admin-lte/dist/js/adminlte.min.js");
@@ -3321,6 +3324,34 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
 //     enabledTransports: ['ws', 'wss'],
 // });
+
+/***/ }),
+
+/***/ "./resources/js/remember.checkbox.js":
+/*!*******************************************!*\
+  !*** ./resources/js/remember.checkbox.js ***!
+  \*******************************************/
+/***/ (() => {
+
+document.addEventListener('DOMContentLoaded', function () {
+  var checkboxes = document.querySelectorAll('.article-checkbox');
+  var selectedArticles = JSON.parse(localStorage.getItem('selectedArticles')) || [];
+  checkboxes.forEach(function (checkbox) {
+    var articleId = checkbox.getAttribute('data-article-id');
+    checkbox.checked = selectedArticles.includes(articleId);
+    checkbox.addEventListener('change', function () {
+      if (this.checked) {
+        selectedArticles.push(articleId);
+      } else {
+        var index = selectedArticles.indexOf(articleId);
+        if (index !== -1) {
+          selectedArticles.splice(index, 1);
+        }
+      }
+      localStorage.setItem('selectedArticles', JSON.stringify(selectedArticles));
+    });
+  });
+});
 
 /***/ }),
 
@@ -25479,6 +25510,18 @@ const toJSONObject = (obj) => {
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	
