@@ -1,16 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Article\ArticleController;
 use App\Http\Controllers\Comment\CommentController;
+use App\Http\Controllers\Member\Auth\LoginController;
+use App\Http\Controllers\Member\Auth\PasswordController;
+use App\Http\Controllers\Member\Auth\ProfileController;
+use App\Http\Controllers\Member\Auth\RegisterController;
 use App\Http\Controllers\Member\MemberController;
-use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Tag\TagController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +32,7 @@ Route::get('/', function () {
 
 //admins middleware
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:admins']], function () {
-    Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class,'logout'])->name('admin/logout');
+    Route::post('/logout', [\App\Http\Controllers\Admin\Auth\LoginController::class,'logout'])->name('admin.logout');
     Route::get('/admin_users', [AdminController::class, 'index'])->name('admin_users.index');
     Route::get('/admin_users_create', [AdminController::class, 'create'])->name('admin_users.create');
     Route::post('/admin_users', [AdminController::class, 'store'])->name('admin_users.store');
@@ -51,17 +50,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admins']], function ()
 
 
 //admins middlewareなし
-Route::group(['prefix' => 'admin'], function () {
-    Route::view('/login', 'admin/login');
-    Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin/login');
-    Route::view('/register', 'admin/register');
-    Route::post('/register', [App\Http\Controllers\Admin\RegisterController::class, 'register'])->name('admin/register');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'showLoginForm'])->name('login.form');
+    Route::post('/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'login'])->name('login');
 });
 
-Route::get('/member_registration', [RegisterController::class, 'showRegistrationForm'])->name('member.register');
-Route::post('/member_registration', [RegisterController::class, 'register'])->name('member.register');
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
+Route::get('/member_registration', [RegisterController::class, 'showRegistrationForm'])->name('register.form');
+Route::post('/member_registration', [RegisterController::class, 'register'])->name('register');
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login.form');
+Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 

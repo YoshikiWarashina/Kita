@@ -1,12 +1,14 @@
 <?php
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Auth;
+
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\Admin;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Auth\Guard;
+
 class RegisterController extends Controller
 {
     /*
@@ -42,7 +44,7 @@ class RegisterController extends Controller
     /**
      * Get the guard instance for the admin authentication.
      *
-     * @return \Illuminate\Contracts\Auth\Guard
+     * @return Guard
      */
 
     protected function guard()
