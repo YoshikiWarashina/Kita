@@ -7,6 +7,7 @@
     <title>Laravel</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/delete.articles.js') }}" defer></script>
 
 </head>
 <body class="sidebar-mini layout-fixed">

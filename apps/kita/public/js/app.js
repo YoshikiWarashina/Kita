@@ -3333,13 +3333,21 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
   \*******************************************/
 /***/ (() => {
 
+// ページ遷移してもチェックボックスを記憶しておく
 document.addEventListener('DOMContentLoaded', function () {
+  //全てのチェックボックス要素を取得
   var checkboxes = document.querySelectorAll('.article-checkbox');
+
+  //チェックされているものを取得 or 空の配列
   var selectedArticles = JSON.parse(localStorage.getItem('selectedArticles')) || [];
   checkboxes.forEach(function (checkbox) {
+    //data-article-id属性から記事のidを取得
     var articleId = checkbox.getAttribute('data-article-id');
+
+    //要素が実際にチェックされているかどうかの確認
     checkbox.checked = selectedArticles.includes(articleId);
     checkbox.addEventListener('change', function () {
+      //チェックされていれば配列に追加 or されてなければ排除
       if (this.checked) {
         selectedArticles.push(articleId);
       } else {
@@ -3348,6 +3356,7 @@ document.addEventListener('DOMContentLoaded', function () {
           selectedArticles.splice(index, 1);
         }
       }
+      //配列を文字列にしてローカルストレージに保存
       localStorage.setItem('selectedArticles', JSON.stringify(selectedArticles));
     });
   });

@@ -10,6 +10,8 @@ use App\Services\TagService;
 use App\Http\Requests\Article\CreateRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Models\Article;
 
 class ArticleController extends Controller
 {
@@ -151,6 +153,18 @@ class ArticleController extends Controller
         $articles = $articleService->getMyArticles();
 
         return view('articles.mypage', compact('articles'));
+    }
+
+
+
+    public function deleteSelected(Request $request)
+    {
+        $selectedArticles = $request->input('selected_articles', []);
+
+        // 選択された記事を削除
+        Article::whereIn('id', $selectedArticles)->delete();
+
+        return response()->json(['message' => 'Selected articles deleted successfully']);
     }
 
 }

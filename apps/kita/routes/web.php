@@ -79,6 +79,7 @@ Route::middleware(['auth:members'])->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/password_change',[PasswordController::class, 'update'])->name('password.update');
     Route::get('/my_articles', [ArticleController::class, 'myArticles'])->name('my.article');
+    Route::delete('/my_articles', [ArticleController::class, 'deleteSelected'])->name('article.deleteSelected');
 });
 
 
