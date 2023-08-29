@@ -10,8 +10,8 @@ use App\Services\TagService;
 use App\Http\Requests\Article\CreateRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
-use App\Models\Article;
+use App\Http\Requests\Article\DeleteRequest;
+use Illuminate\Http\JsonResponse;
 
 class ArticleController extends Controller
 {
@@ -156,15 +156,22 @@ class ArticleController extends Controller
     }
 
 
+    /**
+     * 自分自身の記事削除
+     *
+     * @param ArticleService $articleService
+     * @param DeleteRequest $request
+     * @return JsonResponse
+     */
 
-    public function deleteSelected(Request $request)
+    public function deleteSelected(ArticleService $articleService, DeleteRequest $request)
     {
         $selectedArticles = $request->input('selected_articles', []);
 
         // 選択された記事を削除
-        Article::whereIn('id', $selectedArticles)->delete();
+        $articleService->deleteSelectedArticles($selectedArticles);
 
-        return response()->json(['message' => 'Selected articles deleted successfully']);
+        return response()->json(['message' => '選択した記事の削除が完了しました']);
     }
 
 }

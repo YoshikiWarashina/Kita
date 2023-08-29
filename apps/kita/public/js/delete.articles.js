@@ -30,7 +30,7 @@ $(function () {
         'X-CSRF-TOKEN': csrfToken
       },
       success: function success(response) {
-        alert('削除処理が完了しました。');
+        alert(response.message);
 
         // 選択された記事の情報をクリアして、ページをリロード
         clearSelectedArticles();
