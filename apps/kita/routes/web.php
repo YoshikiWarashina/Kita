@@ -70,7 +70,7 @@ Route::middleware(['auth:members'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/password_change',[PasswordController::class, 'update'])->name('password.update');
-    Route::get('/my_articles', [ArticleController::class, 'myArticles'])->name('my.article');
+    Route::get('/my_articles', [ArticleController::class, 'listMyArticles'])->name('my.article');
     Route::delete('/my_articles', [ArticleController::class, 'deleteSelected'])->name('article.deleteSelected');
 });
 

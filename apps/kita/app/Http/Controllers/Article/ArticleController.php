@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Http\Requests\Article\DeleteRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Session;
 
 class ArticleController extends Controller
 {
@@ -148,7 +149,7 @@ class ArticleController extends Controller
      * @param ArticleService $articleService
      * @return View
      */
-    public function myArticles(ArticleService $articleService)
+    public function listMyArticles(ArticleService $articleService)
     {
         $articles = $articleService->getMyArticles();
 
@@ -171,7 +172,9 @@ class ArticleController extends Controller
         // 選択された記事を削除
         $articleService->deleteSelectedArticles($selectedArticles);
 
-        return response()->json(['message' => '選択した記事の削除が完了しました']);
+        Session::flash('message', '選択した記事の削除が完了しました');
+
+        return response()->json();
     }
 
 }

@@ -1,3 +1,5 @@
+window.$ = window.jQuery = require('jquery');
+
 $(function() {
     $('#my-button').on('click', function() {
 
@@ -27,11 +29,10 @@ $(function() {
             },
             success: function(response) {
 
-                alert(response.message);
-
                 // 選択された記事の情報をクリアして、ページをリロード
                 clearSelectedArticles();
-                location.reload();
+                //削除後、1ページ目にリダイレクト
+                window.location.href = window.location.pathname;
             },
             error: function(xhr, status, error) {
                 alert('削除中にエラーが発生しました。');

@@ -3,6 +3,12 @@
 @section('content')
     <div class="container my-5">
         <div class="row justify-content-center align-items-center">
+            @if(session('message'))
+                <div class="alert alert-success">
+                    <h5 class="fw-bolder">Success!</h5>
+                    {{ session('message') }}
+                </div>
+            @endif
             <div class="col-md-8 col-12 bg-white rounded">
                 <div class="container">
                     <div class="py-3 text-secondary">
