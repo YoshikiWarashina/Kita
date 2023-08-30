@@ -22,14 +22,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//デザインチェック用
-Route::get('/', function () {
-    return view('personal.articles');
-});
-
-//done page 1,2,3,4,5,6,7,8
-//done page 1,2,3,4,5,6,7,9,10
-
 //admins middleware
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:admins']], function () {
     Route::post('/logout', [\App\Http\Controllers\Admin\Auth\LoginController::class,'logout'])->name('admin.logout');
