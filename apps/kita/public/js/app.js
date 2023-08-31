@@ -3422,7 +3422,6 @@ $(function () {
           selectedArticles.splice(index, 1);
         }
       }
-
       // 配列を文字列にしてローカルストレージに保存
       localStorage.setItem('selectedArticles', JSON.stringify(selectedArticles));
     });
