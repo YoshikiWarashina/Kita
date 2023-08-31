@@ -9,6 +9,10 @@ use App\Services\ArticleService;
 use App\Services\TagService;
 use App\Http\Requests\Article\CreateRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use App\Http\Requests\Article\DeleteRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Session;
 
 class ArticleController extends Controller
 {
@@ -123,7 +127,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 記事削除
      *
      * @param ArticleService $articleService
      * @param  int  $id
@@ -137,6 +141,40 @@ class ArticleController extends Controller
         $articleService->deleteArticle($id);
 
         return redirect('articles')->with('message', '記事を削除しました');
+    }
+
+    /**
+     * 自分自身の記事一覧
+     *
+     * @param ArticleService $articleService
+     * @return View
+     */
+    public function listMyArticles(ArticleService $articleService)
+    {
+        $articles = $articleService->getMyArticles();
+
+        return view('articles.mypage', compact('articles'));
+    }
+
+
+    /**
+     * 自分自身の記事削除
+     *
+     * @param ArticleService $articleService
+     * @param DeleteRequest $request
+     * @return JsonResponse
+     */
+
+    public function deleteSelected(ArticleService $articleService, DeleteRequest $request)
+    {
+        $selectedArticles = $request->input('selected_articles', []);
+
+        // 選択された記事を削除
+        $articleService->deleteSelectedArticles($selectedArticles);
+
+        Session::flash('message', '選択した記事の削除が完了しました');
+
+        return response()->json();
     }
 
 }

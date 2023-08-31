@@ -3273,6 +3273,12 @@ function withinMaxClamp(min, value, max) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+/* harmony import */ var _remember_checkbox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./remember.checkbox */ "./resources/js/remember.checkbox.js");
+/* harmony import */ var _remember_checkbox__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_remember_checkbox__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _delete_articles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./delete.articles */ "./resources/js/delete.articles.js");
+/* harmony import */ var _delete_articles__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_delete_articles__WEBPACK_IMPORTED_MODULE_2__);
+
+
 
 window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 __webpack_require__(/*! admin-lte */ "./node_modules/admin-lte/dist/js/adminlte.min.js");
@@ -3321,6 +3327,106 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
 //     enabledTransports: ['ws', 'wss'],
 // });
+
+/***/ }),
+
+/***/ "./resources/js/delete.articles.js":
+/*!*****************************************!*\
+  !*** ./resources/js/delete.articles.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+$(function () {
+  $('#my-button').on('click', function () {
+    // 選択された記事のIDを配列として取得
+    var selectedArticles = Array.from(getSelectedArticles());
+
+    // 削除の確認メッセージ取得
+    var confirmDelete = confirm('選択した記事を削除しますか？');
+
+    //キャンセルしたら処理中断
+    if (!confirmDelete) {
+      return;
+    }
+
+    // CSRFトークンを取得
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+    // Ajaxリクエストを実行して選択した記事を削除
+    $.ajax({
+      type: 'DELETE',
+      url: '/my_articles',
+      data: {
+        selected_articles: selectedArticles
+      },
+      headers: {
+        'X-CSRF-TOKEN': csrfToken
+      },
+      success: function success(response) {
+        // 選択された記事の情報をクリアして、ページをリロード
+        clearSelectedArticles();
+        //削除後、1ページ目にリダイレクト
+        window.location.href = window.location.pathname;
+      },
+      error: function error(xhr, status, _error) {
+        alert('削除中にエラーが発生しました。');
+      }
+    });
+  });
+
+  // ローカルストレージから選択された記事のIDを取得する
+  function getSelectedArticles() {
+    var selectedArticlesString = localStorage.getItem('selectedArticles');
+    return new Set(JSON.parse(selectedArticlesString) || []);
+  }
+
+  // 選択された記事の情報をローカルストレージからクリアする関数
+  function clearSelectedArticles() {
+    localStorage.removeItem('selectedArticles');
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/remember.checkbox.js":
+/*!*******************************************!*\
+  !*** ./resources/js/remember.checkbox.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+// ページ遷移してもチェックボックスを記憶しておく
+$(function () {
+  // 全てのチェックボックス要素を取得
+  var checkboxes = $('.article-checkbox');
+
+  // チェックされているものを取得 or 空の配列
+  var selectedArticles = JSON.parse(localStorage.getItem('selectedArticles')) || [];
+  checkboxes.each(function () {
+    var checkbox = $(this);
+
+    // data-article-id属性から記事のidを取得
+    var articleId = checkbox.data('article-id');
+
+    // 要素が実際にチェックされているかどうかの確認
+    checkbox.prop('checked', selectedArticles.includes(articleId));
+    checkbox.on('change', function () {
+      // チェックされていれば配列に追加 or されていなければ排除
+      if (this.checked) {
+        selectedArticles.push(articleId);
+      } else {
+        var index = selectedArticles.indexOf(articleId);
+        if (index !== -1) {
+          selectedArticles.splice(index, 1);
+        }
+      }
+      // 配列を文字列にしてローカルストレージに保存
+      localStorage.setItem('selectedArticles', JSON.stringify(selectedArticles));
+    });
+  });
+});
 
 /***/ }),
 
@@ -25479,6 +25585,18 @@ const toJSONObject = (obj) => {
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	

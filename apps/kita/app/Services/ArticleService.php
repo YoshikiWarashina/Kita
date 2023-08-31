@@ -6,6 +6,8 @@ use App\Models\Article;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
 
 class ArticleService{
 
@@ -19,6 +21,21 @@ class ArticleService{
         $articlesPerPage = 10;
 
         return Article::orderBy('updated_at', 'desc')->paginate($articlesPerPage);
+    }
+
+    /**
+     * 自分自身の記事をページネーション込みで取得
+     *
+     * @return LengthAwarePaginator
+     */
+
+    public function getMyArticles()
+    {
+        $articlesPerPage = 10;
+        $user = auth()->user();
+
+        return $user->articles()->orderBy('updated_at', 'desc')->paginate($articlesPerPage);
+
     }
 
     /**
@@ -176,9 +193,10 @@ class ArticleService{
      * 記事とコメントを同時取得
      *
      * @param int $article_id
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      *
      **/
+
     public function getArticleWithCommentsById(int $article_id)
     {
         $article = Article::with(['comments' => function ($query) {
@@ -187,5 +205,19 @@ class ArticleService{
             ->find($article_id);
 
         return $article;
+    }
+
+
+    /**
+     * 記事を削除
+     *
+     * @param array $selectedArticles
+     * @return void
+     **/
+
+    public function deleteSelectedArticles(array $selectedArticles)
+    {
+        // 選択された記事を削除
+        Article::whereIn('id', $selectedArticles)->delete();
     }
 }

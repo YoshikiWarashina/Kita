@@ -7,6 +7,7 @@
     <title>Laravel</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
 <header>
@@ -42,6 +43,9 @@
                                         @if(auth()->guard('members')->check())
                                         <li>
                                             <a class="dropdown-item text-primary" href="{{ route('profile.edit') }}">プロフィール編集</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-primary" href="{{ route('my.article') }}">マイページ</a>
                                         </li>
                                         <li>
                                             {{ Form::open(['method' => 'POST', 'route' => 'logout']) }}

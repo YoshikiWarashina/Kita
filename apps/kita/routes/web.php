@@ -22,14 +22,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//デザインチェック用
-Route::get('/', function () {
-    return view('adminLTE');
-});
-
-//done page 1,2,3,4,5,6,7,8
-//done page 1,2,3,4,5,6,7,9,10
-
 //admins middleware
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:admins']], function () {
     Route::post('/logout', [\App\Http\Controllers\Admin\Auth\LoginController::class,'logout'])->name('admin.logout');
@@ -78,6 +70,8 @@ Route::middleware(['auth:members'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/password_change',[PasswordController::class, 'update'])->name('password.update');
+    Route::get('/my_articles', [ArticleController::class, 'listMyArticles'])->name('my.article');
+    Route::delete('/my_articles', [ArticleController::class, 'deleteSelected'])->name('article.deleteSelected');
 });
 
 
