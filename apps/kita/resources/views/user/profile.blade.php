@@ -29,12 +29,13 @@
                                     </div>
                                 </div>
                             </div>
-                            {!! Form::open(['route' => 'profile.update', 'method' => 'PUT']) !!}
+                            {{ Form::open(['route' => 'profile.update', 'method' => 'PUT']) }}
+                            @csrf
                                 <div class="col px-4 mb-4">
                                     <div class="row">
                                         <p class="mb-2 col-auto">{{ __('ユーザー名') }}</p>
                                     </div>
-                                    {!! Form::text('name', $member->name, ['class' => 'form-control'. ($errors->has('name') ? ' is-invalid' : ''), 'required']) !!}
+                                    {{ Form::text('name', $member->name, ['class' => 'form-control'. ($errors->has('name') ? ' is-invalid' : ''), 'required']) }}
 
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -46,7 +47,7 @@
                                     <div class="row">
                                         <p class="mb-2 col-auto">{{ __('メールアドレス') }}</p>
                                     </div>
-                                    {!! Form::email('email', $member->email, ['class' => 'form-control'. ($errors->has('email') ? ' is-invalid' : ''), 'required']) !!}
+                                    {{ Form::email('email', $member->email, ['class' => 'form-control'. ($errors->has('email') ? ' is-invalid' : ''), 'required']) }}
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -64,9 +65,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-12 px-4 my-4 text-end">
-                                    {!! Form::submit(__('更新する'), ['class' => 'btn btn-success rounded-pill']) !!}
+                                    {{ Form::submit(__('更新する'), ['class' => 'btn btn-success rounded-pill']) }}
                                 </div>
-                            {!! Form::close() !!}
+                            {{ Form::close() }}
                         </div>
                     </div>
                 </div>
@@ -87,28 +88,29 @@
                     <div class="modal-body">
                         <div class="form px-3">
                             <!--新しいパスワード-->
-                            {!! Form::open(['route' => 'password.update', 'method' => 'PUT']) !!}
+                            {{ Form::open(['route' => 'password.update', 'method' => 'PUT']) }}
+                            @csrf
                             <div class="row pt-3">
                                 <p class="mb-2 px-0">新しいパスワード</p>
                             </div>
                             <div class="row pt-1">
-                                {!! Form::password('password', ['class' => 'form-control', 'required']) !!}
+                                {{ Form::password('password', ['class' => 'form-control', 'required']) }}
                             </div>
                             <!--確認用のパスワード-->
                             <div class="row pt-3">
                                 <p class="mb-2 px-0">新しいパスワード（確認）</p>
                             </div>
                             <div class="row pt-1">
-                                {!! Form::password('password_confirmation', ['class' => 'form-control', 'required']) !!}
+                                {{ Form::password('password_confirmation', ['class' => 'form-control', 'required']) }}
                             </div>
                             </div>
                             <!--更新ボタン-->
                             <div class="row">
                                 <div class="col-md-4 col-12 px-3 my-4">
-                                    {!! Form::submit('更新する', ['class'=>'btn btn-success col-12 rounded-pill']) !!}
+                                    {{ Form::submit('更新する', ['class'=>'btn btn-success col-12 rounded-pill']) }}
                                 </div>
                             </div>
-                            {!! Form::close() !!}
+                            {{ Form::close() }}
                         </div>
                     </div>
                 </div>

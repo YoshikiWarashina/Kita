@@ -19,7 +19,7 @@
         </section>
 
         <section class="content mx-2">
-            {!! Form::open(['route' => 'admin_users.index', 'method' => 'GET']) !!}
+            {{ Form::open(['route' => 'admin_users.index', 'method' => 'GET']) }}
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
@@ -29,31 +29,31 @@
                                     <div class="col-md-4 col-12">
                                         <div class="form-group">
                                             <label>姓</label>
-                                            {!! Form::text('last_name', null, ['class' => 'form-control', 'id' => 'last_name']) !!}
+                                            {{ Form::text('last_name', null, ['class' => 'form-control', 'id' => 'last_name']) }}
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-12">
                                         <div class="form-group">
                                             <label>名</label>
-                                            {!! Form::text('first_name', null, ['class' => 'form-control', 'id' =>'first_name']) !!}
+                                            {{ Form::text('first_name', null, ['class' => 'form-control', 'id' =>'first_name']) }}
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-12">
                                         <div class="form-group">
                                             <label>メールアドレス</label>
-                                            {!! Form::email('email', null, ['class' => 'form-control', 'id' => 'email']) !!}
+                                            {{ Form::email('email', null, ['class' => 'form-control', 'id' => 'email']) }}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer text-center">
-                                {!! Form::submit('検索', ['class' => 'btn btn-primary']) !!}
+                                {{ Form::submit('検索', ['class' => 'btn btn-primary']) }}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {!! Form::close() !!}
+            {{ Form::close() }}
         </section>
 
         <section class="content mx-2">

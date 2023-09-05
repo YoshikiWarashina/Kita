@@ -24,9 +24,10 @@
 
                         @if($article->member_id === auth()->id())
                         <div class="col-auto mt-4 text-end">
-                            {!! Form::open(['route' => ['article.destroy', $article->id], 'method' => 'DELETE', 'onsubmit' => "return confirm('一度削除すると元に戻せません。よろしいですか？');"]) !!}
-                            {!! Form::submit('削除する', ['class' => 'btn btn-danger btn-sm rounded-pill']) !!}
-                            {!! Form::close() !!}
+                            {{ Form::open(['route' => ['article.destroy', $article->id], 'method' => 'DELETE', 'onsubmit' => "return confirm('一度削除すると元に戻せません。よろしいですか？');"]) }}
+                            @csrf
+                            {{ Form::submit('削除する', ['class' => 'btn btn-danger btn-sm rounded-pill']) }}
+                            {{ Form::close() }}
                         </div>
                         <div class="col-auto mt-4 text-end">
                             <a href="{{ route('article.edit', $article->id) }}" class="btn btn-success btn-sm rounded-pill">更新する</a>
@@ -47,7 +48,7 @@
                     </div>
                     <div class="py-3 text-secondary">
                         <div class="pb-2">
-                            <p>{!! nl2br($article->contents) !!}</p>
+                            <p>{{ nl2br($article->contents) }}</p>
                         </div>
                     </div>
                 </div>
@@ -64,12 +65,13 @@
                     @foreach ($article->comments as $comment)
                     <div class="border-bottom border-dark">
                         <p class="text-secondary mx-2 mt-3">{{ $comment->member->name }}が{{ $comment->created_at->format('Y年m月d日') }}に投稿</p>
-                        <p class="text-secondary mx-2">{!! nl2br(e($comment->contents)) !!}</p>
+                        <p class="text-secondary mx-2">{{ nl2br(e($comment->contents)) }}</p>
                     </div>
                     @endforeach
                 </div>
 
-                {!! Form::open(['route' => ['comment.store', $article->id]]) !!}
+                {{ Form::open(['route' => ['comment.store', $article->id], 'method' => 'POST']) }}
+                @csrf
                 <div class="row align-items-end pb-2">
                     <div class="col-md-9 col-12">
                         <div class="py-2 mx-2">
@@ -85,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-                {!! Form::close() !!}
+                {{ Form::close() }}
             </div>
         </div>
     </div>

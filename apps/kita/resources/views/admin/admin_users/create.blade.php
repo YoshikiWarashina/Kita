@@ -24,7 +24,8 @@
 
         <section class="content mx-2">
             <div class="container-fluid">
-                {!! Form::open(['route' => 'admin_users.store', 'method' => 'POST']) !!}
+                {{ Form::open(['route' => 'admin_users.store', 'method' => 'POST']) }}
+                @csrf
                 <div class="row">
                     <div class="col-md-9 col-12">
                         <div class="card">
@@ -77,7 +78,7 @@
                         </div>
                     </div>
                 </div>
-                {!! Form::close() !!}
+                {{ Form::close() }}
             </div>
         </section>
     </div>
