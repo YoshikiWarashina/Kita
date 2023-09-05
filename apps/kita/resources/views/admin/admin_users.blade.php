@@ -1,4 +1,4 @@
-@extends('admin.admin_menu.header')
+@extends('layouts.app')
 
 @section('content')
     <div class="content-wrapper" style="min-height: auto;">
@@ -98,7 +98,8 @@
                                             <td>{{ $admin->updated_at }}</td>
                                             <td>{{ $admin->created_at }}</td>
                                             <td class="text-center">
-                                                <a href="{{ route('admin_users.edit', $admin->id) }}" class="btn btn-primary">編集</a>
+                                                <a href="{{ route('admin_users.edit', $admin->id) }}"
+                                                   class="btn btn-primary">編集</a>
                                             </td>
                                         </tr>
                                     @endforeach

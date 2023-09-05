@@ -1,4 +1,4 @@
-@extends('admin.admin_menu.header')
+@extends('layouts.app')
 
 @section('content')
     <div class="content-wrapper" style="min-height: auto;">
@@ -81,7 +81,8 @@
                                             <td>{{ $tag->name }}</td>
                                             <td>{{ $tag->created_at }}</td>
                                             <td class="text-center">
-                                                <a href="{{ route('tag.edit', $tag->id) }}" class="btn btn-primary">編集</a>
+                                                <a href="{{ route('tag.edit', $tag->id) }}"
+                                                   class="btn btn-primary">編集</a>
                                             </td>
                                         </tr>
                                     @endforeach

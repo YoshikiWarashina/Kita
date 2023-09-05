@@ -18,13 +18,13 @@
 </head>
 <body>
 
-    @if (!request()->is(['login', 'member_registration', 'admin/*']))
-        @include('user.header')
-        <!--管理者側のログイン画面以外の管理者画面では管理者用のヘッダーを読み込む-->
-    @elseif (!request()->is(['admin/login']) && request()->is(['admin/*']))
-        @include('admin.admin_menu.header')
-    @endif
+@if (!request()->is(['login', 'member_registration', 'admin/*']))
+    @include('articles.common.header')
+    <!--管理者側のログイン画面以外の管理者画面では管理者用のヘッダーを読み込む-->
+@elseif (!request()->is(['admin/login']) && request()->is(['admin/*']))
+    @include('admin.common.header')
+@endif
 
-    @yield('content')
+@yield('content')
 </body>
 </html>

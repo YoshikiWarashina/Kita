@@ -1,4 +1,4 @@
-@extends('admin.admin_menu.header')
+@extends('layouts.app')
 
 @section('content')
     <div class="content-wrapper" style="min-height: auto;">
