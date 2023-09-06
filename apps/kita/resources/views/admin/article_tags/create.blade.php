@@ -1,4 +1,4 @@
-@extends('admin.admin_menu.header')
+@extends('layouts.app')
 
 @section('content')
     <div class="content-wrapper" style="min-height: auto;">
@@ -24,6 +24,7 @@
         <section class="content mx-2">
             <div class="container-fluid">
                 {{ Form::open(['route' => 'tag.store', 'method' => 'POST']) }}
+                @csrf
                 <div class="row">
                     <div class="col-md-9 col-12">
                         <div class="card">

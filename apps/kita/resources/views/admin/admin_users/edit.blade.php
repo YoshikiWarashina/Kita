@@ -1,4 +1,4 @@
-@extends('admin.admin_menu.header')
+@extends('layouts.app')
 
 @section('content')
     <div class="content-wrapper" style="min-height: auto;">
@@ -30,6 +30,7 @@
         <section class="content mx-2">
             <div class="container-fluid">
                 {{ Form::open(['route' => ['admin_users.update', $admin->id],'method' => 'PUT']) }}
+                @csrf
                 <div class="row">
                     <div class="col-md-9 col-12">
                         <div class="card">
@@ -85,6 +86,7 @@
                                 </div>
                                 <div class="py-2">
                                     {{ Form::open(['route' => ['admin_users.destroy', $admin->id],'method' => 'DELETE', 'onsubmit' => "return confirm('一度削除すると元に戻せません。よろしいですか？');"]) }}
+                                    @csrf
                                     {{ Form::submit('削除する', ['class' => 'btn btn-danger btn-block']) }}
                                     {{ Form::close() }}
                                 </div>

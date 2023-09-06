@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Laravel</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-</head>
-<body>
 <header>
     <div class="container-fluid sticky-top border bg-white">
         <div class="row justify-content-center">
@@ -68,10 +56,3 @@
         </div>
     </div>
 </header>
-
-
-<div class="main">
-    @yield('content')
-</div>
-</body>
-</html>
