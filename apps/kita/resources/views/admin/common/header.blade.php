@@ -1,4 +1,3 @@
-<body class="sidebar-mini layout-fixed">
 <header>
     <nav class="main-header navbar navbar-expand navbar-dark navbar-light">
         <!-- Left navbar links -->
