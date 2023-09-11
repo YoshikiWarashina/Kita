@@ -8,7 +8,7 @@
                         <h1><strong>Kita</strong> Administrator console</h1>
                     </div>
                 </div>
-                <form method="POST" action="{{ url('admin/login') }}">
+                {{ Form::open(['route' => 'admin.login', 'method' => 'POST']) }}
                     @csrf
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-10 col-12">
@@ -17,7 +17,7 @@
                                     <div class="row">
                                         <p class="mb-2 col-auto">{{ __('メールアドレス') }}</p>
                                     </div>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    {{ Form::email('email', old('email'), ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : ''), 'required' => 'required', 'autocomplete' => 'email', 'autofocus' => 'autofocus']) }}
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -28,7 +28,7 @@
                                     <div class="row">
                                         <p class="mb-2 col-auto">{{ __('パスワード') }}</p>
                                     </div>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                    {{ Form::password('password', ['class' => 'form-control' . ($errors->has('password') ? ' is-invalid' : ''), 'required' => 'required', 'autocomplete' => 'current-password']) }}
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -36,19 +36,12 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4 col-12 px-4 my-4">
-                                    <button type="submit" class="btn btn-primary col-12">
-                                        {{ __('Login') }}
-                                    </button>
-                                    @if (Route::has('password.request'))
-                                        <a class="btn btn-link" href="{{ url('admin/password.request') }}">
-                                            {{ __('Forgot Your Password?') }}
-                                        </a>
-                                    @endif
+                                    {{ Form::button(__('ログイン'), ['type' => 'submit', 'class' => 'btn btn-primary col-12']) }}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
+                {{ Form::close() }}
             </div>
         </div>
     </div>
