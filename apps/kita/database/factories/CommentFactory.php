@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Article;
+use App\Models\Member;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,8 +20,8 @@ class CommentFactory extends Factory
     {
         return [
             'contents' => $this->faker->realText(100),
-            'member_id' => $this->faker->numberBetween(1,10),
-            'article_id' => $this->faker->numberBetween(1,10),
+            'member_id' => Member::factory(),
+            'article_id' => Article::factory(),
         ];
     }
 }

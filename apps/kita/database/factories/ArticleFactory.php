@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Article;
+use App\Models\Member;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,13 +16,12 @@ class ArticleFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    protected $model = Article::class;
     public function definition()
     {
         return [
             'title' => $this->faker->sentence(),
             'contents' => $this->faker->realText(100),
-            'member_id' => $this->faker->numberBetween(1,10),
+            'member_id' => Member::factory(),
         ];
     }
 }
