@@ -4,15 +4,17 @@ namespace App\Services;
 
 
 use App\Models\Member;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\View\View;
 
 class MemberService{
 
     /**
      * 会員を各ページ10で取得
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
-    public function getMembers()
+    public function getMembers(): View
     {
         $membersPerPage = 10;
 
@@ -24,7 +26,7 @@ class MemberService{
      * @param array $keywords
      * @return array
      */
-    private function escapeKeyword(array $keywords)
+    private function escapeKeyword(array $keywords): array
     {
         $escapedKeywords = [];
         foreach ($keywords as $field => $keyword) {
@@ -37,9 +39,9 @@ class MemberService{
     /**
      * escape後の検索ワードで検索をかけ、合致したものを返す
      * @param array $keywords
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return LengthAwarePaginator
      */
-    public function getSearchedMembers(array $keywords)
+    public function getSearchedMembers(array $keywords): LengthAwarePaginator
     {
         $query = Member::query();
 
@@ -53,8 +55,6 @@ class MemberService{
         }
 
         // 検索結果を取得
-        $results = $query->paginate($membersPerPage);
-
-        return $results;
+        return $query->paginate($membersPerPage);
     }
 }

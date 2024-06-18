@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Member\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Response;
@@ -43,7 +45,7 @@ class LoginController extends Controller
      * @return Guard
      */
 
-    protected function guard()
+    protected function guard(): Guard
     {
         return Auth::guard('members');
     }
@@ -54,7 +56,7 @@ class LoginController extends Controller
      * @return string
      */
 
-    protected function redirectTo()
+    protected function redirectTo(): string
     {
         return route('article.index');
     }
@@ -62,10 +64,12 @@ class LoginController extends Controller
     /**
      * ログイン後のリダイレクト処理
      *
+     * @param Request $request
+     * @param $user
      * @return RedirectResponse
      */
 
-    protected function authenticated(Request $request, $user)
+    protected function authenticated(Request $request, $user): RedirectResponse
     {
         return redirect($this->redirectTo());
     }
@@ -74,10 +78,10 @@ class LoginController extends Controller
      * ログアウト後はログインページにいく(user, adminの連結を排除)
      *
      * @param Request $request
-     * @return Response|JsonResponse|RedirectResponse
+     * @return Application|Redirector|JsonResponse|RedirectResponse
      */
 
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse|Redirector|RedirectResponse|Application
     {
         $this->guard()->logout();
 

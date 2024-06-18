@@ -44,7 +44,7 @@ class LoginController extends Controller
      * @return Guard
      */
 
-    protected function guard()
+    protected function guard(): Guard
     {
         return Auth::guard('admins');
     }
@@ -54,7 +54,7 @@ class LoginController extends Controller
      * @return View
      */
 
-    public function showLoginForm()
+    public function showLoginForm(): View
     {
         return view('admin.login');
     }
@@ -65,7 +65,7 @@ class LoginController extends Controller
      * @return string
      */
 
-    protected function redirectTo()
+    protected function redirectTo(): string
     {
         return route('admin_users.index');
     }
@@ -73,10 +73,12 @@ class LoginController extends Controller
     /**
      * ログイン後のリダイレクト処理
      *
+     * @param Request $request
+     * @param $user
      * @return RedirectResponse
      */
 
-    protected function authenticated(Request $request, $user)
+    protected function authenticated(Request $request, $user): RedirectResponse
     {
         return redirect($this->redirectTo());
     }
@@ -89,7 +91,7 @@ class LoginController extends Controller
      * @return JsonResponse|RedirectResponse
      */
 
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse|RedirectResponse
     {
         $this->guard()->logout();
 

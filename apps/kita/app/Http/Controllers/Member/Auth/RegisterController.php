@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Member\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Member;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/articles';
+    protected string $redirectTo = '/articles';
 
     /**
      * Create a new controller instance.
@@ -44,10 +45,10 @@ class RegisterController extends Controller
     /**
      * Get the guard instance for the user authentication.
      *
-     * @return \Illuminate\Contracts\Auth\Guard
+     * @return Guard
      */
 
-    protected function guard()
+    protected function guard(): Guard
     {
         return Auth::guard('members');
     }
@@ -55,10 +56,10 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @param array $data
+     * @return \Illuminate\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(array $data): \Illuminate\Validation\Validator
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
@@ -73,7 +74,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return Member
      */
-    protected function create(array $data)
+    protected function create(array $data): Member
     {
         return Member::create([
             'name' => $data['name'],

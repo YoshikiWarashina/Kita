@@ -5,17 +5,18 @@ namespace App\Http\Controllers\Comment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Comment\CreateRequest;
 use App\Services\CommentService;
+use Illuminate\Http\RedirectResponse;
 
 class CommentController extends Controller
 {
     /**
      * Store a newly created comment in storage.
      *
-     * @param  \App\Services\CommentService  $commentService
-     * @param  App\Http\Requests\Comment\CreateRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param CommentService $commentService
+     * @param CreateRequest $request
+     * @return RedirectResponse
      */
-    public function store(CommentService $commentService, CreateRequest $request)
+    public function store(CommentService $commentService, CreateRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
         $comment = $commentService->saveNewComment($validatedData);

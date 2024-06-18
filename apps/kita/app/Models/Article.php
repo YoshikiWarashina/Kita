@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\hasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
@@ -37,9 +40,9 @@ class Article extends Model
     /**
      * 記事を保有しているメンバーの取得
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function member()
+    public function member(): BelongsTo
     {
         return $this->belongsTo(Member::class, 'member_id');
     }
@@ -48,9 +51,9 @@ class Article extends Model
     /**
      * 複数コメントが紐付けられる記事の取得
      *
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     * @return hasMany
      */
-    public function comments()
+    public function comments(): hasMany
     {
         return $this->hasMany(Comment::class);
     }
@@ -58,9 +61,9 @@ class Article extends Model
     /**
      * 記事が紐つけられるタグの取得
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'article_article_tag', 'article_id', 'article_tag_id')->withTimestamps();
     }

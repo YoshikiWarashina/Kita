@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Member\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Password\UpdatepassRequest;
 use App\Services\PasswordService;
+use Illuminate\Http\RedirectResponse;
 
 class PasswordController extends Controller
 {
@@ -13,9 +14,9 @@ class PasswordController extends Controller
      *
      * @param PasswordService $passwordService;
      * @param UpdatepassRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function update(PasswordService $passwordService, UpdatepassRequest $request)
+    public function update(PasswordService $passwordService, UpdatepassRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
 

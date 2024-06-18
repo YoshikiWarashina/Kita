@@ -7,15 +7,18 @@ use App\Services\TagService;
 use App\Http\Requests\Tag\CreateRequest;
 use App\Http\Requests\Tag\SearchRequest;
 use App\Http\Requests\Tag\UpdateRequest;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+
 class TagController extends Controller
 {
     /**
      * タグ一覧表示
-     * @param App\Services\TagService
-     * @param App\Http\Requests\Tag\SearchRequest
-     * @return \Illuminate\Contracts\View\View
+     * @param TagService $tagService
+     * @param SearchRequest $request
+     * @return View
      */
-    public function index(TagService $tagService, SearchRequest $request)
+    public function index(TagService $tagService, SearchRequest $request): View
     {
         $keyword = $request->input('name');
 
@@ -30,9 +33,9 @@ class TagController extends Controller
 
     /**
      * タグ新規登録ページ表示
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin.article_tags.create');
     }
@@ -40,11 +43,11 @@ class TagController extends Controller
     /**
      * タグ新規登録
      *
-     * @param App\Http\Requests\Tag\CreateRequest
-     * @param App\Services\TagService
-     * @return \Illuminate\Http\RedirectResponse
+     * @param CreateRequest $request
+     * @param TagService $tagService
+     * @return RedirectResponse
      */
-    public function store(CreateRequest $request, TagService $tagService)
+    public function store(CreateRequest $request, TagService $tagService): RedirectResponse
     {
         $validatedData = $request->validated();
         $tag = $tagService->saveTag($validatedData);
@@ -59,11 +62,11 @@ class TagController extends Controller
 
     /**
      * タグ編集画面表示
-     * @param App\Services\TagService
+     * @param TagService $tagService
      * @param int $id
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
-    public function edit(TagService $tagService, int $id)
+    public function edit(TagService $tagService, int $id): View
     {
         $tag = $tagService->getTagById($id);
 
@@ -73,12 +76,12 @@ class TagController extends Controller
     /**
      * タグをアップデートし、リダイレクト
      *
-     * @param App\Services\TagService
-     * @param App\Http\Requests\Tag\UpdateRequest
+     * @param TagService $tagService
+     * @param UpdateRequest $request
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function update(TagService $tagService, UpdateRequest $request, int $id)
+    public function update(TagService $tagService, UpdateRequest $request, int $id): RedirectResponse
     {
         $validatedData = $request->validated();
 
@@ -94,11 +97,11 @@ class TagController extends Controller
 
     /**
      * タグ削除
-     * @param App\Services\TagService
+     * @param TagService $tagService
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function destroy(TagService $tagService, int $id)
+    public function destroy(TagService $tagService, int $id): RedirectResponse
     {
         $tagService->deleteTag($id);
 

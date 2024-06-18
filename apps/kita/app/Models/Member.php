@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\hasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -52,9 +53,9 @@ class Member extends Authenticatable
     /**
      * 記事の取得
      *
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     * @return hasMany
      */
-    public function articles()
+    public function articles(): hasMany
     {
         return $this->hasMany(Article::class);
     }
@@ -63,9 +64,9 @@ class Member extends Authenticatable
     /**
      * メンバーが保持するコメントの取得
      *
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     * @return hasMany
      */
-    public function comments()
+    public function comments(): hasMany
     {
         return $this->hasMany(Comment::class);
     }

@@ -5,17 +5,18 @@ namespace App\Http\Controllers\Member;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Member\SearchRequest;
 use App\Services\MemberService;
+use Illuminate\Contracts\View\View;
 
 class MemberController extends Controller
 {
     /**
      * 会員一覧表示
      *
-     * @param App\Services\MemberService $memberService
-     * @param App\Http\Requests\Member\SearchRequest $searchRequest
-     * @return \Illuminate\Contracts\View\View
+     * @param MemberService $memberService
+     * @param SearchRequest $searchRequest
+     * @return View
      */
-    public function index(MemberService $memberService, SearchRequest $searchRequest)
+    public function index(MemberService $memberService, SearchRequest $searchRequest): View
     {
         $keywords = $searchRequest->only(['name', 'email']);
 

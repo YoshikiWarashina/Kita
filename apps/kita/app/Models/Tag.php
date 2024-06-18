@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tag extends Model
 {
@@ -29,9 +30,9 @@ class Tag extends Model
     /**
      * タグに関連付けられた記事の取得
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function articles()
+    public function articles(): BelongsToMany
     {
         return $this->belongsToMany(Article::class, 'article_article_tag', 'article_tag_id', 'article_id')->withTimestamps();
     }

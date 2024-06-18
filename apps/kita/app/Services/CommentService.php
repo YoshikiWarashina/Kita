@@ -14,7 +14,7 @@ class CommentService
      * @param array $data
      * @return Comment
      */
-    public function saveNewComment(array $data)
+    public function saveNewComment(array $data): Comment
     {
         $comment = new Comment();
 
