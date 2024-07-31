@@ -27,7 +27,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/admin_users';
+    protected string $redirectTo = '/admin/admin_users';
 
     /**
      * Create a new controller instance.
@@ -47,7 +47,7 @@ class RegisterController extends Controller
      * @return Guard
      */
 
-    protected function guard()
+    protected function guard(): Guard
     {
         return Auth::guard('admins');
     }
@@ -58,7 +58,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($data, [
             'first_name' => ['required', 'string', 'max:255'],
@@ -74,7 +74,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return Admin
      */
-    protected function create(array $data)
+    protected function create(array $data): Admin
     {
         return Admin::create([
             'first_name' => $data['first_name'],

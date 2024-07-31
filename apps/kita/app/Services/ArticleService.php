@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Article;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -14,9 +16,9 @@ class ArticleService{
     /**
      * 記事一覧をページネーション込みで取得
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return LengthAwarePaginator
      */
-    public function getArticles()
+    public function getArticles(): LengthAwarePaginator
     {
         $articlesPerPage = 10;
 
@@ -29,7 +31,7 @@ class ArticleService{
      * @return LengthAwarePaginator
      */
 
-    public function getMyArticles()
+    public function getMyArticles(): LengthAwarePaginator
     {
         $articlesPerPage = 10;
         $user = auth()->user();
@@ -44,20 +46,18 @@ class ArticleService{
      * @param string $keyword
      * @return string
      */
-    private function escapeKeyword(string $keyword)
+    private function escapeKeyword(string $keyword): string
     {
-        $escapedKeyword = '%' . addcslashes($keyword, '%_\\') . '%';
-
-        return $escapedKeyword;
+        return '%' . addcslashes($keyword, '%_\\') . '%';
     }
 
     /**
      * 記事の部分一致検索結果一覧をページネーション込みで取得
      *
      * @param string $keyword
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return LengthAwarePaginator
      */
-    public function getSearchedArticles(string $keyword)
+    public function getSearchedArticles(string $keyword): LengthAwarePaginator
     {
         $articlesPerPage = 10;
 
@@ -76,7 +76,7 @@ class ArticleService{
      * @return Article
      * @throws Exception
      */
-    public function saveNewArticle(array $data)
+    public function saveNewArticle(array $data): Article
     {
         DB::beginTransaction();
 
@@ -117,25 +117,22 @@ class ArticleService{
      * @return Article
      */
 
-    public function getArticleById($article_id)
+    public function getArticleById(int $article_id): Article
     {
-        $article = Article::find($article_id);
-
-        return $article;
+        return Article::find($article_id);
     }
 
     /**
      * 認証ユーザーと記事が一致している場合取得
      *
-     * @param int $article_id
+     * @param int $articleId
      * @param int $userId
      * @return Article
      */
 
-    public function isUserArticle(int $articleId, int $userId)
+    public function isUserArticle(int $articleId, int $userId): Article
     {
-        $article = Article::where('id', $articleId)->where('member_id', $userId)->exists();
-        return $article;
+        return Article::where('id', $articleId)->where('member_id', $userId)->exists();
     }
 
     /**
@@ -146,7 +143,7 @@ class ArticleService{
      * @return Article
      * @@throws Exception
      */
-    public function updateArticle(int $articleId, array $data)
+    public function updateArticle(int $articleId, array $data): Article
     {
         DB::beginTransaction();
 
@@ -183,7 +180,7 @@ class ArticleService{
      * @param int $articleId;
      * @return void
      */
-    public function deleteArticle(int $articleId)
+    public function deleteArticle(int $articleId): void
     {
         $article = $this->getArticleById($articleId);
         $article->delete();
@@ -195,16 +192,14 @@ class ArticleService{
      * @param int $article_id
      * @return Model
      *
-     **/
+     */
 
-    public function getArticleWithCommentsById(int $article_id)
+    public function getArticleWithCommentsById(int $article_id): Model
     {
-        $article = Article::with(['comments' => function ($query) {
+        return Article::with(['comments' => function ($query) {
             $query->orderBy('updated_at', 'desc');
         }])
             ->find($article_id);
-
-        return $article;
     }
 
 
@@ -215,7 +210,7 @@ class ArticleService{
      * @return void
      **/
 
-    public function deleteSelectedArticles(array $selectedArticles)
+    public function deleteSelectedArticles(array $selectedArticles): void
     {
         // 選択された記事を削除
         Article::whereIn('id', $selectedArticles)->delete();

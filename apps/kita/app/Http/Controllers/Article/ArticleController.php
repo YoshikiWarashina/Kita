@@ -8,6 +8,8 @@ use App\Http\Requests\Article\UpdateRequest;
 use App\Services\ArticleService;
 use App\Services\TagService;
 use App\Http\Requests\Article\CreateRequest;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Http\Requests\Article\DeleteRequest;
@@ -19,11 +21,11 @@ class ArticleController extends Controller
     /**
      * 記事一覧表示/検索
      *
-     * @param App\Services\ArticleService $articleService
-     * @param App\Http\Requests\Article\SearchRequest $request
-     * @return \Illuminate\Contracts\View\View
+     * @param ArticleService $articleService
+     * @param SearchRequest $request
+     * @return View
      */
-    public function index(ArticleService $articleService, SearchRequest $request)
+    public function index(ArticleService $articleService, SearchRequest $request): View
     {
         $search = $request->input('search');
 
@@ -39,10 +41,10 @@ class ArticleController extends Controller
     /**
      * タグとともに新規投稿ページを表示
      *
-     * @param \App\Services\TagService
-     * @return \Illuminate\Contracts\View\View
+     * @param TagService $tagService
+     * @return View
      */
-    public function create(TagService $tagService)
+    public function create(TagService $tagService): View
     {
         $tags = $tagService->getTagsForArticle();
 
@@ -53,11 +55,12 @@ class ArticleController extends Controller
     /**
      * 記事をテーブルに保存
      *
-     * @param  \App\Services\ArticleService  $articleService
-     * @param  App\Http\Requests\Article\CreateRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param ArticleService $articleService
+     * @param CreateRequest $request
+     * @return RedirectResponse
+     * @throws Exception
      */
-    public function store(ArticleService $articleService, CreateRequest $request)
+    public function store(ArticleService $articleService, CreateRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
         $article = $articleService->saveNewArticle($validatedData);
@@ -73,11 +76,11 @@ class ArticleController extends Controller
     /**
      * 記事詳細ページ表示
      *
-     * @param  \App\Services\ArticleService  $articleService
+     * @param ArticleService $articleService
      * @param  int  $id
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
-    public function show(ArticleService $articleService, int $id)
+    public function show(ArticleService $articleService, int $id): View
     {
         $article = $articleService->getArticleWithCommentsById($id);
 
@@ -87,12 +90,12 @@ class ArticleController extends Controller
     /**
      * 記事編集ページ表示
      *
-     * @param  \App\Services\ArticleService $articleService
-     * @param  \App\Services\TagService $tagService
+     * @param ArticleService $articleService
+     * @param TagService $tagService
      * @param  int  $id
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
-    public function edit(ArticleService $articleService, TagService $tagService, int $id)
+    public function edit(ArticleService $articleService, TagService $tagService, int $id): View
     {
         $article = $articleService->getArticleById($id);
         $tags = $tagService->getTagsForArticle();
@@ -103,12 +106,12 @@ class ArticleController extends Controller
     /**
      * 記事の更新
      *
-     * @param  \App\Services\ArticleService  $articleService
-     * @param  \App\Http\Requests\Article\UpdateRequest $request
+     * @param ArticleService $articleService
+     * @param UpdateRequest $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function update(ArticleService $articleService, UpdateRequest $request, int $id)
+    public function update(ArticleService $articleService, UpdateRequest $request, int $id): RedirectResponse
     {
         if (!$articleService->isUserArticle($id, Auth::id())) {
             return redirect('articles/'.$id)->withErrors(['error' => '他のユーザーの記事は編集できません']);
@@ -131,9 +134,9 @@ class ArticleController extends Controller
      *
      * @param ArticleService $articleService
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function destroy(ArticleService $articleService, int $id)
+    public function destroy(ArticleService $articleService, int $id): RedirectResponse
     {
         if (!$articleService->isUserArticle($id, Auth::id())) {
             return redirect('articles/'.$id)->withErrors(['error' => '他のユーザーの記事は削除できません']);
@@ -149,7 +152,7 @@ class ArticleController extends Controller
      * @param ArticleService $articleService
      * @return View
      */
-    public function listMyArticles(ArticleService $articleService)
+    public function listMyArticles(ArticleService $articleService): View
     {
         $articles = $articleService->getMyArticles();
 
@@ -165,7 +168,7 @@ class ArticleController extends Controller
      * @return JsonResponse
      */
 
-    public function deleteSelected(ArticleService $articleService, DeleteRequest $request)
+    public function deleteSelected(ArticleService $articleService, DeleteRequest $request): JsonResponse
     {
         $selectedArticles = $request->input('selected_articles', []);
 

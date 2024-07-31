@@ -3,15 +3,16 @@
 namespace App\Services;
 
 use App\Models\Tag;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class TagService
 {
     /**
      * 記事投稿する際に表示するタグ(アルファベット順)
      *
-     *@return  App\Models\Tag
+     *@return  Tag
      */
-    public function getTagsForArticle()
+    public function getTagsForArticle(): Tag
     {
         return Tag::orderBy('name', 'asc')->get();
     }
@@ -19,9 +20,9 @@ class TagService
     /**
      * タグをページネーション込みで取得
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return LengthAwarePaginator
      */
-    public function getTags()
+    public function getTags(): LengthAwarePaginator
     {
         $tagsPerPage = 10;
 
@@ -34,20 +35,18 @@ class TagService
      * @param string $keyword
      * @return string
      */
-    private function escapeKeyword(string $keyword)
+    private function escapeKeyword(string $keyword): string
     {
-        $escapedKeyword = '%' . addcslashes($keyword, '%_\\') . '%';
-
-        return $escapedKeyword;
+        return '%' . addcslashes($keyword, '%_\\') . '%';
     }
 
     /**
      * タグの部分一致検索を行い、ページネーション込みで取得
      *
      * @param string $keyword
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return LengthAwarePaginator
      */
-    public function getSearchedTags(string $keyword)
+    public function getSearchedTags(string $keyword): LengthAwarePaginator
     {
         $tagsPerPage = 10;
 
@@ -62,9 +61,9 @@ class TagService
      * タグをテーブルに保存
      *
      * @param array $data
-     * @return \App\Models\Tag
+     * @return Tag
      */
-    public function saveTag(array $data)
+    public function saveTag(array $data): Tag
     {
         $tag = new Tag();
 
@@ -81,13 +80,11 @@ class TagService
      * idをベースにタグを取得
      *
      * @param int $id
-     * @return \App\Models\Tag
+     * @return Tag
      */
-    public function getTagById(int $id)
+    public function getTagById(int $id): Tag
     {
-        $tag = Tag::find($id);
-
-        return $tag;
+        return Tag::find($id);
     }
 
     /**
@@ -95,9 +92,9 @@ class TagService
      *
      * @param int $id
      * @param array $data
-     * @return \App\Models\Tag
+     * @return Tag
      */
-    public function updateTag(int $id, array $data)
+    public function updateTag(int $id, array $data): Tag
     {
         $tag = $this->getTagById($id);
 
@@ -115,7 +112,7 @@ class TagService
      * @param int $id
      * @return void
      */
-    public function deleteTag(int $id)
+    public function deleteTag(int $id): void
     {
         $tag = $this->getTagById($id);
         $tag->articles()->detach();

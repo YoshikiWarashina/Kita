@@ -7,16 +7,18 @@ use App\Http\Requests\Admin\SearchRequest;
 use App\Services\AdminService;
 use App\Http\Requests\Admin\CreateRequest;
 use App\Http\Requests\Admin\UpdateRequest;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class AdminController extends Controller
 {
     /**
      * admin users一覧表示(ページネーション6)
-     * @param App\Services\AdminService $adminService
-     * @param App\Http\Requests\Admin\SearchRequest $searchRequest
-     * @return \Illuminate\Contracts\View\View
+     * @param AdminService $adminService
+     * @param SearchRequest $searchRequest
+     * @return View
      */
-    public function index(AdminService $adminService, SearchRequest $searchRequest)
+    public function index(AdminService $adminService, SearchRequest $searchRequest): View
     {
         $keywords = $searchRequest->only(['last_name', 'first_name', 'email']);
 
@@ -34,10 +36,10 @@ class AdminController extends Controller
     /**
      * admin users新規登録ページへの遷移
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
 
-    public function create() : object
+    public function create(): View
     {
         return view('admin.admin_users.create');
     }
@@ -45,11 +47,11 @@ class AdminController extends Controller
     /**
      * 新規のadmin userをテーブルに格納し、編集画面にリダイレクト
      *
-     * @param \App\Http\Requests\Admin\CreateRequest $request
-     * @param \App\Services\AdminService $adminService
-     * @return \Illuminate\Http\RedirectResponse
+     * @param CreateRequest $request
+     * @param AdminService $adminService
+     * @return RedirectResponse
      */
-    public function store(CreateRequest $request, AdminService $adminService)
+    public function store(CreateRequest $request, AdminService $adminService): RedirectResponse
     {
         $validatedData = $request->validated();
         $admin = $adminService->saveNewAdmin($validatedData);
@@ -65,11 +67,11 @@ class AdminController extends Controller
     /**
      * admin userの編集ページ表示
      *
-     * @param \App\Services\AdminService $adminService
+     * @param AdminService $adminService
      * @param int $adminId
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
-    public function edit(AdminService $adminService, int $adminId)
+    public function edit(AdminService $adminService, int $adminId): View
     {
         $admin = $adminService->getAdminById($adminId);
 
@@ -80,12 +82,12 @@ class AdminController extends Controller
     /**
      * admin userの情報を更新し、編集ページへ遷移
      *
-     * @param \App\Services\AdminService $adminService
-     * @param App\Http\Requests\Admin\UpdateRequest $request
+     * @param AdminService $adminService
+     * @param UpdateRequest $request
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function update(AdminService $adminService, UpdateRequest $request, int $id)
+    public function update(AdminService $adminService, UpdateRequest $request, int $id): RedirectResponse
     {
         $validatedData = $request->validated();
 
@@ -103,11 +105,11 @@ class AdminController extends Controller
     /**
      * admin userを削除し、一覧へ遷移
      *
-     * @param \App\Services\AdminService $adminService
+     * @param AdminService $adminService
      * @param int $adminId
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function destroy(AdminService $adminService, int $adminId)
+    public function destroy(AdminService $adminService, int $adminId): RedirectResponse
     {
         $adminService->deleteAdmin($adminId);
 

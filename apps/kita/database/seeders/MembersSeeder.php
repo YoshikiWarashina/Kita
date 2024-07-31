@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Member;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class MembersSeeder extends Seeder
@@ -15,6 +14,13 @@ class MembersSeeder extends Seeder
      */
     public function run()
     {
-        Member::factory()->count(40)->create();
+        // test data for login
+        Member::factory()->create([
+            'name' => 'test_name',
+            'email' => 'test_name@gmail.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        Member::factory()->count(39)->create();
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Member\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\UpdateRequest;
 use App\Services\ProfileService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
@@ -12,9 +14,9 @@ class ProfileController extends Controller
     /**
      *ユーザー用プロフィール画面の表示
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
-    public function edit()
+    public function edit(): View
     {
         $member = Auth::user();
         return view('user.profile', compact('member'));
@@ -26,9 +28,9 @@ class ProfileController extends Controller
      *
      * @param ProfileService $profileService;
      * @param UpdateRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function update(ProfileService $profileService, UpdateRequest $request)
+    public function update(ProfileService $profileService, UpdateRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
 

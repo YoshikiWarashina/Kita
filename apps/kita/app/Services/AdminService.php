@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Admin;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 
 class AdminService{
@@ -10,9 +11,9 @@ class AdminService{
     /**
      * 管理者ユーザーをページネーション込みで取得
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return LengthAwarePaginator
      */
-    public function getAdminUsers()
+    public function getAdminUsers(): LengthAwarePaginator
     {
         $pageNum = 6;
 
@@ -26,7 +27,7 @@ class AdminService{
      * @return Admin
      */
 
-    public function saveNewAdmin(array $data)
+    public function saveNewAdmin(array $data): Admin
     {
         $admin = new Admin();
 
@@ -48,11 +49,9 @@ class AdminService{
      * @param int $id
      * @return Admin
      */
-    public function getAdminById(int $id)
+    public function getAdminById(int $id): Admin
     {
-        $admin = Admin::find($id);
-
-        return $admin;
+        return Admin::find($id);
     }
 
     /**
@@ -62,7 +61,7 @@ class AdminService{
      * @param array $data
      * @return Admin
      */
-    public function updateAdmin(int $id, array $data)
+    public function updateAdmin(int $id, array $data): Admin
     {
         $admin = $this->getAdminById($id);
 
@@ -81,7 +80,7 @@ class AdminService{
      * @param int $id;
      * @return void
      */
-    public function deleteAdmin(int $id)
+    public function deleteAdmin(int $id): void
     {
         $admin = $this->getAdminById($id);
         $admin->delete();
@@ -93,7 +92,7 @@ class AdminService{
      * @param array $keywords
      * @return array
      */
-    private function escapeKeyword(array $keywords)
+    private function escapeKeyword(array $keywords): array
     {
         $escapedKeywords = [];
         foreach ($keywords as $field => $keyword) {
@@ -106,9 +105,9 @@ class AdminService{
     /**
      * escape後の検索ワードで検索をかけ、合致したものを返す
      * @param array $keywords
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return LengthAwarePaginator
      */
-    public function getSearchedAdmins(array $keywords)
+    public function getSearchedAdmins(array $keywords): LengthAwarePaginator
     {
         $query = Admin::query();
 
@@ -122,9 +121,7 @@ class AdminService{
         }
 
         // 検索結果を取得
-        $results = $query->paginate($adminPerPage);
-
-        return $results;
+        return $query->paginate($adminPerPage);
     }
 
 }
