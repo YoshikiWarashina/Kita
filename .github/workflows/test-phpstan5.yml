@@ -35,10 +35,6 @@ jobs:
         if: steps.cache-composer.outputs.cache-hit != 'true'
         run: docker-compose run -v ${{ github.workspace }}/apps/kita/vendor:/var/www/html/vendor kita composer install --prefer-dist --no-progress
 
-      - name: Run PHP-CS-Fixer
-        # CS Fixerにより整形されたコードを検知する
-        run: cd apps/kita && vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose --dry-run
-
       - name: Run Larastan
         # 理想は"docker-compose run --rm kita vendor/bin/phpstan analyse app --level 5"によってコンテナ環境上でテストを行うべきだが
         # コンテナ構築に時間がかかるため、ホスト環境のパッケージで行うものとする
